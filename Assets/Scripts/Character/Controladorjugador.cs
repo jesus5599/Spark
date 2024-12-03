@@ -57,7 +57,7 @@ public class Controladorjugador : MonoBehaviour
     public Transform Cabeza;
 
     //Configuracion de dash
-    public float dashSpeed;
+    public float dashSpeed, dashCooldown;
     public bool dashEnable;
 
     void Awake()
@@ -92,7 +92,7 @@ public class Controladorjugador : MonoBehaviour
         // Manejar el Dash
         if (controlador.Player.Dash.triggered && dashEnable)
         {            
-            StartCoroutine (Dash(( playerBody.position - virtualCamera.transform.position).normalized));
+            StartCoroutine (Dash(transform.forward));
         }
         // Aplicar gravedad y mover el jugador
         ApplyGravity();
@@ -161,7 +161,7 @@ public class Controladorjugador : MonoBehaviour
         Vector3 wallNormalL = wallLeft ? hitLeft.normal : hitRight.normal;
              forceToApply = transform.up * wallJumpUpForce + wallNormalL * wallJumpSideForce;
             characterController.Move(forceToApply.normalized);
-            playerVelocity.y += -9.81f * Time.deltaTime;
+            playerVelocity.y += gravityValue * Time.deltaTime;
             StartCoroutine(Dash(forceToApply));
         }
         if (wallRight)
@@ -170,7 +170,8 @@ public class Controladorjugador : MonoBehaviour
              forceToApply = transform.up * wallJumpUpForce + wallNormalR * wallJumpSideForce;
             characterController.Move(forceToApply.normalized);
             playerVelocity.y += -9.81f * Time.deltaTime;
-            //StartCoroutine(Dash(forceToApply));
+            StartCoroutine(Dash(forceToApply));
+            dashEnable = true;
         }     
     }
 
@@ -183,7 +184,7 @@ public class Controladorjugador : MonoBehaviour
             characterController.Move(moveDir * dashSpeed * Time.fixedDeltaTime);
             yield return null;
         }
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(dashCooldown);
         dashEnable = true;
     }
 
