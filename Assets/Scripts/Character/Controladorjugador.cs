@@ -4,9 +4,12 @@ using static UnityEngine.UI.Image;
 using System;
 using UnityEngine.InputSystem.XR;
 using System.Collections;
+using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms;
 
 public class Controladorjugador : MonoBehaviour
 {
+    #region Variables
     // Componentes y referencias
     private CharacterController characterController;
 
@@ -45,13 +48,20 @@ public class Controladorjugador : MonoBehaviour
     public float wallDetectionDistance = 1f;
     public LayerMask wallLayer;
     RaycastHit hitLeft, hitRight;
-    
+
+    //Configuracion Disparo
+    public float tiempodisparo, timeAux;
+
+    //Configuracion parar el tiempo
+    public float timecooldown;
+    public bool timeslow;
 
     // Variables para el control de la cámara con el ratón
     public CinemachineVirtualCamera virtualCamera; // Referencia a la Cinemachine Virtual Camera
     public Transform playerBody; // Referencia al cuerpo del jugador (para moverlo horizontalmente)
-    public float SensitivityX = 2.0f; // Sensibilidad del ratón en el eje X
-    public float SensitivityY = 2.0f; // Sensibilidad del ratón en el eje Y
+    public float SensitivityMouse, SensitivityJoystick;
+    public float SensitivityX = 2.0f; // Sensibilidad  en el eje X
+    public float SensitivityY = 2.0f; // Sensibilidad en el eje Y
 
     private float xRotation = 0f; // Rotación en el eje X (vertical)
     public Transform Cabeza;
@@ -60,26 +70,31 @@ public class Controladorjugador : MonoBehaviour
     public float dashSpeed, dashCooldown;
     public bool dashEnable;
 
+    #endregion
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
         controlador = new Controlador();
         virtualCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         dashEnable = true;
-        
+        timeAux = Time.time;
     }
 
     void Update()
     {
-        // Mover la cámara con el ratón
-        MouseLook();
+        // Mover la cámara 
+        PlayerLook();
 
         // Verificar si el jugador está en el suelo
         CheckGroundStatus();
 
         // Aplicar movimiento y salto
-        HandleMovementAndJump();
+        if (isWallRunning == false)
+        {
+            HandleMovement();
+        }
 
+        Jump();
         // Manejar wall running
         if (isWallRunning)
         {
@@ -92,13 +107,36 @@ public class Controladorjugador : MonoBehaviour
         // Manejar el Dash
         if (controlador.Player.Dash.triggered && dashEnable)
         {            
-            StartCoroutine (Dash(transform.forward));
+            StartCoroutine (Dash(Camera.main.transform.forward));
+        }
+        // Manejar el Disparo
+        if (controlador.Player.Shot.triggered && Time.time - timeAux > tiempodisparo)
+        {
+            disparo.disparoarma = true;
+            timeAux = Time.time;
+        }
+        if (controlador.Player.SlowTime.triggered && timeslow)
+        {
+            StartCoroutine(TimeStop());
         }
         // Aplicar gravedad y mover el jugador
         ApplyGravity();
-        characterController.Move(playerVelocity * Time.deltaTime);
+        characterController.Move(playerVelocity * Time.unscaledDeltaTime);
     }
-
+    private void Jump()
+    {
+        
+        // Saltar si está en el suelo
+        if (controlador.Player.Jump.triggered && groundedPlayer)
+        {
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
+        }
+        // Saltar si está en el muro
+        if (controlador.Player.Jump.triggered && isWallRunning)
+        {
+            WallJump();
+        }
+    }
     private void CheckGroundStatus()
     {
         // Usar raycast para verificar si el jugador está en el suelo
@@ -122,7 +160,7 @@ public class Controladorjugador : MonoBehaviour
         }
     }
 
-    private void HandleMovementAndJump()
+    private void HandleMovement()
     {
         // Movimiento horizontal usando el sistema de entrada
         Vector2 input = controlador.Player.Move.ReadValue<Vector2>();
@@ -131,29 +169,12 @@ public class Controladorjugador : MonoBehaviour
         move = virtualCamera.transform.TransformDirection(move);
         move.y = 0;
         move = (transform.forward * move.z + transform.right * move.x).normalized;
-        characterController.Move(move * Time.deltaTime * playerSpeed);
-
-        // Rotar al jugador en la dirección del movimiento
-       if (move != Vector3.zero)
-        {
-            Vector3 moveDirectionNoRotation = Vector3.ProjectOnPlane(move, Vector3.up);  // Proyecta sobre el plano horizontal
-            characterController.Move(moveDirectionNoRotation * Time.deltaTime * wallRunSpeed);
-        }
-        // Saltar si está en el suelo
-        if (controlador.Player.Jump.triggered && groundedPlayer )
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
-        }
-        if ( controlador.Player.Jump.triggered && isWallRunning)
-        {
-            WallJump();
-        }
-       
+        
+            characterController.Move(move * Time.unscaledDeltaTime * playerSpeed);     
     }
     void WallJump()
     {
-        isWallRunning = false;
-        //wallRunTimer = wallRunDuration;
+        isWallRunning = false;        
         StopWallRun();
         Vector3 forceToApply;
         if (wallLeft)
@@ -161,15 +182,16 @@ public class Controladorjugador : MonoBehaviour
         Vector3 wallNormalL = wallLeft ? hitLeft.normal : hitRight.normal;
              forceToApply = transform.up * wallJumpUpForce + wallNormalL * wallJumpSideForce;
             characterController.Move(forceToApply.normalized);
-            playerVelocity.y += gravityValue * Time.deltaTime;
+            playerVelocity.y += gravityValue * Time.unscaledDeltaTime;
             StartCoroutine(Dash(forceToApply));
+            dashEnable = true;
         }
         if (wallRight)
         {
         Vector3 wallNormalR = wallRight ? hitRight.normal : hitLeft.normal ;
              forceToApply = transform.up * wallJumpUpForce + wallNormalR * wallJumpSideForce;
             characterController.Move(forceToApply.normalized);
-            playerVelocity.y += -9.81f * Time.deltaTime;
+            playerVelocity.y += -9.81f * Time.unscaledDeltaTime;
             StartCoroutine(Dash(forceToApply));
             dashEnable = true;
         }     
@@ -200,11 +222,11 @@ public class Controladorjugador : MonoBehaviour
         if (wallLeft || wallRight)
         {
             wallNormal = wallLeft ? hitLeft.normal : hitRight.normal;
-            StartWallRun();
+            StartWallRun(wallNormal);
         }
     }
 
-    private void StartWallRun()
+    private void StartWallRun(Vector3 wallNormal)
     {
         isWallRunning = true;
         wallRunTimer = wallRunDuration;
@@ -213,18 +235,28 @@ public class Controladorjugador : MonoBehaviour
         preWallRunVelocity = playerVelocity;
 
         // Almacenar la dirección de entrada al wall run (la dirección de movimiento al momento de entrar)
-        entryDirection = transform.forward; // Dirección a la que el jugador se mueve
+        entryDirection = transform.forward;
 
         // Desactivar la gravedad temporalmente durante el wall run
         playerVelocity.y = 0; // Cancelar efecto de gravedad durante el wall run
 
-        // Establecer la dirección del movimiento en base a la dirección de entrada
-        playerVelocity = entryDirection * wallRunSpeed; // Movimiento horizontal sobre la pared
+        // Calcular la dirección del movimiento sobre la pared
+        Vector3 wallRunDirection = Vector3.Cross(wallNormal, Vector3.up).normalized; // Movimiento paralelo a la pared
+
+        // Ajustar la dirección para que coincida con la entrada inicial
+        if (Vector3.Dot(wallRunDirection, entryDirection) < 0)
+        {
+            wallRunDirection = -wallRunDirection; // Asegurarse de que el movimiento sea en la misma dirección de entrada
+        }
+
+        // Establecer la velocidad del jugador en la dirección del wall run
+        playerVelocity = wallRunDirection * wallRunSpeed;
     }
+
 
     private void HandleWallRun()
     {
-        wallRunTimer -= Time.deltaTime;
+        wallRunTimer -= Time.unscaledDeltaTime;
 
         // Si el wall run termina o se salta, detenerlo
         if (wallRunTimer <= 0 || controlador.Player.Jump.triggered)
@@ -237,8 +269,6 @@ public class Controladorjugador : MonoBehaviour
     {
         isWallRunning = false;
         playerVelocity = Vector3.zero;
-
-
     }
 
     private void ApplyGravity()
@@ -248,27 +278,60 @@ public class Controladorjugador : MonoBehaviour
             playerVelocity.y += gravityValue * Time.deltaTime;
         }
     }
-
-    private void MouseLook()
+   
+    private void PlayerLook()
     {
+        var dispositivoActivo = controlador.Player.Look.activeControl?.device;
+        if (dispositivoActivo is Mouse)
+        {
+            SensitivityX = SensitivityMouse;
+            SensitivityY = SensitivityMouse;
+        }
+        else
+        {
+            SensitivityX = SensitivityJoystick;
+            SensitivityY = SensitivityJoystick - 1;
+        }
         // Obtener el movimiento del ratón
-        float mouseX = controlador.Player.Look.ReadValue<Vector2>().x * SensitivityX;
-        float mouseY = controlador.Player.Look.ReadValue<Vector2>().y * SensitivityY;
+        float lookX = controlador.Player.Look.ReadValue<Vector2>().x * SensitivityX;
+        float lookY = controlador.Player.Look.ReadValue<Vector2>().y * SensitivityY;
 
         // Rotar la cámara vertical (eje X)
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limitar la rotación vertical
+        xRotation -= lookY;
+        xRotation = Mathf.Clamp(xRotation, -80f, 80f); // Limitar la rotación vertical
 
         // Aplicar rotación vertical a la cámara
         virtualCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         Cabeza.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         // Rotar el cuerpo del jugador horizontalmente (eje Y)
-        playerBody.Rotate(Vector3.up * mouseX);
-        
-        
+        playerBody.Rotate(Vector3.up * lookX);
+
+
     }
 
+    IEnumerator TimeStop() 
+    {
+        timeslow = false;
+            SlowDownTime();
+        yield return new WaitForSeconds(timecooldown*.2f);
+        RestoreTime();
+        yield return new WaitForSeconds(timecooldown);
+        timeslow = true;
+    }
+    // Ralentiza el tiempo al 50% de su velocidad normal
+    public void SlowDownTime()
+    {
+        Time.timeScale = 0.2f; // Tiempo a la mitad de velocidad
+        Time.fixedDeltaTime = 0.02f * Time.timeScale; // Ajusta el fixedDeltaTime para mantener la física sincronizada
+    }
+
+    // Restaura el tiempo a la velocidad normal
+    public void RestoreTime()
+    {
+        Time.timeScale = 1f; // Tiempo normal
+        Time.fixedDeltaTime = 0.02f; // Restaurar el valor original
+    }
     private void OnEnable()
     {
         controlador.Enable();

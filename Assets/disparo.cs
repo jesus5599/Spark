@@ -1,0 +1,124 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class disparo : MonoBehaviour
+{
+    
+    public GameObject targetObject;  // Target object
+    public Rigidbody misil;  // Rigidbody for the missile (change to Rigidbody)
+    public Transform lanzador;  // The launcher's position and rotation 
+    public float veldisparo, tiempoDeRecarga;  // Speed at which the missile is shot
+    public static bool disparoarma;
+    public int municioninicial, municionactual;
+    public bool recarga;
+    public GameObject bala1, bala2, bala3, bala4, bala5, bala6;
+    public AudioSource audioSource; // Componente AudioSource para reproducir sonido
+    public AudioClip disparoClip,recargaClip;   // Sonido del disparo
+    // Start is called before the first frame update
+    void Start()
+    {
+        disparoarma = false;
+       
+        municionactual = municioninicial;
+        recarga = true;
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Calculate the direction of the missile in the world space
+        Vector3 fwd = lanzador.TransformDirection(Vector3.forward);
+        
+
+        // Get the direction vector from the launcher to the target (fireboy)
+        Vector3 difference = targetObject.transform.position - transform.position;
+        // Calculate the rotation needed to face the target in 3D space
+        Quaternion rotation = Quaternion.LookRotation(difference);
+        transform.rotation = rotation;
+
+        if (municionactual <= 0 && recarga==true)
+        {
+            StartCoroutine(Reload()); 
+            recarga = false;
+        }
+
+        if (disparoarma == true && municionactual > 0)
+        { Shoot(); }
+    }
+    private void Shoot()
+    {
+        if (audioSource != null && disparoClip != null)
+        {
+            audioSource.PlayOneShot(disparoClip);
+        }
+        disparoarma = false;
+        municionactual = municionactual -1;
+        BalasVisibles();
+        Rigidbody misilInstanc;
+        misilInstanc = Instantiate(misil, lanzador.position, lanzador.rotation);
+        misilInstanc.gameObject.SetActive(true);
+        // Add force to the missile in the forward direction of the launcher
+        misilInstanc.AddForce(lanzador.forward * veldisparo, ForceMode.VelocityChange);
+
+
+
+    }
+    private void BalasVisibles()
+    {
+        if (municionactual == 6)
+        {
+            bala1.gameObject.SetActive(true);
+            bala2.gameObject.SetActive(true);
+            bala3.gameObject.SetActive(true);
+            bala4.gameObject.SetActive(true);
+            bala5.gameObject.SetActive(true);
+            bala6.gameObject.SetActive(true);
+        }
+        if (municionactual == 5 )
+        {
+             bala1.gameObject.SetActive(false);
+        }
+        if (municionactual == 4)
+        {
+            bala2.gameObject.SetActive(false);
+        }
+        if (municionactual == 3)
+        {
+            bala3.gameObject.SetActive(false);
+        }
+        if (municionactual == 2)
+        {
+            bala4.gameObject.SetActive(false);
+        }
+        if (municionactual == 1)
+        {
+            bala5.gameObject.SetActive(false);
+        }
+        if (municionactual <= 0)
+        {
+            bala6.gameObject.SetActive(false);
+        }
+
+
+
+    }
+    IEnumerator Reload()
+    { // Reproducir el sonido del disparo
+        if (audioSource != null && recargaClip != null)
+        {
+            audioSource.PlayOneShot(recargaClip);
+        }
+        yield return new WaitForSeconds(tiempoDeRecarga);
+        municionactual = municioninicial;
+        BalasVisibles();
+        recarga =true;
+        
+    }
+    
+}
+
