@@ -78,6 +78,7 @@ public class Controladorjugador : MonoBehaviour
         virtualCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         dashEnable = true;
         timeAux = Time.time;
+        timeslow = true;
     }
 
     void Update()
@@ -109,11 +110,20 @@ public class Controladorjugador : MonoBehaviour
         {            
             StartCoroutine (Dash(Camera.main.transform.forward));
         }
+        Vector3 puntopantalla= new Vector3(Screen.width/2, Screen.height/2, 0f);
+        Ray rayo = Camera.main.ScreenPointToRay(puntopantalla);
+        RaycastHit hit;
         // Manejar el Disparo
         if (controlador.Player.Shot.triggered && Time.time - timeAux > tiempodisparo)
         {
+            if (Physics.Raycast(rayo, out hit))
+            { 
+             disparo.puntoimpacto = hit.point;
             disparo.disparoarma = true;
             timeAux = Time.time;
+            }
+            
+           
         }
         if (controlador.Player.SlowTime.triggered && timeslow)
         {
@@ -203,7 +213,7 @@ public class Controladorjugador : MonoBehaviour
 
         while (Time.time < startTime + wallJumpTime)
         {
-            characterController.Move(moveDir * dashSpeed * Time.fixedDeltaTime);
+            characterController.Move(moveDir * dashSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
         yield return new WaitForSeconds(dashCooldown);
@@ -275,7 +285,7 @@ public class Controladorjugador : MonoBehaviour
     {
         if (!isWallRunning)
         {
-            playerVelocity.y += gravityValue * Time.deltaTime;
+            playerVelocity.y += gravityValue * Time.unscaledDeltaTime;
         }
     }
    

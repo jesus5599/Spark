@@ -10,6 +10,7 @@ public class disparo : MonoBehaviour
     public Transform lanzador;  // The launcher's position and rotation 
     public float veldisparo, tiempoDeRecarga;  // Speed at which the missile is shot
     public static bool disparoarma;
+    public static Vector3 puntoimpacto;
     public int municioninicial, municionactual;
     public bool recarga;
     public GameObject bala1, bala2, bala3, bala4, bala5, bala6;
@@ -35,7 +36,7 @@ public class disparo : MonoBehaviour
         Vector3 fwd = lanzador.TransformDirection(Vector3.forward);
         
 
-        // Get the direction vector from the launcher to the target (fireboy)
+        // Get the direction vector from the launcher to the target 
         Vector3 difference = targetObject.transform.position - transform.position;
         // Calculate the rotation needed to face the target in 3D space
         Quaternion rotation = Quaternion.LookRotation(difference);
@@ -59,11 +60,14 @@ public class disparo : MonoBehaviour
         disparoarma = false;
         municionactual = municionactual -1;
         BalasVisibles();
+        
+       
         Rigidbody misilInstanc;
         misilInstanc = Instantiate(misil, lanzador.position, lanzador.rotation);
+        misilInstanc.transform.LookAt(puntoimpacto);
         misilInstanc.gameObject.SetActive(true);
-        // Add force to the missile in the forward direction of the launcher
-        misilInstanc.AddForce(lanzador.forward * veldisparo, ForceMode.VelocityChange);
+        
+       
 
 
 

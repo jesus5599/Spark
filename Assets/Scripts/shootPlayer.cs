@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class shoot : MonoBehaviour
+public class shootPlayer : MonoBehaviour
 {
     public float speed;
     private void Start()
     {
-         StartCoroutine(Destroy());
+        transform.Rotate(90f,0f,0f);
+        StartCoroutine(Destroy());
     }
     private void Update()
     {
         transform.Translate(Vector2.up * speed * Time.deltaTime);
-       
+        
 
     }
     IEnumerator Destroy()
@@ -26,7 +27,7 @@ public class shoot : MonoBehaviour
     {
 
 
-        Debug.Log("colision");
+        collision.collider.GetComponent<Enemy>()?.Destruir();
 
         Destroy(gameObject);
 
