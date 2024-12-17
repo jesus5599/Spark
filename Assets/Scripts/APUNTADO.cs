@@ -5,7 +5,7 @@ using UnityEngine;
 public class APUNTADO : MonoBehaviour
 {
     float timeAux;
-    public GameObject targetObject;  // Objeto que rotará en Y
+    public GameObject gun;  // Objeto que rotará en XZ
     public GameObject enemy;  // Objeto que rotará en Y
     public Rigidbody misil;  // Rigidbody para el misil
     public Transform lanzador;  // Posición y rotación del lanzador
@@ -41,7 +41,7 @@ public class APUNTADO : MonoBehaviour
             
             Quaternion rotationY = Quaternion.LookRotation(lookDirection);
             Quaternion rotation = Quaternion.LookRotation(difference);
-            transform.rotation = rotation;
+            gun.transform.rotation = rotation;
             // Aplicar la rotación en Y al targetObject
             enemy.transform.rotation = Quaternion.Euler(0, rotationY.eulerAngles.y, 0);
 

@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.XR;
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.Windows;
 
 public class Controladorjugador : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class Controladorjugador : MonoBehaviour
     public float jumpHeight = 1.0f;
     public float gravityValue = -9.81f;
     public bool groundedPlayer;
-
+    
     // Configuración de wall run
     public float wallRunSpeed = 10f;
     public float wallRunDuration = 1.5f;
@@ -46,6 +47,7 @@ public class Controladorjugador : MonoBehaviour
 
     // Configuración de detección de la pared
     public float wallDetectionDistance = 1f;
+    public float  salidarayos = .9f;
     public LayerMask wallLayer;
     RaycastHit hitLeft, hitRight;
 
@@ -70,6 +72,8 @@ public class Controladorjugador : MonoBehaviour
     public float dashSpeed, dashCooldown;
     public bool dashEnable;
 
+    //Configuracion de las animaciones
+    private Animator animate;
     #endregion
     void Awake()
     {
@@ -79,10 +83,15 @@ public class Controladorjugador : MonoBehaviour
         dashEnable = true;
         timeAux = Time.time;
         timeslow = true;
+        animate = GetComponent<Animator>();
     }
 
     void Update()
     {
+        //animate.SetFloat("speed", );
+        animate.SetFloat("y",playerVelocity.y);
+        animate.SetBool("ground", groundedPlayer);
+        animate.SetBool("pared",isWallRunning);
         // Mover la cámara 
         PlayerLook();
 
@@ -223,11 +232,11 @@ public class Controladorjugador : MonoBehaviour
     private void CheckForWall()
     {
         // Detectar paredes a los lados del jugador
-        
-        Debug.DrawRay(transform.position, -transform.right * wallDetectionDistance, Color.red);
-        Debug.DrawRay(transform.position, transform.right * wallDetectionDistance, Color.blue);
-         wallLeft = Physics.Raycast(transform.position, -transform.right, out hitLeft, wallDetectionDistance, wallLayer);
-         wallRight = Physics.Raycast(transform.position, transform.right, out hitRight, wallDetectionDistance, wallLayer);
+        Vector3 positionray = new Vector3 (transform.position.x,transform.position.y+salidarayos,transform.position.z);
+        Debug.DrawRay(positionray, -transform.right * wallDetectionDistance, Color.red);
+        Debug.DrawRay(positionray, transform.right * wallDetectionDistance, Color.blue);
+         wallLeft = Physics.Raycast(positionray, -transform.right, out hitLeft, wallDetectionDistance, wallLayer);
+         wallRight = Physics.Raycast(positionray, transform.right, out hitRight, wallDetectionDistance, wallLayer);
 
         if (wallLeft || wallRight)
         {
@@ -308,7 +317,7 @@ public class Controladorjugador : MonoBehaviour
 
         // Rotar la cámara vertical (eje X)
         xRotation -= lookY;
-        xRotation = Mathf.Clamp(xRotation, -80f, 80f); // Limitar la rotación vertical
+        xRotation = Mathf.Clamp(xRotation, -80f, 56f); // Limitar la rotación vertical
 
         // Aplicar rotación vertical a la cámara
         virtualCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);

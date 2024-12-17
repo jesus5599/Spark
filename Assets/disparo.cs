@@ -6,6 +6,7 @@ public class disparo : MonoBehaviour
 {
     
     public GameObject targetObject;  // Target object
+    public GameObject brazo;
     public Rigidbody misil;  // Rigidbody for the missile (change to Rigidbody)
     public Transform lanzador;  // The launcher's position and rotation 
     public float veldisparo, tiempoDeRecarga;  // Speed at which the missile is shot
@@ -40,7 +41,7 @@ public class disparo : MonoBehaviour
         Vector3 difference = targetObject.transform.position - transform.position;
         // Calculate the rotation needed to face the target in 3D space
         Quaternion rotation = Quaternion.LookRotation(difference);
-        transform.rotation = rotation;
+        brazo.transform.rotation = rotation;
 
         if (municionactual <= 0 && recarga==true)
         {
