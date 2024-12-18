@@ -7,6 +7,8 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.Windows;
+using UnityEngine.UIElements;
+using System.Security.Cryptography;
 
 public class Controladorjugador : MonoBehaviour
 {
@@ -74,6 +76,19 @@ public class Controladorjugador : MonoBehaviour
 
     //Configuracion de las animaciones
     private Animator animate;
+    public float speedx, speedz;
+    //Configuracion del deslizamiento
+    public bool isSliding;         
+    public float slideSpeed = 10f;                 // Velocidad del deslizamiento
+    public float slideDuration = 1f;              // Duración del deslizamiento
+    public float crouchHeight = 0.9f;             // Altura al agacharse
+    public float originalHeight = 1.8f;             // Altura original                
+    private float slideTimer = 0f;    
+    private Vector3 slideDirection;
+    public LayerMask ceilingLayer;                  // Para detectar techos
+    public LayerMask slideLayer;                   // Para detectar rampas
+    public float rampSlideSpeedMultiplier = 1.5f; // Velocidad adicional en rampas
+    private bool isOnRamp = false;
     #endregion
     void Awake()
     {
@@ -84,14 +99,17 @@ public class Controladorjugador : MonoBehaviour
         timeAux = Time.time;
         timeslow = true;
         animate = GetComponent<Animator>();
+        isSliding = false;
     }
 
     void Update()
     {
-        //animate.SetFloat("speed", );
+        animate.SetFloat("speedx",speedx);
+        animate.SetFloat("speedz", speedz);
         animate.SetFloat("y",playerVelocity.y);
         animate.SetBool("ground", groundedPlayer);
         animate.SetBool("pared",isWallRunning);
+        animate.SetBool("slide", isSliding);
         // Mover la cámara 
         PlayerLook();
 
@@ -99,7 +117,7 @@ public class Controladorjugador : MonoBehaviour
         CheckGroundStatus();
 
         // Aplicar movimiento y salto
-        if (isWallRunning == false)
+        if (isWallRunning == false && isSliding == false && isOnRamp==false)
         {
             HandleMovement();
         }
@@ -141,12 +159,33 @@ public class Controladorjugador : MonoBehaviour
         // Aplicar gravedad y mover el jugador
         ApplyGravity();
         characterController.Move(playerVelocity * Time.unscaledDeltaTime);
+
+        isOnRamp = IsOnRamp();
+
+        if (controlador.Player.CrouchSlide.triggered && groundedPlayer)
+        {
+            StartSlide();
+        }
+
+        // Deslizar mientras el temporizador esté activo
+        if (isSliding)
+        {
+            Slide();
+        }
+        if (isOnRamp && !isSliding)
+        {
+            StartRampSlide();
+        }
+        if (playerVelocity.y < -100)
+        { 
+        playerVelocity.y = -100;
+        }
     }
     private void Jump()
     {
         
         // Saltar si está en el suelo
-        if (controlador.Player.Jump.triggered && groundedPlayer)
+        if (controlador.Player.Jump.triggered && groundedPlayer )
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
         }
@@ -154,6 +193,19 @@ public class Controladorjugador : MonoBehaviour
         if (controlador.Player.Jump.triggered && isWallRunning)
         {
             WallJump();
+        }
+        if (controlador.Player.Jump.triggered && isOnRamp || controlador.Player.Jump.triggered && isSliding)
+        {
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, slideLayer))
+            {
+                Vector3 wallNormalL = hit.normal;
+                Vector3 forceToApply = transform.up * wallJumpUpForce + wallNormalL * wallJumpSideForce;
+                characterController.Move(forceToApply.normalized);
+                playerVelocity.y += gravityValue * Time.unscaledDeltaTime;
+                StartCoroutine(Dash(forceToApply));
+                dashEnable = true;
+            }
+            
         }
     }
     private void CheckGroundStatus()
@@ -188,8 +240,9 @@ public class Controladorjugador : MonoBehaviour
         move = virtualCamera.transform.TransformDirection(move);
         move.y = 0;
         move = (transform.forward * move.z + transform.right * move.x).normalized;
-        
-            characterController.Move(move * Time.unscaledDeltaTime * playerSpeed);     
+        speedx = input.y;
+        speedz = input.x;
+        characterController.Move(move * Time.unscaledDeltaTime * playerSpeed);     
     }
     void WallJump()
     {
@@ -350,6 +403,96 @@ public class Controladorjugador : MonoBehaviour
     {
         Time.timeScale = 1f; // Tiempo normal
         Time.fixedDeltaTime = 0.02f; // Restaurar el valor original
+    }
+    void StartSlide()
+    {
+        isSliding = true;
+        slideTimer = slideDuration;
+
+        // Reducir la altura del CharacterController
+        characterController.height = crouchHeight;
+        characterController.center = new Vector3(0f, .45f, 0f);
+
+        // Capturar la dirección de movimiento actual
+        slideDirection = transform.forward * slideSpeed;
+    }
+
+    void Slide()
+    {
+        if (slideTimer > 0)
+        {
+            slideTimer -= Time.unscaledDeltaTime;
+
+            // Aplicar el movimiento del deslizamiento
+            characterController.Move(slideDirection * Time.unscaledDeltaTime);
+        }
+        else
+        {
+            // Intentar detener el deslizamiento
+            TryStopSlide();
+        }
+    }
+    void TryStopSlide()
+    {
+        // Verificar si hay algo encima
+        if (IsSomethingAbove())
+        {
+           
+            // Si hay algo encima, continuar deslizando
+            slideTimer = 0.2f; // Extender temporalmente el deslizamiento
+        }
+        else
+        {
+            StopSlide();
+        }
+    }
+    void StopSlide()
+    {
+        isSliding = false;
+
+        // Restaurar la altura original del CharacterController
+        characterController.height = originalHeight;
+        characterController.center = new Vector3(0f, 0.9f, 0f);
+
+        playerVelocity = Vector3.zero;
+    }
+    bool IsSomethingAbove()
+    {
+        // Comprobar si hay un objeto por encima
+        //Vector3 top = transform.position + Vector3.up * (originalHeight / 2);
+        //return Physics.CheckSphere(top, 0.1f, ceilingLayer);
+        return Physics.Raycast(transform.position, Vector3.up, out RaycastHit hit,2f, ceilingLayer);
+        
+    }
+    void StartRampSlide()
+    {
+        isSliding = true;
+
+        // Generar deslizamiento hacia abajo en rampas
+        //slideDirection = Vector3.ProjectOnPlane(Vector3.down, GetRampNormal()) * slideSpeed * rampSlideSpeedMultiplier;
+        
+        playerVelocity = Vector3.ProjectOnPlane(Vector3.down, GetRampNormal()) * slideSpeed * rampSlideSpeedMultiplier;
+       // playerVelocity.y = -10;
+
+    }
+    bool IsOnRamp()
+    {
+        // Verificar si el personaje está sobre una rampa
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, slideLayer))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    Vector3 GetRampNormal()
+    {
+        // Obtener la normal de la rampa debajo del personaje
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, slideLayer))
+        {
+            return hit.normal;
+        }
+        return Vector3.up; // Valor predeterminado si no hay rampa
     }
     private void OnEnable()
     {
