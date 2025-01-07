@@ -18,21 +18,21 @@ public class shoot : MonoBehaviour
     IEnumerator Destroy()
     {
         
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(7);
         Destroy(gameObject);
     }
     
     private void OnCollisionEnter(Collision collision)
     {
 
-
-        Debug.Log("colision");
+        
 
         Destroy(gameObject);
 
     }
     private void OnTriggerEnter(Collider collision)
     {
+        
         Destroy(gameObject);
 
     }

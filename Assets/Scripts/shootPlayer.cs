@@ -12,7 +12,7 @@ public class shootPlayer : MonoBehaviour
     }
     private void Update()
     {
-        transform.Translate(Vector2.up * speed * Time.deltaTime);
+        transform.Translate(Vector2.up * speed * Time.unscaledDeltaTime);
         
 
     }
@@ -27,14 +27,10 @@ public class shootPlayer : MonoBehaviour
     {
 
 
-        collision.collider.GetComponent<Enemy>()?.Destruir();
+        collision.collider.GetComponent<Enemy>()?.Defeat();
 
         Destroy(gameObject);
 
     }
-    private void OnTriggerEnter(Collider collision)
-    {
-        Destroy(gameObject);
-
-    }
+    
 }

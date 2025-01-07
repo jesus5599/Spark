@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - Enemy
+  - checkpoint
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - Wall
   - Slide
   - ceiling
-  - 
-  - 
+  - player
+  - enemy
   - 
   - 
   - 
