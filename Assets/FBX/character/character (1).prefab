@@ -67,6 +67,59 @@ Transform:
   - {fileID: 1252458508486817085}
   m_Father: {fileID: 1813855321196094716}
   m_LocalEulerAnglesHint: {x: -1.6793749, y: 4.6112723, z: 19.166224}
+--- !u!1 &119576648653423750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7956997765215177156}
+  - component: {fileID: 9063220083895050991}
+  m_Layer: 0
+  m_Name: escudo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7956997765215177156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119576648653423750}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4499834116270351053}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &9063220083895050991
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119576648653423750}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.8, z: 0.2}
+  m_Center: {x: 0, y: 0.9, z: 0.7}
 --- !u!1 &173852842923507955
 GameObject:
   m_ObjectHideFlags: 0
@@ -2558,6 +2611,7 @@ Transform:
   - {fileID: 4986541258277828340}
   - {fileID: 1646872130894192748}
   - {fileID: 8224361841111073369}
+  - {fileID: 7956997765215177156}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6940943216456818401
@@ -2585,6 +2639,9 @@ MonoBehaviour:
   wallJumpSpeed: 1
   isWallRunning: 0
   groundCheckDistance: 0.2
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   wallDetectionDistance: 0.75
   salidarayos: 0.9
   playerLayer:
@@ -2596,8 +2653,7 @@ MonoBehaviour:
   timeslow: 0
   virtualCamera: {fileID: 8288145835431378008, guid: ab3772458a1b001449d678d86636b2d3, type: 3}
   playerBody: {fileID: 4499834116270351053}
-  SensitivityMouse: 0.3
-  SensitivityJoystick: 3
+  Sensitivity: 0
   SensitivityX: 1
   SensitivityY: 1
   Cabeza: {fileID: 4986541258277828340}
@@ -2625,6 +2681,10 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   pasosClip: {fileID: 0}
   checkpointposition: {x: 0, y: 0, z: 0}
+  parry: {fileID: 0}
+  timeparry: 0
+  parrycooldown: 0
+  Isparring: 0
 --- !u!114 &8417250214759488698
 MonoBehaviour:
   m_ObjectHideFlags: 0

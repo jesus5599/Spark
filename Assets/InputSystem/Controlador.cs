@@ -60,7 +60,7 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                     ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -116,6 +116,15 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sensitivity"",
+                    ""type"": ""Value"",
+                    ""id"": ""61fedea9-58aa-49cb-bfbe-9619035ac8b1"",
+                    ""expectedControlType"": ""Dpad"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -234,7 +243,7 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                     ""id"": ""c1f7a91b-d0fd-4a62-997e-7fb9b69bf235"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=3,y=1.5)"",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
@@ -245,8 +254,8 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                     ""id"": ""8c8e490b-c610-4785-884f-f04217b23ca4"",
                     ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse;Touch"",
+                    ""processors"": ""ScaleVector2(x=0.3,y=0.3)"",
+                    ""groups"": "";Touch;Keyboard&Mouse"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -457,6 +466,17 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""SlowTime"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8213a524-0251-4be9-ac34-57f8250253c2"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Sensitivity"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1054,6 +1074,7 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Melee = m_Player.FindAction("Melee", throwIfNotFound: true);
         m_Player_SlowTime = m_Player.FindAction("SlowTime", throwIfNotFound: true);
+        m_Player_Sensitivity = m_Player.FindAction("Sensitivity", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1143,6 +1164,7 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Melee;
     private readonly InputAction m_Player_SlowTime;
+    private readonly InputAction m_Player_Sensitivity;
     public struct PlayerActions
     {
         private @Controlador m_Wrapper;
@@ -1157,6 +1179,7 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Melee => m_Wrapper.m_Player_Melee;
         public InputAction @SlowTime => m_Wrapper.m_Player_SlowTime;
+        public InputAction @Sensitivity => m_Wrapper.m_Player_Sensitivity;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1196,6 +1219,9 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
             @SlowTime.started += instance.OnSlowTime;
             @SlowTime.performed += instance.OnSlowTime;
             @SlowTime.canceled += instance.OnSlowTime;
+            @Sensitivity.started += instance.OnSensitivity;
+            @Sensitivity.performed += instance.OnSensitivity;
+            @Sensitivity.canceled += instance.OnSensitivity;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1230,6 +1256,9 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
             @SlowTime.started -= instance.OnSlowTime;
             @SlowTime.performed -= instance.OnSlowTime;
             @SlowTime.canceled -= instance.OnSlowTime;
+            @Sensitivity.started -= instance.OnSensitivity;
+            @Sensitivity.performed -= instance.OnSensitivity;
+            @Sensitivity.canceled -= instance.OnSensitivity;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1422,6 +1451,7 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnMelee(InputAction.CallbackContext context);
         void OnSlowTime(InputAction.CallbackContext context);
+        void OnSensitivity(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

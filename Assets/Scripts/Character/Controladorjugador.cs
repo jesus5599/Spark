@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 public class Controladorjugador : MonoBehaviour
 {
     #region Variables
+    private const float referenceDpi = 160f; // DPI de referencia para ajustes
     // Componentes y referencias
     private CharacterController characterController;
 
@@ -63,7 +64,7 @@ public class Controladorjugador : MonoBehaviour
     // Variables para el control de la cámara con el ratón
     public CinemachineVirtualCamera virtualCamera; // Referencia a la Cinemachine Virtual Camera
     public Transform playerBody; // Referencia al cuerpo del jugador (para moverlo horizontalmente)
-    public float SensitivityMouse, SensitivityJoystick;
+    public float Sensitivity;
     public float SensitivityX = 2.0f; // Sensibilidad  en el eje X
     public float SensitivityY = 2.0f; // Sensibilidad en el eje Y
 
@@ -103,6 +104,11 @@ public class Controladorjugador : MonoBehaviour
     public Vector3 checkpointposition;
     private int currentCheckpointID = 0; // ID del último checkpoint alcanzado
     private EnemyManager enemyManager; // Referencia al gestor de enemigos
+
+    public GameObject parry;
+    public float timeparry, parrycooldown;
+    public bool Isparring;
+    
     #endregion
     #region Awake Start Update
     void Awake()
@@ -118,10 +124,23 @@ public class Controladorjugador : MonoBehaviour
         tocandotecho = false;
         checkpointposition= transform.position;
         enemyManager = FindObjectOfType<EnemyManager>(); // Encuentra el gestor de enemigos
-    }
+        Isparring=true;
 
+    }
+    private void Start()
+    {
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;  
+    }
     void Update()
     {
+        if (controlador.Player.Sensitivity.ReadValue<Vector2>().x<-.5)
+        {
+            Sensitivity -= 0.001f;
+        }
+        if (controlador.Player.Sensitivity.ReadValue<Vector2>().x > .5)
+        {
+            Sensitivity += 0.001f;
+        }
         cameraoffset();
 
         animate.SetFloat("speedx",speedx);
@@ -204,10 +223,17 @@ public class Controladorjugador : MonoBehaviour
         {
             StartRampSlide();
         }
+
+        if (controlador.Player.Deflect.triggered && Isparring)
+        {
+            StartCoroutine(Parry());
+        }
+
         if (playerVelocity.y < -100)
         { 
         playerVelocity.y = -100;
         }
+
     }
     #endregion
     #region Jump and movement
@@ -293,35 +319,30 @@ public class Controladorjugador : MonoBehaviour
 
     private void PlayerLook()
     {
-        var dispositivoActivo = controlador.Player.Look.activeControl?.device;
-        if (dispositivoActivo is Mouse)
-        {
-            SensitivityX = SensitivityMouse;
-            SensitivityY = SensitivityMouse;
-        }
-        else
-        {
-            SensitivityX = SensitivityJoystick;
-            SensitivityY = SensitivityJoystick - 1;
-        }
-        // Obtener el movimiento del ratón
-        float lookX = controlador.Player.Look.ReadValue<Vector2>().x * SensitivityX;
-        float lookY = controlador.Player.Look.ReadValue<Vector2>().y * SensitivityY;
+        
+            SensitivityX = Sensitivity;
+            SensitivityY = Sensitivity;
+        
+        
 
-        // Rotar la cámara vertical (eje X)
+        // Leer entrada de movimiento
+        Vector2 lookInput = controlador.Player.Look.ReadValue<Vector2>();
+        float lookX = lookInput.x * SensitivityX * Time.unscaledDeltaTime;
+        float lookY = lookInput.y * SensitivityY * Time.unscaledDeltaTime;
+        Debug.Log(lookInput.x + "  " + lookInput.y);
+
+        // Rotación vertical (cámara y cabeza)
         xRotation -= lookY;
         xRotation = Mathf.Clamp(xRotation, -80f, 56f); // Limitar la rotación vertical
+        Quaternion verticalRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        virtualCamera.transform.localRotation = verticalRotation;
+        Cabeza.transform.localRotation = verticalRotation;
 
-        // Aplicar rotación vertical a la cámara
-        virtualCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        Cabeza.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
-        // Rotar el cuerpo del jugador horizontalmente (eje Y)
+        // Rotación horizontal (cuerpo del jugador)
         playerBody.Rotate(Vector3.up * lookX);
-
-
     }
-    
+
+
     #endregion
 
     IEnumerator Dash(Vector3 moveDir)
@@ -622,6 +643,16 @@ public class Controladorjugador : MonoBehaviour
         yield return new WaitForSeconds(.948f);
         run = true;
     }
+    IEnumerator Parry()
+    {
+        Isparring = false;
+        parry.gameObject.SetActive(true);
+        yield return new WaitForSeconds(timeparry);
+        parry.gameObject.SetActive(false);
+        yield return new WaitForSeconds(parrycooldown);
+        Isparring = true;
+    }
+    
     private void OnEnable()
     {
         controlador.Enable();

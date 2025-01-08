@@ -25,15 +25,30 @@ public class shoot : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        
 
-        Destroy(gameObject);
+        if (collision.transform.CompareTag("Parry"))
+        {
+            transform.Rotate(180f, 0f, 0f);
+        }
+        if (collision.transform.CompareTag("Enemy"))
+        {
+            collision.collider.GetComponent<Enemy>()?.Defeat();
+        }
+        
 
     }
     private void OnTriggerEnter(Collider collision)
     {
+        if (collision.transform.CompareTag("Parry"))
+        {
+            
+            transform.Rotate(180f, 0f, 0f);
+        }
         
-        Destroy(gameObject);
 
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        Destroy(gameObject);
     }
 }
