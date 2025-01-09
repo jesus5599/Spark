@@ -5,46 +5,35 @@ using UnityEngine;
 public class shoot : MonoBehaviour
 {
     public float speed;
+
     private void Start()
     {
-         StartCoroutine(Destroy());
+        StartCoroutine(Destroy());
+
     }
     private void Update()
     {
         transform.Translate(Vector2.up * speed * Time.deltaTime);
-       
+
 
     }
     IEnumerator Destroy()
     {
-        
-        yield return new WaitForSeconds(7);
+
+        yield return new WaitForSeconds(20);
         Destroy(gameObject);
     }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
-
-
-        if (collision.transform.CompareTag("Parry"))
-        {
-            transform.Rotate(180f, 0f, 0f);
-        }
-        if (collision.transform.CompareTag("Enemy"))
-        {
-            collision.collider.GetComponent<Enemy>()?.Defeat();
-        }
         
+        Destroy(gameObject);
 
     }
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.CompareTag("Parry"))
-        {
-            
-            transform.Rotate(180f, 0f, 0f);
-        }
-        
+collision.GetComponent<Collider>().GetComponent<parry>()?.Shoot();
+        Destroy(gameObject);
 
     }
     private void OnTriggerStay(Collider other)

@@ -107,8 +107,8 @@ public class Controladorjugador : MonoBehaviour
 
     public GameObject parry;
     public float timeparry, parrycooldown;
-    public bool Isparring;
-    
+    public bool Isparring,counter;
+    public LayerMask ParryLayer; 
     #endregion
     #region Awake Start Update
     void Awake()
@@ -151,6 +151,7 @@ public class Controladorjugador : MonoBehaviour
         animate.SetBool("paredright", paredright);
         animate.SetBool("paredleft", paredleft);
         animate.SetBool("slide", isSliding);
+        animate.SetBool("parry", counter); 
         // Mover la cámara 
         PlayerLook();
 
@@ -178,6 +179,7 @@ public class Controladorjugador : MonoBehaviour
         {            
             StartCoroutine (Dash(Camera.main.transform.forward));
         }
+        int excludeParryLayer = ~ParryLayer.value;
         Vector3 puntopantalla= new Vector3(Screen.width/2, Screen.height/2, 0f);
         Ray rayo = Camera.main.ScreenPointToRay(puntopantalla);
         RaycastHit hit;
@@ -185,7 +187,7 @@ public class Controladorjugador : MonoBehaviour
         // Manejar el Disparo
         if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
         {
-            if (Physics.Raycast(rayo, out hit))
+            if (Physics.Raycast(rayo, out hit,1000, ~ParryLayer.value))
             { 
              disparo.puntoimpacto = hit.point;
             disparo.disparoarma = true;
@@ -645,10 +647,13 @@ public class Controladorjugador : MonoBehaviour
     }
     IEnumerator Parry()
     {
+        counter = true;
         Isparring = false;
         parry.gameObject.SetActive(true);
         yield return new WaitForSeconds(timeparry);
+        counter = false;
         parry.gameObject.SetActive(false);
+        
         yield return new WaitForSeconds(parrycooldown);
         Isparring = true;
     }
