@@ -348,7 +348,10 @@ public class Controladorjugador : MonoBehaviour
     #endregion
 
     IEnumerator Dash(Vector3 moveDir)
-    {   dashEnable = false;
+       
+    {
+        playerVelocity.y = 0;
+        dashEnable = false;
         float startTime = Time.unscaledTime;
 
         while (Time.unscaledTime < startTime + wallJumpTime)
