@@ -58,7 +58,7 @@ public class Controladorjugador : MonoBehaviour
     public float tiempodisparo, timeAux;
 
     //Configuracion parar el tiempo
-    public float timecooldown;
+    public float TimeCooldown,TimeSlowed;
     public bool timeslow;
 
     // Variables para el control de la cámara con el ratón
@@ -79,6 +79,7 @@ public class Controladorjugador : MonoBehaviour
     private Animator animate;
     public float speedx, speedz;
     bool paredright, paredleft;
+
     //Configuracion del deslizamiento
     public bool isSliding;         
     public float slideSpeed = 10f;                 // Velocidad del deslizamiento
@@ -94,7 +95,7 @@ public class Controladorjugador : MonoBehaviour
     private bool isOnRamp = false;
     public float slideUpForce;
     public float floorSideForce;
-
+    public float SlideJumpSpeed;
     public GameObject timelow;
 
     public AudioSource audioSource; // Componente AudioSource para reproducir sonido
@@ -108,7 +109,11 @@ public class Controladorjugador : MonoBehaviour
     public GameObject parry;
     public float timeparry, parrycooldown;
     public bool Isparring,counter;
-    public LayerMask ParryLayer; 
+    public LayerMask ParryLayer;
+    public enum Difficulty { Easy, Normal, Hard }
+    public Difficulty currentDifficulty;
+
+
     #endregion
     #region Awake Start Update
     void Awake()
@@ -133,7 +138,22 @@ public class Controladorjugador : MonoBehaviour
     }
     void Update()
     {
-        if (controlador.Player.Sensitivity.ReadValue<Vector2>().x<-.5)
+
+        if (UnifiedMenuController.isPaused)
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
+            return;
+        }
+        else
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = true;
+        }
+
+
+
+            if (controlador.Player.Sensitivity.ReadValue<Vector2>().x<-.5)
         {
             Sensitivity -= 0.001f;
         }
@@ -143,15 +163,25 @@ public class Controladorjugador : MonoBehaviour
         }
         cameraoffset();
 
-        animate.SetFloat("speedx",speedx);
-        animate.SetFloat("speedz", speedz);
-        animate.SetFloat("y",playerVelocity.y);
-        animate.SetBool("ground", groundedPlayer);
-        animate.SetBool("pared",isWallRunning);
-        animate.SetBool("paredright", paredright);
-        animate.SetBool("paredleft", paredleft);
-        animate.SetBool("slide", isSliding);
-        animate.SetBool("parry", counter); 
+        HandleAnimations();
+
+        int excludeParryLayer = ~ParryLayer.value;
+        Vector3 puntopantalla = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
+        Ray rayo = Camera.main.ScreenPointToRay(puntopantalla);
+        RaycastHit hit;
+
+        // Manejar el Disparo
+        if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
+        {
+            if (Physics.Raycast(rayo, out hit, 1000, ~ParryLayer.value))
+            {
+                disparo.puntoimpacto = hit.point;
+                disparo.disparoarma = true;
+                timeAux = Time.unscaledTime;
+            }
+
+
+        }
         // Mover la cámara 
         PlayerLook();
 
@@ -179,24 +209,7 @@ public class Controladorjugador : MonoBehaviour
         {            
             StartCoroutine (Dash(Camera.main.transform.forward));
         }
-        int excludeParryLayer = ~ParryLayer.value;
-        Vector3 puntopantalla= new Vector3(Screen.width/2, Screen.height/2, 0f);
-        Ray rayo = Camera.main.ScreenPointToRay(puntopantalla);
-        RaycastHit hit;
-
-        // Manejar el Disparo
-        if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
-        {
-            if (Physics.Raycast(rayo, out hit,1000, ~ParryLayer.value))
-            { 
-             disparo.puntoimpacto = hit.point;
-            disparo.disparoarma = true;
-            timeAux = Time.unscaledTime;
-            }
-            
-           
-        }
-
+        // Manejar el Tiempo  
         if (controlador.Player.SlowTime.triggered && timeslow)
         {
             StartCoroutine(TimeStop());
@@ -225,7 +238,7 @@ public class Controladorjugador : MonoBehaviour
         {
             StartRampSlide();
         }
-
+        // Manejar el Escudo 
         if (controlador.Player.Deflect.triggered && Isparring)
         {
             StartCoroutine(Parry());
@@ -260,10 +273,8 @@ public class Controladorjugador : MonoBehaviour
                 Vector3 forceToApply = transform.up * slideUpForce + floorNormalL * floorSideForce;
                 characterController.Move(forceToApply.normalized);
                 playerVelocity.y += gravityValue * Time.unscaledDeltaTime;
-                StartCoroutine(Dash(forceToApply));
-                dashEnable = true;
-            }
-            
+                StartCoroutine(JumpOfRamp(forceToApply));              
+            }            
         }
     }
     private void CheckGroundStatus()
@@ -347,11 +358,9 @@ public class Controladorjugador : MonoBehaviour
 
     #endregion
 
-    IEnumerator Dash(Vector3 moveDir)
-       
+    IEnumerator Dash(Vector3 moveDir)       
     {
-        playerVelocity.y = 0;
-        dashEnable = false;
+        dashEnable = false;               
         float startTime = Time.unscaledTime;
 
         while (Time.unscaledTime < startTime + wallJumpTime)
@@ -433,6 +442,7 @@ public class Controladorjugador : MonoBehaviour
         playerVelocity = Vector3.zero;
         paredright = false; paredleft = false;
     }
+    
     void WallJump()
     {
         isWallRunning = false;
@@ -444,8 +454,8 @@ public class Controladorjugador : MonoBehaviour
             forceToApply = transform.up * wallJumpUpForce + wallNormalL * wallJumpSideForce;
             characterController.Move(forceToApply.normalized);
             playerVelocity.y += gravityValue * Time.unscaledDeltaTime;
-            StartCoroutine(Dash(forceToApply));
-            dashEnable = true;
+            StartCoroutine(JumpOfWall(forceToApply));
+           
         }
         if (wallRight)
         {
@@ -453,21 +463,33 @@ public class Controladorjugador : MonoBehaviour
             forceToApply = transform.up * wallJumpUpForce + wallNormalR * wallJumpSideForce;
             characterController.Move(forceToApply.normalized);
             playerVelocity.y += -9.81f * Time.unscaledDeltaTime;
-            StartCoroutine(Dash(forceToApply));
-            dashEnable = true;
+            StartCoroutine(JumpOfWall(forceToApply));
+            
         }
+    }
+    IEnumerator JumpOfWall(Vector3 moveDir)
+    {
+        playerVelocity.y = 0;
+        
+        float startTime = Time.unscaledTime;
+
+        while (Time.unscaledTime < startTime + wallJumpTime)
+        {
+            characterController.Move(moveDir * wallJumpSpeed * Time.unscaledDeltaTime);
+            yield return null;
+        }               
     }
     #endregion
 
-   
+
     #region Timestop
     IEnumerator TimeStop() 
     {
         timeslow = false;
             SlowDownTime();
-        yield return new WaitForSeconds(timecooldown*.2f);
+        yield return new WaitForSeconds(TimeSlowed*.2f);
         RestoreTime();
-        yield return new WaitForSeconds(timecooldown);
+        yield return new WaitForSeconds(TimeCooldown);
         timeslow = true;
     }
     // Ralentiza el tiempo al 50% de su velocidad normal
@@ -579,6 +601,18 @@ public class Controladorjugador : MonoBehaviour
         }
         return Vector3.up; // Valor predeterminado si no hay rampa
     }
+    IEnumerator JumpOfRamp(Vector3 moveDir)
+    {
+        playerVelocity.y = 0;
+
+        float startTime = Time.unscaledTime;
+
+        while (Time.unscaledTime < startTime + wallJumpTime)
+        {
+            characterController.Move(moveDir * SlideJumpSpeed * Time.unscaledDeltaTime);
+            yield return null;
+        }
+    }
     #endregion
 
     #region Die
@@ -660,10 +694,68 @@ public class Controladorjugador : MonoBehaviour
         yield return new WaitForSeconds(parrycooldown);
         Isparring = true;
     }
-    
+    private void HandleAnimations()
+    {
+        animate.SetFloat("speedx", speedx);
+        animate.SetFloat("speedz", speedz);
+        animate.SetFloat("y", playerVelocity.y);
+        animate.SetBool("ground", groundedPlayer);
+        animate.SetBool("pared", isWallRunning);
+        animate.SetBool("paredright", paredright);
+        animate.SetBool("paredleft", paredleft);
+        animate.SetBool("slide", isSliding);
+        animate.SetBool("parry", counter);
+    }
+
+    private void LoadDifficulty()
+    {
+        // Cargar la dificultad desde PlayerPrefs. Si no se ha guardado, se asume dificultad Normal.
+        if (PlayerPrefs.HasKey("Difficulty"))
+        {
+            int difficultyValue = PlayerPrefs.GetInt("Difficulty");
+            currentDifficulty = (Difficulty)difficultyValue;
+        }
+        else
+        {
+            currentDifficulty = Difficulty.Normal; // Valor por defecto
+        }
+    }
+    private void AdjustHabilitiesDelays()
+    {
+        // Ajusta los tiempos de disparo según la dificultad
+        switch (currentDifficulty)
+        {
+            case Difficulty.Easy:
+                dashCooldown = 1;
+                tiempodisparo = .25f;
+                timeparry = 4;
+                parrycooldown = 1;
+                TimeSlowed = 8;
+                TimeCooldown = 2;
+                break;
+            case Difficulty.Normal:
+                dashCooldown = 2;
+                tiempodisparo = 0.5f;
+                timeparry = 2;
+                parrycooldown = 2;
+                TimeSlowed = 4;
+                TimeCooldown = 4;
+                break;
+            case Difficulty.Hard:
+                dashCooldown = 4;
+                tiempodisparo = 1;
+                timeparry = 1;
+                parrycooldown = 4;
+                TimeSlowed = 2;
+                TimeCooldown = 8;
+                break;
+        }
+    }
     private void OnEnable()
     {
         controlador.Enable();
+        LoadDifficulty();  // Cargar la dificultad desde PlayerPrefs
+        AdjustHabilitiesDelays();
     }
 
     private void OnDisable()
