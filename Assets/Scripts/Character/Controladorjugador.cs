@@ -683,7 +683,7 @@ public class Controladorjugador : MonoBehaviour
         run = true;
     }
     IEnumerator Parry()
-    {
+    {  SwordCooldown.isAvailable = true;
         counter = true;
         Isparring = false;
         parry.gameObject.SetActive(true);
