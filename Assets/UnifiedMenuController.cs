@@ -17,9 +17,10 @@ public class UnifiedMenuController : MonoBehaviour
     public Stack<GameObject> menuStack = new Stack<GameObject>(); // Pila para rastrear menús
     private PlayerInput playerInput;         // Referencia al sistema de entrada
     private Controlador controlador;
-
+    
     private void Start()
     {
+        
         playerInput = GetComponent<PlayerInput>();
         if (SceneManager.GetActiveScene().buildIndex == 0) // Verificar la escena inicial correctamente
         {
@@ -69,10 +70,13 @@ public class UnifiedMenuController : MonoBehaviour
 
     public void Update()
     {
-        if (controlador != null && controlador.UI.Menu.WasPerformedThisFrame() && SceneManager.GetActiveScene().buildIndex > 0)
+
+        Debug.Log("Scene Index: " + SceneManager.GetActiveScene().buildIndex);
+        if (controlador != null && controlador.UI.Menu.WasPerformedThisFrame() )
         {
             OnPause(new InputAction.CallbackContext()); // Invocar pausa manualmente
         }
+
     }
 
     public void OnPause(InputAction.CallbackContext context)
@@ -81,9 +85,11 @@ public class UnifiedMenuController : MonoBehaviour
         {
             // Cambiar estado de pausa
             if (isPaused)
-                ResumeGame();
+            { if (SceneManager.GetActiveScene().buildIndex > 0) { ResumeGame(); } }
+
             else
-                PauseGame();
+            { if (SceneManager.GetActiveScene().buildIndex > 0) { PauseGame(); } }
+               
         }
     }
 

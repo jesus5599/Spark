@@ -46,12 +46,12 @@ public class Controladorjugador : MonoBehaviour
 
     // Configuración de detección de suelo
     public float groundCheckDistance = 1f;
-    public LayerMask enemyLayer;
+    public LayerMask groundLayer;
 
     // Configuración de detección de la pared
     public float wallDetectionDistance = 1f;
     public float  salidarayos = .9f;
-    public LayerMask playerLayer;
+    public LayerMask wallLayer;
     RaycastHit hitLeft, hitRight;
 
     //Configuracion Disparo
@@ -74,7 +74,7 @@ public class Controladorjugador : MonoBehaviour
     //Configuracion de dash
     public float dashSpeed, dashCooldown;
     public bool dashEnable;
-
+    public ParticleSystem DashParticles; // Sistema de partículas
     //Configuracion de las animaciones
     private Animator animate;
     public float speedx, speedz;
@@ -113,7 +113,8 @@ public class Controladorjugador : MonoBehaviour
     public enum Difficulty { Easy, Normal, Hard }
     public Difficulty currentDifficulty;
 
-
+    public LineRendererProgress progress;
+    
     #endregion
     #region Awake Start Update
     void Awake()
@@ -173,7 +174,7 @@ public class Controladorjugador : MonoBehaviour
         // Manejar el Disparo
         if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
         {
-            if (Physics.Raycast(rayo, out hit, 1000, ~ParryLayer.value))
+            if (Physics.Raycast(rayo, out hit, 1000, excludeParryLayer))
             {
                 disparo.puntoimpacto = hit.point;
                 disparo.disparoarma = true;
@@ -205,7 +206,7 @@ public class Controladorjugador : MonoBehaviour
             CheckForWall();
         }
         // Manejar el Dash
-        if (controlador.Player.Dash.triggered && dashEnable)
+        if (controlador.Player.Dash.triggered && dashEnable && !tocandotecho)
         {            
             StartCoroutine (Dash(Camera.main.transform.forward));
         }
@@ -279,13 +280,13 @@ public class Controladorjugador : MonoBehaviour
     }
     private void CheckGroundStatus()
     {
-        int excludeGroundLayer = ~enemyLayer.value;
+        int excludeGroundLayer = ~groundLayer.value;
         // Usar raycast para verificar si el jugador está en el suelo
         Vector3 origin = transform.position;
         Vector3 direction = -transform.up;
         Debug.DrawRay(origin, direction * groundCheckDistance, Color.green);
 
-        if (Physics.Raycast(origin, direction, groundCheckDistance, ~enemyLayer))
+        if (Physics.Raycast(origin, direction, groundCheckDistance, ~groundLayer))
         {
             groundedPlayer = true;
         }
@@ -357,17 +358,18 @@ public class Controladorjugador : MonoBehaviour
 
 
     #endregion
-
+    
     IEnumerator Dash(Vector3 moveDir)       
     {
         dashEnable = false;               
         float startTime = Time.unscaledTime;
-
+        DashParticles.gameObject.SetActive(true);
         while (Time.unscaledTime < startTime + wallJumpTime)
         {
             characterController.Move(moveDir * dashSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
+        DashParticles.gameObject.SetActive(false);
         yield return new WaitForSeconds(dashCooldown);
         dashEnable = true;
     }
@@ -375,7 +377,7 @@ public class Controladorjugador : MonoBehaviour
     #region Wallrun
     private void CheckForWall()
     {
-        int excludeWallLayer = ~playerLayer.value; // Invierte el bitmask para excluir la capa específica
+        int excludeWallLayer = ~wallLayer.value; // Invierte el bitmask para excluir la capa específica
 
         
         
@@ -514,7 +516,10 @@ public class Controladorjugador : MonoBehaviour
     {
         isSliding = true;
         slideTimer = slideDuration;
-
+        if (IsSomethingAbove())
+        {
+            tocandotecho = true;            
+        }
         // Reducir la altura del CharacterController
         characterController.height = crouchHeight;
         characterController.center = new Vector3(0f, crouchHeight/2, 0f);
@@ -527,6 +532,10 @@ public class Controladorjugador : MonoBehaviour
     {
         if (slideTimer > 0)
         {
+            if (IsSomethingAbove())
+            {
+                tocandotecho = true;
+            }
             slideTimer -= Time.unscaledDeltaTime;
 
             // Aplicar el movimiento del deslizamiento
@@ -549,12 +558,13 @@ public class Controladorjugador : MonoBehaviour
         }
         else
         {
-            tocandotecho = false;
+            
             StopSlide();
         }
     }
     void StopSlide()
     {
+        tocandotecho = false;
         isSliding = false;
 
         // Restaurar la altura original del CharacterController
@@ -683,15 +693,19 @@ public class Controladorjugador : MonoBehaviour
         run = true;
     }
     IEnumerator Parry()
-    {  SwordCooldown.isAvailable = true;
+    {  
         counter = true;
         Isparring = false;
         parry.gameObject.SetActive(true);
+        LineRendererProgress.delay = timeparry/13;
+        progress.StartUnloading();
         yield return new WaitForSeconds(timeparry);
         counter = false;
         parry.gameObject.SetActive(false);
-        
+        LineRendererProgress.delay = parrycooldown/13;
+        progress.StartLoading();
         yield return new WaitForSeconds(parrycooldown);
+        
         Isparring = true;
     }
     private void HandleAnimations()
