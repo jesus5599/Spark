@@ -1,15 +1,15 @@
 using UnityEngine;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using UnityEditor.Experimental.GraphView;  // Importa el namespace para manejar escenas
+
 
 public class VolumeController : MonoBehaviour
 {
     [Header("Volume Slider")]
     public string sliderName = "Slider"; // Nombre del Slider en la escena
-    private Slider volumeSlider;
-    [SerializeField] private TMPro.TextMeshProUGUI volumeLabel; // Asignar en el Inspector
+   // private Slider volumeSlider;
+  //  [SerializeField] private TMPro.TextMeshProUGUI volumeLabel; // Asignar en el Inspector
     [SerializeField] private AudioClip volumeChangeSound; // Efecto de sonido para cambio de volumen
     [SerializeField] private AudioSource uiAudioSource;  // AudioSource para efectos de interfaz
     private static VolumeController instance; // Instancia estática para evitar duplicados
@@ -78,7 +78,7 @@ public class VolumeController : MonoBehaviour
     }
         private void FindSlider()
     {
-        // Buscar el slider usando el Tag en lugar del nombre
+       /* // Buscar el slider usando el Tag en lugar del nombre
         GameObject sliderObject = GameObject.FindWithTag("VolumeSliderTag");
 
         if (sliderObject != null)
@@ -97,7 +97,7 @@ public class VolumeController : MonoBehaviour
         else
         {
             Debug.LogWarning("No se encontró un Slider con el Tag 'VolumeSliderTag' en la escena.");
-        }
+        }*/
     }
 
     private void FindAllAudioSources()
@@ -163,20 +163,20 @@ public class VolumeController : MonoBehaviour
 
     private void UpdateVolumeLabel(float volume)
     {
-        if (volumeLabel != null)
+      /*  if (volumeLabel != null)
         {
             volumeLabel.text = $"{Mathf.RoundToInt(volume * 100)}%";
-        }
+        }*/
     }
 
     // Si deseas un botón de reset
     public void ResetVolume()
     {
-        SetVolume(1f); // Establece el volumen a 100%
+       /* SetVolume(1f); // Establece el volumen a 100%
         if (volumeSlider != null)
         {
             volumeSlider.value = 1f;
-        }
+        }*/
     }
 
     private void OnDestroy()
