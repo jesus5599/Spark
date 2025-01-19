@@ -9,6 +9,7 @@ TagManager:
   - checkpoint
   - Parry
   - VolumeSliderTag
+  - finish
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - player
   - enemy
   - Parry
-  - 
+  - Escenario
   - 
   - 
   - 

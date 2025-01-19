@@ -2,7 +2,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using System.Collections.Generic; // Necesario para usar Stack
-
+using UnityEngine.UI;
+using UnityEngine.UIElements;
+using TMPro;
 public class UnifiedMenuController : MonoBehaviour
 {
     [Header("Menus")]
@@ -10,20 +12,23 @@ public class UnifiedMenuController : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;      // Menú de pausa
     [SerializeField] private GameObject optionsMenu;    // Menú de opciones
     [SerializeField] private GameObject difficultyMenu; // Menú de selección de dificultad
-    [SerializeField] private GameObject DeathMenu; // Menú de selección de dificultad
+    [SerializeField] private GameObject DeathMenu; // Menú de muerte
+    [SerializeField] private GameObject LevelFinishMenu; // Menú de siguiente nivel
     public static bool isPaused = false;
     public static bool isDeath = false;// Estado del juego (pausado o no)
+    public static bool isWin = false;// Estado del juego (pausado o no)
     [SerializeField] private float previousTimeScale = 1.0f;  // Guarda el tiempo anterior a pausar
 
     public Stack<GameObject> menuStack = new Stack<GameObject>(); // Pila para rastrear menús
     private PlayerInput playerInput;         // Referencia al sistema de entrada
     private Controlador controlador;
     private InputAction anyButtonAction;
-
+    public TextMeshProUGUI textMeshPro;
+    
     private void Start()
     {
-        
-         controlador = new Controlador();
+        SetTransparency(true); // Hacer transparente
+        controlador = new Controlador();
         controlador.UI.Menu.performed += OnPause; // Suscribir el evento
         controlador.Enable(); // Habilitar entradas
         if (SceneManager.GetActiveScene().buildIndex == 0) // Verificar la escena inicial correctamente
@@ -40,6 +45,7 @@ public class UnifiedMenuController : MonoBehaviour
         DeactivateMenu(optionsMenu);
         DeactivateMenu(difficultyMenu);
         DeactivateMenu(DeathMenu);
+        DeactivateMenu(LevelFinishMenu);
         Time.timeScale = 1f; // Asegurar que el tiempo comience normal
        
 
@@ -57,6 +63,7 @@ public class UnifiedMenuController : MonoBehaviour
         Debug.Log("paquito");
         Time.timeScale = 1f;
         isPaused = false;
+        SetTransparency(true); // Hacer transparente
         // Verificar si es la escena principal y activar el menú adecuado
         if (scene.buildIndex == 0)
         {
@@ -65,6 +72,7 @@ public class UnifiedMenuController : MonoBehaviour
             DeactivateMenu(optionsMenu);
             DeactivateMenu(difficultyMenu);
             DeactivateMenu(DeathMenu);
+            DeactivateMenu(LevelFinishMenu);
         }
         else { 
             DeactivateMenu(mainMenu);
@@ -72,6 +80,7 @@ public class UnifiedMenuController : MonoBehaviour
             DeactivateMenu(optionsMenu);
             DeactivateMenu(difficultyMenu);
             DeactivateMenu(DeathMenu);
+            DeactivateMenu(LevelFinishMenu);
         }
     }
 
@@ -104,7 +113,7 @@ public class UnifiedMenuController : MonoBehaviour
 
     // Mostrar menú de pausa y detener el tiempo
     public void PauseGame()
-    { if (!isDeath)
+    { if (!isDeath && !isWin)
         {
             isPaused = true;
 
@@ -123,7 +132,7 @@ public class UnifiedMenuController : MonoBehaviour
     // Ocultar el menú de pausa y restaurar el tiempo
     public void ResumeGame()
     {
-        if (!isDeath)
+        if (!isDeath && !isWin)
         {
             isPaused = false;
 
@@ -236,6 +245,19 @@ public class UnifiedMenuController : MonoBehaviour
             menu.SetActive(false);
     }
 
+    public void ShowNextLevelMenu()
+    {   
+        isWin = true;
+        isPaused = true;
+        ActivateMenu(LevelFinishMenu);
+        SetTransparency(false); // Hacer visible
+    }
+    public void NextLevel() 
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Time.timeScale = 1f;
+    }
+
     private void OnEnable()
     {
         controlador.Enable();
@@ -281,6 +303,22 @@ public class UnifiedMenuController : MonoBehaviour
         Debug.Log("Pantalla de muerte activada.");
         // Implementa la lógica para mostrar la DeathScreen
         OpenMenu(DeathMenu);
+    }
+
+
+
+    public void SetTransparency(bool isTransparent)
+    {
+        if (textMeshPro == null)
+        {
+            Debug.LogWarning("No se ha asignado un componente TextMeshProUGUI.");
+            return;
+        }
+
+        // Establecer el color según si debe ser transparente o opaco
+        Color currentColor = textMeshPro.color;
+        currentColor.a = isTransparent ? 0f : 1f;  // 0f para transparente, 1f para opaco
+        textMeshPro.color = currentColor;  // Asignamos el nuevo color al componente
     }
 
     private void OnDestroy()

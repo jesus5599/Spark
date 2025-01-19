@@ -103,8 +103,13 @@ public class Controladorjugador : MonoBehaviour
     bool run=true;
 
     public Vector3 checkpointposition;
+    public Quaternion checkpointrotation;
     private int currentCheckpointID = 0; // ID del último checkpoint alcanzado
     private EnemyManager enemyManager; // Referencia al gestor de enemigos
+    public float currentTime; // Tiempo actual del jugador
+    private float checkpointTime; // Tiempo registrado en el checkpoint
+    private bool isDead = false; // Estado del jugador
+    [SerializeField] private TMPro.TextMeshProUGUI tiempopartida; // Asignar en el Inspector
 
     public GameObject parry;
     public float timeparry, parrycooldown;
@@ -115,6 +120,8 @@ public class Controladorjugador : MonoBehaviour
 
     public LineRendererProgress progress;
     private PlayerInput playerInput; // Referencia al componente PlayerInput
+
+    
     #endregion
     #region Awake Start Update
     void Awake()
@@ -129,17 +136,40 @@ public class Controladorjugador : MonoBehaviour
         isSliding = false;
         tocandotecho = false;
         checkpointposition= transform.position;
+        checkpointrotation = transform.rotation;
         enemyManager = FindObjectOfType<EnemyManager>(); // Encuentra el gestor de enemigos
-        Isparring=true;
+        
+        Isparring =true;
 
     }
     private void Start()
     {
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;  
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        // Busca un GameObject llamado "Texto" y obtiene el componente TextMeshProUGUI
+        GameObject textObject = GameObject.Find("tiempo");
+
+        if (textObject != null)
+        {
+            tiempopartida = textObject.GetComponent<TMPro.TextMeshProUGUI>();
+            tiempopartida.text = "Texto actualizado!";
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró un GameObject llamado 'tiempo'.");
+        }
     }
     void Update()
     {
+        if (tiempopartida != null)
+        {
+            // Convertir el tiempo total transcurrido a minutos y segundos
+            int minutes = Mathf.FloorToInt(currentTime / 60); // Minutos enteros
+            float seconds = currentTime % 60; // Segundos sobrantes
 
+            // Formatear el texto como MM:SS.ss
+            tiempopartida.text = $"Tiempo: {minutes:00}:{seconds:00.00}";
+        }
+        
         if (UnifiedMenuController.isPaused)
         {
             UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -257,6 +287,11 @@ public class Controladorjugador : MonoBehaviour
         if (controlador.Player.Deflect.triggered && Isparring)
         {
             StartCoroutine(Parry());
+        }
+        //Tiempo
+        if (!isDead)
+        {
+            currentTime += Time.unscaledDeltaTime;
         }
 
         if (playerVelocity.y < -100)
@@ -647,6 +682,8 @@ public class Controladorjugador : MonoBehaviour
         {
             // Actualiza la posición e ID del checkpoint
             checkpointposition = other.transform.position;
+            checkpointrotation = other.transform.rotation;
+            checkpointTime = currentTime;
             currentCheckpointID = other.GetComponent<Checkpoint>().checkpointID;
             other.gameObject.SetActive(false);
             Debug.Log("Checkpoint alcanzado: " + currentCheckpointID);
@@ -654,6 +691,19 @@ public class Controladorjugador : MonoBehaviour
         else if (other.transform.CompareTag("Enemy"))
         {
             Muerto();
+        }
+        else if(other.transform.CompareTag("finish"))
+            {
+            UnifiedMenuController menuController = FindObjectOfType<UnifiedMenuController>();
+            if (menuController != null)
+            {
+                menuController.ShowNextLevelMenu();
+            }
+            else
+            {
+                Debug.LogError("No se encontró un objeto de tipo UnifiedMenuController en la escena.");
+            }
+            Time.timeScale = 0f;
         }
     }
 
@@ -702,6 +752,7 @@ public class Controladorjugador : MonoBehaviour
 
         Debug.Log("Reapareciendo en: " + checkpointposition);
         transform.position = checkpointposition; // Mueve al jugador
+        transform.rotation = checkpointrotation; // Orienta al jugador
         enemyManager.RespawnEnemies(currentCheckpointID);
         if (characterController != null)
         {
