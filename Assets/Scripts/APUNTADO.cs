@@ -46,6 +46,13 @@ public class APUNTADO : MonoBehaviour
 
     void Update()
     {
+        if (UnifiedMenuController.isDeath)
+        {
+            StopAllCoroutines();
+            canShoot = true;     // Reiniciar el estado de disparo
+            isShooting = false;
+            return;
+        }
         // Salir si el objeto no está activo o no puede disparar
         if (!gameObject.activeInHierarchy || !canShoot)
             return;
@@ -200,5 +207,9 @@ public class APUNTADO : MonoBehaviour
         currentDifficulty = newDifficulty;
         PlayerPrefs.SetInt("Difficulty", (int)newDifficulty);
         PlayerPrefs.Save();  // Guardar la dificultad en PlayerPrefs
+    }
+    public void StopCorrutine()
+    {
+        StopAllCoroutines();
     }
 }

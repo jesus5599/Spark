@@ -169,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8199281926459122866}
   - component: {fileID: 7446200258703765384}
-  - component: {fileID: 4511356466387658840}
+  - component: {fileID: 4255477908151269129}
   m_Layer: 11
   m_Name: Escudo
   m_TagString: Parry
@@ -214,8 +214,8 @@ MonoBehaviour:
     m_Bits: 2048
   parryClip: {fileID: 8300000, guid: 9c022e5d7dc162547bd8619d9aaa6be3, type: 3}
   audioSource: {fileID: 0}
---- !u!65 &4511356466387658840
-BoxCollider:
+--- !u!136 &4255477908151269129
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -232,6 +232,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 2
+  m_Height: 3.14
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: -1}

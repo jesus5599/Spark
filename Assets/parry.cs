@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class parry : MonoBehaviour
@@ -26,15 +27,7 @@ public class parry : MonoBehaviour
     {
         
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (collision.transform.CompareTag("Enemy"))
-        {
-            Shoot();
-        }
-
-    }
+  
     public void Shoot()
     {
         if (audioSource != null && parryClip != null)

@@ -32,7 +32,23 @@ public class LineRendererProgress : MonoBehaviour
     {
         StartCoroutine(UnloadBars());
     }
+    public void PointsToOrigin()
+    {
+        StartCoroutine(origin());
+    }
+    private IEnumerator origin()
+    {
+        for (int step = 0; step < originalPositions[0].Length; step++)
+        {
+            foreach (LineRenderer line in lineRenderers)
+            {
+                // Restaurar la posición original punto por punto
+                line.SetPosition(step, originalPositions[Array.IndexOf(lineRenderers, line)][step]);
+            }
 
+        }
+        yield return new WaitForSeconds(0);
+    }
     // Corrutina para cargar los LineRenderers
     private IEnumerator LoadBars()
     {

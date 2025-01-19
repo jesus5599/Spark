@@ -10,18 +10,22 @@ public class UnifiedMenuController : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;      // Menú de pausa
     [SerializeField] private GameObject optionsMenu;    // Menú de opciones
     [SerializeField] private GameObject difficultyMenu; // Menú de selección de dificultad
-
-    public static bool isPaused = false;            // Estado del juego (pausado o no)
+    [SerializeField] private GameObject DeathMenu; // Menú de selección de dificultad
+    public static bool isPaused = false;
+    public static bool isDeath = false;// Estado del juego (pausado o no)
     [SerializeField] private float previousTimeScale = 1.0f;  // Guarda el tiempo anterior a pausar
 
     public Stack<GameObject> menuStack = new Stack<GameObject>(); // Pila para rastrear menús
     private PlayerInput playerInput;         // Referencia al sistema de entrada
     private Controlador controlador;
-    
+    private InputAction anyButtonAction;
+
     private void Start()
     {
         
-        playerInput = GetComponent<PlayerInput>();
+         controlador = new Controlador();
+        controlador.UI.Menu.performed += OnPause; // Suscribir el evento
+        controlador.Enable(); // Habilitar entradas
         if (SceneManager.GetActiveScene().buildIndex == 0) // Verificar la escena inicial correctamente
         {
             ActivateMenu(mainMenu);
@@ -35,14 +39,15 @@ public class UnifiedMenuController : MonoBehaviour
         DeactivateMenu(pauseMenu);
         DeactivateMenu(optionsMenu);
         DeactivateMenu(difficultyMenu);
-
+        DeactivateMenu(DeathMenu);
         Time.timeScale = 1f; // Asegurar que el tiempo comience normal
-        controlador = new Controlador();
-        controlador.UI.Menu.performed += OnPause; // Suscribir el evento
-        controlador.Enable(); // Habilitar entradas
+       
 
         // Suscribir al evento de carga de escena
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        
+       
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -59,12 +64,14 @@ public class UnifiedMenuController : MonoBehaviour
             DeactivateMenu(pauseMenu);
             DeactivateMenu(optionsMenu);
             DeactivateMenu(difficultyMenu);
+            DeactivateMenu(DeathMenu);
         }
         else { 
             DeactivateMenu(mainMenu);
             DeactivateMenu(pauseMenu);
             DeactivateMenu(optionsMenu);
             DeactivateMenu(difficultyMenu);
+            DeactivateMenu(DeathMenu);
         }
     }
 
@@ -76,6 +83,8 @@ public class UnifiedMenuController : MonoBehaviour
         {
             OnPause(new InputAction.CallbackContext()); // Invocar pausa manualmente
         }
+       
+
 
     }
 
@@ -95,29 +104,35 @@ public class UnifiedMenuController : MonoBehaviour
 
     // Mostrar menú de pausa y detener el tiempo
     public void PauseGame()
-    {
-        isPaused = true;
+    { if (!isDeath)
+        {
+            isPaused = true;
 
-        // Guardar el estado actual del tiempo antes de pausar
-        previousTimeScale = Time.timeScale;
+            // Guardar el estado actual del tiempo antes de pausar
+            previousTimeScale = Time.timeScale;
 
-        // Pausar el tiempo del juego
-        Time.timeScale = 0f;
+            // Pausar el tiempo del juego
+            Time.timeScale = 0f;
 
-        // Activar el menú de pausa
-        OpenMenu(pauseMenu);
+            // Activar el menú de pausa
+            OpenMenu(pauseMenu);
+        }
+        
     }
 
     // Ocultar el menú de pausa y restaurar el tiempo
     public void ResumeGame()
     {
-        isPaused = false;
+        if (!isDeath)
+        {
+            isPaused = false;
 
-        // Restaurar el tiempo al valor previo a la pausa
-        Time.timeScale = previousTimeScale;
+            // Restaurar el tiempo al valor previo a la pausa
+            Time.timeScale = previousTimeScale;
 
-        // Cerrar el menú de pausa
-        CloseAllMenus();
+            // Cerrar el menú de pausa
+            CloseAllMenus();
+        }
     }
 
     // Abrir un menú y guardar el actual como anterior
@@ -224,11 +239,48 @@ public class UnifiedMenuController : MonoBehaviour
     private void OnEnable()
     {
         controlador.Enable();
+
+        
+
     }
 
     private void OnDisable()
     {
         controlador.Disable();
+        
+
+    }  
+    public void Continue()
+    {
+        if (isDeath) 
+        {
+            Debug.Log("¡Cualquier botón ha sido presionado!");
+            Controladorjugador DeathController = FindObjectOfType<Controladorjugador>();
+            if (DeathController != null)
+            {
+                
+                DeactivateMenu(mainMenu);
+                DeactivateMenu(pauseMenu);
+                DeactivateMenu(optionsMenu);
+                DeactivateMenu(difficultyMenu);
+                DeactivateMenu(DeathMenu);
+                DeathController.respawn();
+                isDeath = false;
+            }
+            else
+            {
+                Debug.LogError("No se encontró un objeto de tipo Controlador jugador en la escena.");
+            }
+        }
+        
+    }
+
+    public void ShowDeathScreen()
+    {
+        isDeath = true;
+        Debug.Log("Pantalla de muerte activada.");
+        // Implementa la lógica para mostrar la DeathScreen
+        OpenMenu(DeathMenu);
     }
 
     private void OnDestroy()

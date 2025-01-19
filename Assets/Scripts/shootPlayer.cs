@@ -13,8 +13,11 @@ public class shootPlayer : MonoBehaviour
     private void Update()
     {
         transform.Translate(Vector2.up * speed * Time.unscaledDeltaTime);
-        
 
+        if (UnifiedMenuController.isDeath)
+        {
+            gameObject.SetActive(false);
+        }
     }
     IEnumerator Destroy()
     {

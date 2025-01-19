@@ -19,12 +19,15 @@ public class shoot : MonoBehaviour
     {
         transform.Translate(Vector2.up * speed * Time.deltaTime);
 
-
+        if (UnifiedMenuController.isDeath)
+        {
+            gameObject.SetActive(false);
+        }
     }
     IEnumerator Destroy()
     {
 
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(7);
         Destroy(gameObject);
     }
 

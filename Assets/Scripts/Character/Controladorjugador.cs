@@ -114,7 +114,7 @@ public class Controladorjugador : MonoBehaviour
     public Difficulty currentDifficulty;
 
     public LineRendererProgress progress;
-    
+    private PlayerInput playerInput; // Referencia al componente PlayerInput
     #endregion
     #region Awake Start Update
     void Awake()
@@ -151,10 +151,24 @@ public class Controladorjugador : MonoBehaviour
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = true;
         }
+        if (UnifiedMenuController.isDeath)
+        {
+            controlador.Disable();
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
+            
+            
+            return;
+        }
+        else
+        {
+            
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = true;
+        }
 
 
-
-            if (controlador.Player.Sensitivity.ReadValue<Vector2>().x<-.5)
+        if (controlador.Player.Sensitivity.ReadValue<Vector2>().x<-.5)
         {
             Sensitivity -= 0.001f;
         }
@@ -655,12 +669,37 @@ public class Controladorjugador : MonoBehaviour
 
     public void Muerto()
     {
-        
+        StopAllCoroutines();
+        progress.StopAllCoroutines();        
+        timeslow = true;
+        counter = false;
+        Isparring = true;
+        dashEnable = true;
+        parry.gameObject.SetActive(false);
+        timelow.gameObject.SetActive(false);
+        DashParticles.gameObject.SetActive(false);
+        progress.PointsToOrigin();
+        Time.timeScale = 0;
+
+        // Llamar a la pantalla de muerte
+        UnifiedMenuController menuController = FindObjectOfType<UnifiedMenuController>();
+        if (menuController != null)
+        {
+            menuController.ShowDeathScreen();
+        }
+        else
+        {
+            Debug.LogError("No se encontró un objeto de tipo UnifiedMenuController en la escena.");
+        }
+    }
+
+    public void respawn()
+    {
         if (characterController != null)
         {
             characterController.enabled = false; // Desactiva el CharacterController temporalmente
         }
-        
+
         Debug.Log("Reapareciendo en: " + checkpointposition);
         transform.position = checkpointposition; // Mueve al jugador
         enemyManager.RespawnEnemies(currentCheckpointID);
@@ -668,6 +707,8 @@ public class Controladorjugador : MonoBehaviour
         {
             characterController.enabled = true; // Reactiva el CharacterController
         }
+        Time.timeScale = 1f;
+        controlador.Enable();
     }
 
     #endregion
