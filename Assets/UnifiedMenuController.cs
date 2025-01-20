@@ -5,6 +5,8 @@ using System.Collections.Generic; // Necesario para usar Stack
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using TMPro;
+using static UnityEngine.UI.Image;
+
 public class UnifiedMenuController : MonoBehaviour
 {
     [Header("Menus")]
@@ -14,9 +16,10 @@ public class UnifiedMenuController : MonoBehaviour
     [SerializeField] private GameObject difficultyMenu; // Menú de selección de dificultad
     [SerializeField] private GameObject DeathMenu; // Menú de muerte
     [SerializeField] private GameObject LevelFinishMenu; // Menú de siguiente nivel
-    public static bool isPaused = false;
-    public static bool isDeath = false;// Estado del juego (pausado o no)
-    public static bool isWin = false;// Estado del juego (pausado o no)
+    [SerializeReference] public static bool isPaused = false;
+    [SerializeReference] public static bool isDeath = false;// Estado del juego (pausado o no)
+    [SerializeReference] public static bool isWin = false;// Estado del juego (pausado o no)
+    public bool paused, death, win;
     [SerializeField] private float previousTimeScale = 1.0f;  // Guarda el tiempo anterior a pausar
 
     public Stack<GameObject> menuStack = new Stack<GameObject>(); // Pila para rastrear menús
@@ -24,9 +27,11 @@ public class UnifiedMenuController : MonoBehaviour
     private Controlador controlador;
     private InputAction anyButtonAction;
     public TextMeshProUGUI textMeshPro;
-    
+   
+   
     private void Start()
     {
+        isPaused = false;
         SetTransparency(true); // Hacer transparente
         controlador = new Controlador();
         controlador.UI.Menu.performed += OnPause; // Suscribir el evento
@@ -58,12 +63,16 @@ public class UnifiedMenuController : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        
         // Desactivar todos los menús cuando se carga una nueva escena
         CloseAllMenus();
         Debug.Log("paquito");
         Time.timeScale = 1f;
         isPaused = false;
+        isDeath = false;
+        isWin = false;
         SetTransparency(true); // Hacer transparente
+      
         // Verificar si es la escena principal y activar el menú adecuado
         if (scene.buildIndex == 0)
         {
@@ -86,7 +95,12 @@ public class UnifiedMenuController : MonoBehaviour
 
     public void Update()
     {
-
+        string nombreescena = SceneManager.GetActiveScene().name;
+        SaveSystem guardado = FindObjectOfType<SaveSystem>();
+        guardado.SetCurrentLevel(nombreescena);
+        paused = isPaused;
+        death = isDeath;
+        win = isWin;
         Debug.Log("Scene Index: " + SceneManager.GetActiveScene().buildIndex);
         if (controlador != null && controlador.UI.Menu.WasPerformedThisFrame() )
         {
@@ -269,7 +283,7 @@ public class UnifiedMenuController : MonoBehaviour
     private void OnDisable()
     {
         controlador.Disable();
-        
+     
 
     }  
     public void Continue()
@@ -326,4 +340,7 @@ public class UnifiedMenuController : MonoBehaviour
         // Desuscribirse del evento al destruir el objeto
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+   
+
+
 }

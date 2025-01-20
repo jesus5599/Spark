@@ -392,7 +392,7 @@ public class Controladorjugador : MonoBehaviour
         Vector2 lookInput = controlador.Player.Look.ReadValue<Vector2>();
         float lookX = lookInput.x * SensitivityX * Time.unscaledDeltaTime;
         float lookY = lookInput.y * SensitivityY * Time.unscaledDeltaTime;
-        Debug.Log(lookInput.x + "  " + lookInput.y);
+        //Debug.Log(lookInput.x + "  " + lookInput.y);
 
         // Rotación vertical (cámara y cabeza)
         xRotation -= lookY;
@@ -695,8 +695,10 @@ public class Controladorjugador : MonoBehaviour
         else if(other.transform.CompareTag("finish"))
             {
             UnifiedMenuController menuController = FindObjectOfType<UnifiedMenuController>();
+            SaveSystem sistemaguardadotiempo = FindObjectOfType<SaveSystem>();
             if (menuController != null)
             {
+                sistemaguardadotiempo.SaveNewTime(currentTime);
                 menuController.ShowNextLevelMenu();
             }
             else
