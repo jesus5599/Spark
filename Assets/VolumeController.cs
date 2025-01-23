@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using UnityEditor.Experimental.GraphView;  // Importa el namespace para manejar escenas
+
 
 public class VolumeController : MonoBehaviour
 {
