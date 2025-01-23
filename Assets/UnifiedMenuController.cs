@@ -6,9 +6,23 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using TMPro;
 using static UnityEngine.UI.Image;
+using System.Text;
+using System;
+using System.IO;
+using UnityEngine.SocialPlatforms.Impl;
+
 
 public class UnifiedMenuController : MonoBehaviour
 {
+    [System.Serializable]
+    public class GameData
+    {
+        public int currentLevel; // Nivel actual
+        public int score;        // Puntaje acumulado
+    }
+
+    private static string SaveFilePath => Application.persistentDataPath + "/savefile.dat"; // Cambié la extensión por .dat para mayor claridad
+    private GameData gameData;
     [Header("Menus")]
     [SerializeField] private GameObject mainMenu;       // Menú principal
     [SerializeField] private GameObject pauseMenu;      // Menú de pausa
@@ -27,10 +41,16 @@ public class UnifiedMenuController : MonoBehaviour
     private Controlador controlador;
     private InputAction anyButtonAction;
     public TextMeshProUGUI textMeshPro;
+    // Opcional: Desactivar el botón de "Continuar" si no hay partida guardada
+    public UnityEngine.UI.Button continueButton; // Referencia al botón de "Continuar"
    
-   
+
+
     private void Start()
     {
+        UpdateContinueButton();
+        // Intentar cargar los datos guardados al iniciar el juego
+        gameData = LoadGame() ?? new GameData { currentLevel = 1, score = 0 };
         isPaused = false;
         SetTransparency(true); // Hacer transparente
         controlador = new Controlador();
@@ -60,41 +80,9 @@ public class UnifiedMenuController : MonoBehaviour
         
        
     }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        
-        // Desactivar todos los menús cuando se carga una nueva escena
-        CloseAllMenus();
-        Debug.Log("paquito");
-        Time.timeScale = 1f;
-        isPaused = false;
-        isDeath = false;
-        isWin = false;
-        SetTransparency(true); // Hacer transparente
-      
-        // Verificar si es la escena principal y activar el menú adecuado
-        if (scene.buildIndex == 0)
-        {
-            ActivateMenu(mainMenu);
-            DeactivateMenu(pauseMenu);
-            DeactivateMenu(optionsMenu);
-            DeactivateMenu(difficultyMenu);
-            DeactivateMenu(DeathMenu);
-            DeactivateMenu(LevelFinishMenu);
-        }
-        else { 
-            DeactivateMenu(mainMenu);
-            DeactivateMenu(pauseMenu);
-            DeactivateMenu(optionsMenu);
-            DeactivateMenu(difficultyMenu);
-            DeactivateMenu(DeathMenu);
-            DeactivateMenu(LevelFinishMenu);
-        }
-    }
-
     public void Update()
     {
+        UpdateContinueButton();
         string nombreescena = SceneManager.GetActiveScene().name;
         SaveSystem guardado = FindObjectOfType<SaveSystem>();
         guardado.SetCurrentLevel(nombreescena);
@@ -110,7 +98,38 @@ public class UnifiedMenuController : MonoBehaviour
 
 
     }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
 
+        // Desactivar todos los menús cuando se carga una nueva escena
+        CloseAllMenus();
+        Debug.Log("paquito");
+        Time.timeScale = 1f;
+        isPaused = false;
+        isDeath = false;
+        isWin = false;
+        SetTransparency(true); // Hacer transparente
+
+        // Verificar si es la escena principal y activar el menú adecuado
+        if (scene.buildIndex == 0)
+        {
+            ActivateMenu(mainMenu);
+            DeactivateMenu(pauseMenu);
+            DeactivateMenu(optionsMenu);
+            DeactivateMenu(difficultyMenu);
+            DeactivateMenu(DeathMenu);
+            DeactivateMenu(LevelFinishMenu);
+        }
+        else
+        {
+            DeactivateMenu(mainMenu);
+            DeactivateMenu(pauseMenu);
+            DeactivateMenu(optionsMenu);
+            DeactivateMenu(difficultyMenu);
+            DeactivateMenu(DeathMenu);
+            DeactivateMenu(LevelFinishMenu);
+        }
+    }
     public void OnPause(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -228,6 +247,8 @@ public class UnifiedMenuController : MonoBehaviour
     public void SelectDifficulty(int difficulty)
     {
         PlayerPrefs.SetInt("Difficulty", difficulty); // Guardar dificultad seleccionada
+        gameData = new GameData { currentLevel = 1, score = 0 }; // Reiniciar datos
+        SaveGame(gameData);                                      // Guardar nueva partida
         SceneManager.LoadScene("level1");          // Cargar la escena principal del juego
     }
 
@@ -259,19 +280,18 @@ public class UnifiedMenuController : MonoBehaviour
             menu.SetActive(false);
     }
 
-    public void ShowNextLevelMenu()
+    public void ShowNextLevelMenu(int score)
     {   
         isWin = true;
         isPaused = true;
+        gameData.currentLevel += 1; // Avanzar al siguiente nivel
+        gameData.score += score;    // Actualizar puntaje
+        SaveGame(gameData);         // Guardar progreso
+
         ActivateMenu(LevelFinishMenu);
         SetTransparency(false); // Hacer visible
     }
-    public void NextLevel() 
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        Time.timeScale = 1f;
-    }
-
+  
     private void OnEnable()
     {
         controlador.Enable();
@@ -341,6 +361,87 @@ public class UnifiedMenuController : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
    
+    // Método para pasar al siguiente nivel y guardar el progreso
+    public void LevelCompleted(int score)
+    {
+        
+        // Cargar el siguiente nivel
+        SceneManager.LoadScene("level" + gameData.currentLevel);
+        Time.timeScale = 1f;
+    }
+
+    // Guardar los datos en un archivo cifrado en Base64
+    private void SaveGame(GameData data)
+    {
+        string json = JsonUtility.ToJson(data); // Convertir datos a JSON
+        string encryptedData = Convert.ToBase64String(Encoding.UTF8.GetBytes(json)); // Codificar en Base64
+        File.WriteAllText(SaveFilePath, encryptedData); // Guardar en archivo
+        Debug.Log("Partida guardada encriptada.");
+    }
+
+    // Cargar los datos desde un archivo cifrado en Base64
+    private GameData LoadGame()
+    {
+        if (File.Exists(SaveFilePath))
+        {
+            string encryptedData = File.ReadAllText(SaveFilePath); // Leer archivo
+            string json = Encoding.UTF8.GetString(Convert.FromBase64String(encryptedData)); // Decodificar Base64
+            Debug.Log("Partida cargada y desencriptada.");
+            return JsonUtility.FromJson<GameData>(json); // Convertir JSON a objeto
+        }
+        return null; // Si no hay datos guardados
+    }
+
+    // Método para continuar la partida desde el nivel guardado
+    public void ContinueGame()
+    {
+        if (gameData != null && gameData.currentLevel > 1)
+        {
+            SceneManager.LoadScene("level" + gameData.currentLevel); // Cargar nivel guardado
+        }
+        else
+        {
+            Debug.Log("No hay una partida guardada.");
+        }
+    }
+    // Actualizar la interactividad del botón según si hay partida guardada
+    // Actualizar la interactividad del botón según los datos guardados
+    private void UpdateContinueButton()
+    {
+        if (continueButton != null)
+        {
+            bool saveExists = File.Exists(SaveFilePath);
+
+            if (saveExists)
+            {
+                // Cargar datos del archivo y verificar el nivel
+                string encryptedData = File.ReadAllText(SaveFilePath);
+                string jsonData = Encoding.UTF8.GetString(Convert.FromBase64String(encryptedData));
+                GameData gameData = JsonUtility.FromJson<GameData>(jsonData);
+
+                // El botón es interactuable solo si el nivel guardado es mayor que 1
+                continueButton.interactable = gameData.currentLevel > 1;
+
+                if (gameData.currentLevel == 1)
+                {
+                    Debug.Log("No hay progreso más allá del nivel 1. El botón de 'Continuar' está desactivado.");
+                }
+            }
+            else
+            {
+                // No hay archivo de guardado, el botón no es interactuable
+                continueButton.interactable = false;
+                Debug.Log("No hay partida guardada.");
+            }
+        }
+    }
+
+
+
+
+
 
 
 }
+
+

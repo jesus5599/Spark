@@ -9,6 +9,7 @@ using UnityEngine.SocialPlatforms;
 using UnityEngine.Windows;
 using UnityEngine.UIElements;
 using System.Security.Cryptography;
+using UnityEngine.SceneManagement;
 
 public class Controladorjugador : MonoBehaviour
 {
@@ -699,7 +700,7 @@ public class Controladorjugador : MonoBehaviour
             if (menuController != null)
             {
                 sistemaguardadotiempo.SaveNewTime(currentTime);
-                menuController.ShowNextLevelMenu();
+                menuController.ShowNextLevelMenu(SceneManager.GetActiveScene().buildIndex);
             }
             else
             {
