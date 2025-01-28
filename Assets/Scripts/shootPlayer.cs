@@ -6,8 +6,10 @@ public class shootPlayer : MonoBehaviour
 {
     public float speed;
     public GameObject particle;
+   
     private void Start()
     {
+        
         transform.Rotate(90f,0f,0f);
         StartCoroutine(Destroy());
     }
@@ -34,6 +36,7 @@ public class shootPlayer : MonoBehaviour
         yield return new WaitForSeconds(0);
         Destroy(gameObject);
     }
+   
     private void OnCollisionEnter(Collision collision)
     {
         // Mostrar siempre el objeto con el que colisiona

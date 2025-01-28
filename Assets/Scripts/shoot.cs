@@ -8,9 +8,11 @@ public class shoot : MonoBehaviour
     public enum Difficulty { Easy, Normal, Hard }
     public Difficulty currentDifficulty;
     public GameObject particle;
+    public GameObject flash;
     private void Start()
     {
         StartCoroutine(Destroy());
+        StartCoroutine(ShowFlash());
         AdjustShootVelocity();
         LoadDifficulty();
 
@@ -37,6 +39,14 @@ public class shoot : MonoBehaviour
         impacto.gameObject.SetActive(true);
         yield return new WaitForSeconds(0);
         Destroy(gameObject);
+    }
+    IEnumerator ShowFlash()
+    {
+        GameObject destello;
+        destello = Instantiate(flash, transform.position, transform.rotation);
+        destello.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0);
+        
     }
 
     private void OnCollisionEnter(Collision collision)

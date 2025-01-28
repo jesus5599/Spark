@@ -62,6 +62,8 @@ public class Controladorjugador : MonoBehaviour
     public float TimeCooldown,TimeSlowed;
     public bool timeslow;
     public Light TimeLight;
+    float targetIntensitytime = 4f; // Intensidad máxima de la luz
+    Color originalColortime;
 
     // Variables para el control de la cámara con el ratón
     public CinemachineVirtualCamera virtualCamera; // Referencia a la Cinemachine Virtual Camera
@@ -79,6 +81,9 @@ public class Controladorjugador : MonoBehaviour
     public bool dashEnable;
     public ParticleSystem DashParticles; // Sistema de partículas
     public Light DashLight;
+    float targetIntensitydash = 4f; // Intensidad máxima de la luz
+    Color originalColordash;
+
     //Configuracion de las animaciones
     private Animator animate;
     public float speedx, speedz;
@@ -105,7 +110,7 @@ public class Controladorjugador : MonoBehaviour
 
     public AudioSource audioSource; // Componente AudioSource para reproducir sonido
     public AudioClip pasosClip;   // Sonido de correr
-    bool run=true;
+   public bool run=true;
 
     public Vector3 checkpointposition;
     public Quaternion checkpointrotation;
@@ -131,6 +136,12 @@ public class Controladorjugador : MonoBehaviour
     #region Awake Start Update
     void Awake()
     {
+        run = true;
+        Animationtime = 1;
+        targetIntensitytime = TimeLight.intensity ;
+        originalColortime = TimeLight.color ;
+         targetIntensitydash = DashLight.intensity ;
+         originalColordash= DashLight.color ;
         characterController = GetComponent<CharacterController>();
         controlador = new Controlador();
         virtualCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
@@ -412,24 +423,53 @@ public class Controladorjugador : MonoBehaviour
 
 
     #endregion
-    
+
     IEnumerator Dash(Vector3 moveDir)
     {
+        // Guardar el color original de la luz
+        originalColordash = DashLight.color;
+
+        // Cambiar intensidad a 0 e iniciar el color rojo
         DashLight.intensity = 0;
-        dashEnable = false;               
+        DashLight.color = Color.red; // Cambiar el color a rojo
+        dashEnable = false;
+
         float startTime = Time.unscaledTime;
         DashParticles.gameObject.SetActive(true);
+
+        // Movimiento del dash
         while (Time.unscaledTime < startTime + wallJumpTime)
         {
             characterController.Move(moveDir * dashSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
-        DashParticles.gameObject.SetActive(false);       
-        yield return new WaitForSeconds(dashCooldown);
-        DashLight.intensity = 4;
+
+        DashParticles.gameObject.SetActive(false);
+
+        // Proceso de recarga
+         float elapsedTime = 0f;
+        float rechargeTime = dashCooldown; // Tiempo que tarda en recargarse completamente
+        targetIntensitydash = 4f; // Intensidad máxima de la luz
+
+        while (elapsedTime < rechargeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / rechargeTime;
+
+            // Interpolar intensidad de la luz y color (rojo -> original)
+            DashLight.intensity = Mathf.Lerp(0, targetIntensitydash, t);
+            DashLight.color = Color.Lerp(Color.red, originalColordash, t);
+            yield return null;
+        }
+
+        // Asegurar que la luz está completamente cargada
+        DashLight.intensity = targetIntensitydash;
+        DashLight.color = originalColordash;
         dashEnable = true;
     }
-  
+
+
+
     #region Wallrun
     private void CheckForWall()
     {
@@ -541,20 +581,48 @@ public class Controladorjugador : MonoBehaviour
 
 
     #region Timestop
-    IEnumerator TimeStop() 
+    IEnumerator TimeStop()
     {
+        // Guardar el color original de la luz
+        originalColortime = TimeLight.color;
+
+        // Cambiar intensidad a 0 e iniciar el color rojo
         TimeLight.intensity = 0;
+        TimeLight.color = Color.red; // Cambiar el color a rojo
         Animationtime = 5;
         timeslow = false;
+
+        // Activar el tiempo ralentizado
         SlowDownTime();
-        yield return new WaitForSeconds(TimeSlowed*.2f);
+        yield return new WaitForSeconds(TimeSlowed * 0.2f);
+
+        // Restaurar la animación
         Animationtime = 1;
-        RestoreTime();                             
-        yield return new WaitForSeconds(TimeCooldown);
-        TimeLight.intensity = 4;
+        RestoreTime();
+
+        // Proceso de recarga
+         float elapsedTime = 0f;
+        float rechargeTime = TimeCooldown; // Tiempo que tarda en recargarse completamente
+        targetIntensitytime = 4f; // Intensidad máxima de la luz
+
+        while (elapsedTime < rechargeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / rechargeTime;
+
+            // Interpolar intensidad de la luz y color (rojo -> original)
+            TimeLight.intensity = Mathf.Lerp(0, targetIntensitytime, t);
+            TimeLight.color = Color.Lerp(Color.red, originalColortime, t);
+            yield return null;
+        }
+
+        // Asegurar que la luz está completamente cargada
+        TimeLight.intensity = targetIntensitytime;
+        TimeLight.color = originalColortime;
         timeslow = true;
     }
-    // Ralentiza el tiempo al 50% de su velocidad normal
+
+    // Ralentiza el tiempo al 20% de su velocidad normal
     public void SlowDownTime()
     {
         Time.timeScale = 0.2f; // Tiempo a la mitad de velocidad
@@ -583,7 +651,19 @@ public class Controladorjugador : MonoBehaviour
         // Reducir la altura del CharacterController
         characterController.height = crouchHeight;
         characterController.center = new Vector3(0f, crouchHeight/2, 0f);
+        CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 
+        // Verifica si hay un Capsule Collider
+        if (capsuleCollider != null)
+        {
+            // Modificar el centro del collider
+            capsuleCollider.center = new Vector3(0f, crouchHeight / 2, 0f); // Cambia las coordenadas según necesites
+
+            // Modificar la altura del collider
+            capsuleCollider.height = crouchHeight; // Cambia este valor según necesites
+
+            Debug.Log("Capsule Collider modificado.");
+        }
         // Capturar la dirección de movimiento actual
         slideDirection = transform.forward * slideSpeed;
     }
@@ -630,7 +710,19 @@ public class Controladorjugador : MonoBehaviour
         // Restaurar la altura original del CharacterController
         characterController.height = originalHeight;
         characterController.center = new Vector3(0f, originalHeight/2, 0f);
+        CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 
+        // Verifica si hay un Capsule Collider
+        if (capsuleCollider != null)
+        {
+            // Modificar el centro del collider
+            capsuleCollider.center = new Vector3(0f, originalHeight / 2, 0f); // Cambia las coordenadas según necesites
+
+            // Modificar la altura del collider
+            capsuleCollider.height = originalHeight; // Cambia este valor según necesites
+
+            Debug.Log("Capsule Collider modificado.");
+        }
         playerVelocity = new Vector3(0, playerVelocity.y, 0);
     }
     bool IsSomethingAbove()
@@ -733,7 +825,11 @@ public class Controladorjugador : MonoBehaviour
     public void Muerto()
     {
         StopAllCoroutines();
-        progress.StopAllCoroutines();        
+        progress.StopAllCoroutines();
+        TimeLight.intensity = targetIntensitytime;
+        TimeLight.color = originalColortime;
+        DashLight.intensity = targetIntensitydash;
+        DashLight.color = originalColordash;
         timeslow = true;
         counter = false;
         Isparring = true;
@@ -742,6 +838,8 @@ public class Controladorjugador : MonoBehaviour
         timelow.gameObject.SetActive(false);
         DashParticles.gameObject.SetActive(false);
         progress.PointsToOrigin();
+        Animationtime = 1;
+        run = true;
         Time.timeScale = 0;
 
         // Llamar a la pantalla de muerte

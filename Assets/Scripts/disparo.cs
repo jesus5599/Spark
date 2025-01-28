@@ -17,6 +17,7 @@ public class disparo : MonoBehaviour
     public GameObject bala1, bala2, bala3, bala4, bala5, bala6;
     public AudioSource audioSource; // Componente AudioSource para reproducir sonido
     public AudioClip disparoClip,recargaClip;   // Sonido del disparo
+    public GameObject flash;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +43,10 @@ public class disparo : MonoBehaviour
         }
 
         if (disparoarma == true && municionactual > 0)
-        { Shoot(); }
+        {
+            StartCoroutine(ShowFlash()); 
+            Shoot();
+        }
     }
     void LateUpdate()
     {
@@ -132,6 +136,14 @@ public class disparo : MonoBehaviour
 
 
     }
-    
+    IEnumerator ShowFlash()
+    {
+        GameObject destello;
+        destello = Instantiate(flash, lanzador.position, lanzador.rotation);
+        destello.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0);
+
+    }
+
 }
 
