@@ -5,6 +5,7 @@ using UnityEngine;
 public class shootPlayer : MonoBehaviour
 {
     public float speed;
+    public GameObject particle;
     private void Start()
     {
         transform.Rotate(90f,0f,0f);
@@ -25,15 +26,38 @@ public class shootPlayer : MonoBehaviour
         yield return new WaitForSeconds(15);
         Destroy(gameObject);
     }
-    
+    IEnumerator ShowImpact()
+    {
+        GameObject impacto;
+        impacto = Instantiate(particle, transform.position, transform.rotation);
+        impacto.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0);
+        Destroy(gameObject);
+    }
     private void OnCollisionEnter(Collision collision)
     {
+        // Mostrar siempre el objeto con el que colisiona
+        Debug.Log("Choca con: " + collision.gameObject.name);
 
+        // Si el objeto tiene el componente Enemy, derrotarlo
+        if (collision.collider.GetComponent<Enemy>() != null)
+        {
+            collision.collider.GetComponent<Enemy>().Defeat();
+            Debug.Log("Es un enemigo. Derrotado.");
+        }
+        else if (collision.gameObject.CompareTag("Obstaculo"))
+        {
+            Debug.Log("Choca con un obstáculo.");
+            // Lógica para un obstáculo, si es necesario
+        }
+        else
+        {
+            Debug.Log("Colisión con otro objeto sin lógica específica.");
+        }
 
-        collision.collider.GetComponent<Enemy>()?.Defeat();
-
-        Destroy(gameObject);
-
+        // Llamar siempre a ShowImpact()
+        StartCoroutine(ShowImpact());
     }
-    
+
+
 }

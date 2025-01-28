@@ -64,6 +64,7 @@ public class Controladorjugador : MonoBehaviour
 
     // Variables para el control de la cámara con el ratón
     public CinemachineVirtualCamera virtualCamera; // Referencia a la Cinemachine Virtual Camera
+    public Vector3 alturacamara, alturacamaraslide;
     public Transform playerBody; // Referencia al cuerpo del jugador (para moverlo horizontalmente)
     public float Sensitivity;
     public float SensitivityX = 2.0f; // Sensibilidad  en el eje X
@@ -80,6 +81,7 @@ public class Controladorjugador : MonoBehaviour
     private Animator animate;
     public float speedx, speedz;
     bool paredright, paredleft;
+    public float Animationtime;
 
     //Configuracion del deslizamiento
     public bool isSliding;         
@@ -537,9 +539,11 @@ public class Controladorjugador : MonoBehaviour
     #region Timestop
     IEnumerator TimeStop() 
     {
+        Animationtime = 5;
         timeslow = false;
             SlowDownTime();
         yield return new WaitForSeconds(TimeSlowed*.2f);
+        Animationtime = 1;
         RestoreTime();
         yield return new WaitForSeconds(TimeCooldown);
         timeslow = true;
@@ -770,11 +774,11 @@ public class Controladorjugador : MonoBehaviour
     {
         if (isSliding)
         {
-            virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = new Vector3(0f, 0.66f, 0.17f);
+            virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = alturacamaraslide;
         }
         else
         {
-            virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = new Vector3(0f, 1.62f, 0.17f);
+            virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = alturacamara;
         }
     }
     IEnumerator Runsound()
@@ -814,6 +818,7 @@ public class Controladorjugador : MonoBehaviour
         animate.SetBool("paredleft", paredleft);
         animate.SetBool("slide", isSliding);
         animate.SetBool("parry", counter);
+        animate.SetFloat("Tiempo", Animationtime);
     }
 
     private void LoadDifficulty()

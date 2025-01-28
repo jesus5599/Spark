@@ -7,7 +7,7 @@ public class shoot : MonoBehaviour
     public float speed;
     public enum Difficulty { Easy, Normal, Hard }
     public Difficulty currentDifficulty;
-
+    public GameObject particle;
     private void Start()
     {
         StartCoroutine(Destroy());
@@ -30,17 +30,29 @@ public class shoot : MonoBehaviour
         yield return new WaitForSeconds(7);
         Destroy(gameObject);
     }
+    IEnumerator ShowImpact()
+    {
+        GameObject impacto;
+        impacto = Instantiate(particle, transform.position, transform.rotation);        
+        impacto.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0);
+        Destroy(gameObject);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        
-        Destroy(gameObject);
+        StartCoroutine(ShowImpact());
+       
 
     }
     private void OnTriggerEnter(Collider collision)
     {
-collision.GetComponent<Collider>().GetComponent<parry>()?.Shoot();
-        Destroy(gameObject);
+        if (collision.transform.CompareTag("Parry"))
+        {
+            StartCoroutine(ShowImpact());
+        }
+            collision.GetComponent<Collider>().GetComponent<parry>()?.Shoot();
+        
 
     }
     private void OnTriggerStay(Collider other)

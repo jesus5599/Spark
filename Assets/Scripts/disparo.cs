@@ -33,15 +33,7 @@ public class disparo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Calculate the direction of the missile in the world space
-        Vector3 fwd = lanzador.TransformDirection(Vector3.forward);
-        
-
-        // Get the direction vector from the launcher to the target 
-        Vector3 difference = targetObject.transform.position - transform.position;
-        // Calculate the rotation needed to face the target in 3D space
-        Quaternion rotation = Quaternion.LookRotation(difference);
-        brazo.transform.rotation = rotation;
+       
 
         if (municionactual <= 0 && recarga==true)
         {
@@ -51,6 +43,20 @@ public class disparo : MonoBehaviour
 
         if (disparoarma == true && municionactual > 0)
         { Shoot(); }
+    }
+    void LateUpdate()
+    {
+        // Calculate the direction of the missile in the world space
+        Vector3 fwd = lanzador.TransformDirection(Vector3.forward);
+
+
+        // Get the direction vector from the launcher to the target 
+        Vector3 difference = targetObject.transform.position - transform.position;
+        // Calculate the rotation needed to face the target in 3D space
+        Quaternion rotation = Quaternion.LookRotation(difference);
+        brazo.transform.rotation = rotation;
+
+     
     }
     private void Shoot()
     {
