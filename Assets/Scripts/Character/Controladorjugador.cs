@@ -61,6 +61,7 @@ public class Controladorjugador : MonoBehaviour
     //Configuracion parar el tiempo
     public float TimeCooldown,TimeSlowed;
     public bool timeslow;
+    public Light TimeLight;
 
     // Variables para el control de la cámara con el ratón
     public CinemachineVirtualCamera virtualCamera; // Referencia a la Cinemachine Virtual Camera
@@ -77,6 +78,7 @@ public class Controladorjugador : MonoBehaviour
     public float dashSpeed, dashCooldown;
     public bool dashEnable;
     public ParticleSystem DashParticles; // Sistema de partículas
+    public Light DashLight;
     //Configuracion de las animaciones
     private Animator animate;
     public float speedx, speedz;
@@ -411,8 +413,9 @@ public class Controladorjugador : MonoBehaviour
 
     #endregion
     
-    IEnumerator Dash(Vector3 moveDir)       
+    IEnumerator Dash(Vector3 moveDir)
     {
+        DashLight.intensity = 0;
         dashEnable = false;               
         float startTime = Time.unscaledTime;
         DashParticles.gameObject.SetActive(true);
@@ -421,8 +424,9 @@ public class Controladorjugador : MonoBehaviour
             characterController.Move(moveDir * dashSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
-        DashParticles.gameObject.SetActive(false);
+        DashParticles.gameObject.SetActive(false);       
         yield return new WaitForSeconds(dashCooldown);
+        DashLight.intensity = 4;
         dashEnable = true;
     }
   
@@ -539,13 +543,15 @@ public class Controladorjugador : MonoBehaviour
     #region Timestop
     IEnumerator TimeStop() 
     {
+        TimeLight.intensity = 0;
         Animationtime = 5;
         timeslow = false;
-            SlowDownTime();
+        SlowDownTime();
         yield return new WaitForSeconds(TimeSlowed*.2f);
         Animationtime = 1;
-        RestoreTime();
+        RestoreTime();                             
         yield return new WaitForSeconds(TimeCooldown);
+        TimeLight.intensity = 4;
         timeslow = true;
     }
     // Ralentiza el tiempo al 50% de su velocidad normal
