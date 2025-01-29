@@ -473,27 +473,30 @@ public class Controladorjugador : MonoBehaviour
     #region Wallrun
     private void CheckForWall()
     {
-        int excludeWallLayer = ~wallLayer.value; // Invierte el bitmask para excluir la capa específica
+        int excludeWallLayer = ~wallLayer.value; // Invertir bitmask para excluir la capa específica
 
-        
-        
+        Vector3 positionray = new Vector3(transform.position.x, transform.position.y + salidarayos, transform.position.z);
 
-        // Detectar paredes a los lados del jugador
-        Vector3 positionray = new Vector3 (transform.position.x,transform.position.y+salidarayos,transform.position.z);
+        // Radio del SphereCast
+        float sphereRadius = 0.5f;
+
+        // Detectar paredes a los lados del jugador con SphereCast
         Debug.DrawRay(positionray, -transform.right * wallDetectionDistance, Color.red);
         Debug.DrawRay(positionray, transform.right * wallDetectionDistance, Color.blue);
-        wallLeft = Physics.Raycast(positionray, -transform.right, out hitLeft, wallDetectionDistance, excludeWallLayer);
-        wallRight = Physics.Raycast(positionray, transform.right, out hitRight, wallDetectionDistance, excludeWallLayer);
+
+        wallLeft = Physics.SphereCast(positionray, sphereRadius, -transform.right, out hitLeft, wallDetectionDistance, excludeWallLayer);
+        wallRight = Physics.SphereCast(positionray, sphereRadius, transform.right, out hitRight, wallDetectionDistance, excludeWallLayer);
 
         if (wallLeft || wallRight)
         {
             if (wallLeft) { paredleft = true; paredright = false; }
-        else if (wallRight) { paredright = true; paredleft = false; }
+            else if (wallRight) { paredright = true; paredleft = false; }
+
             wallNormal = wallLeft ? hitLeft.normal : hitRight.normal;
             StartWallRun(wallNormal);
-
         }
     }
+
 
     private void StartWallRun(Vector3 wallNormal)
     {

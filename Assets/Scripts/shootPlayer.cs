@@ -28,15 +28,19 @@ public class shootPlayer : MonoBehaviour
         yield return new WaitForSeconds(15);
         Destroy(gameObject);
     }
-    IEnumerator ShowImpact()
+    IEnumerator ShowImpact(Vector3 position, Vector3 normal)
     {
-        GameObject impacto;
-        impacto = Instantiate(particle, transform.position, transform.rotation);
-        impacto.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0);
-        Destroy(gameObject);
+        // Crear el impacto en el punto de colisión con la rotación hacia la normal
+        Quaternion rotation = Quaternion.LookRotation(normal);
+        GameObject impacto = Instantiate(particle, position, rotation);
+        impacto.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f); // Esperar antes de destruir el efecto (ajústalo según sea necesario)
+
+        
+        Destroy(gameObject); // Destruir la bala después de mostrar el impacto
     }
-   
+
     private void OnCollisionEnter(Collision collision)
     {
         // Mostrar siempre el objeto con el que colisiona
@@ -58,8 +62,20 @@ public class shootPlayer : MonoBehaviour
             Debug.Log("Colisión con otro objeto sin lógica específica.");
         }
 
-        // Llamar siempre a ShowImpact()
-        StartCoroutine(ShowImpact());
+        // Obtener el primer punto de contacto
+        ContactPoint contact = collision.contacts[0];
+
+        // Obtener la posición del impacto
+        Vector3 hitPosition = contact.point;
+
+        // Obtener la normal de la superficie impactada
+        Vector3 hitNormal = contact.normal;
+
+        // Desplazar el impacto un poco hacia atrás en la dirección de la normal
+        Vector3 adjustedPosition = hitPosition - hitNormal * -0.15f; // Ajusta 0.1f según necesites
+
+        // Iniciar la corrutina con la nueva posición ajustada
+        StartCoroutine(ShowImpact(adjustedPosition, hitNormal));
     }
 
 

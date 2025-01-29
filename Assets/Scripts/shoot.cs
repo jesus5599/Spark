@@ -32,14 +32,7 @@ public class shoot : MonoBehaviour
         yield return new WaitForSeconds(7);
         Destroy(gameObject);
     }
-    IEnumerator ShowImpact()
-    {
-        GameObject impacto;
-        impacto = Instantiate(particle, transform.position, transform.rotation);        
-        impacto.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0);
-        Destroy(gameObject);
-    }
+    
     IEnumerator ShowFlash()
     {
         GameObject destello;
@@ -48,20 +41,57 @@ public class shoot : MonoBehaviour
         yield return new WaitForSeconds(0);
         
     }
+    IEnumerator ShowImpact(Vector3 position, Vector3 normal)
+    {
+        // Crear el impacto en el punto de colisión con la rotación hacia la normal
+        Quaternion rotation = Quaternion.LookRotation(normal);
+        GameObject impacto = Instantiate(particle, position, rotation);
+        impacto.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f); // Esperar antes de destruir el efecto (ajústalo según sea necesario)
+
+        
+        Destroy(gameObject); // Destruir la bala después de mostrar el impacto
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        StartCoroutine(ShowImpact());
-       
+        // Obtener el primer punto de contacto
+        ContactPoint contact = collision.contacts[0];
 
+        // Obtener la posición del impacto
+        Vector3 hitPosition = contact.point;
+
+        // Obtener la normal de la superficie impactada
+        Vector3 hitNormal = contact.normal;
+
+        // Desplazar el impacto un poco hacia atrás en la dirección de la normal
+        Vector3 adjustedPosition = hitPosition - hitNormal * -0.15f; // Ajusta 0.1f según necesites
+
+        // Iniciar la corrutina con la nueva posición ajustada
+        StartCoroutine(ShowImpact(adjustedPosition, hitNormal));
     }
-    private void OnTriggerEnter(Collider collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.transform.CompareTag("Parry"))
+
+        if (other.CompareTag("Parry"))
         {
-            StartCoroutine(ShowImpact());
+            // Obtener la posición del impacto
+            Vector3 hitPosition = other.ClosestPoint(transform.position);
+
+            // Calcular la normal de la superficie simulada
+            Vector3 hitNormal = (transform.position - hitPosition).normalized;
+
+            // Desplazar el impacto un poco hacia atrás en la dirección de la normal
+            Vector3 adjustedPosition = hitPosition - hitNormal * -0.15f; // Ajusta 0.1f según necesites
+
+            // Iniciar la corrutina con la nueva posición y normal ajustada
+            StartCoroutine(ShowImpact(adjustedPosition, hitNormal));           
         }
-            collision.GetComponent<Collider>().GetComponent<parry>()?.Shoot();
+
+
+        other.GetComponent<Collider>().GetComponent<parry>()?.Shoot();
         
 
     }
