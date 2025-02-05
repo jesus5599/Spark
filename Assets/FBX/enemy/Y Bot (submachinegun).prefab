@@ -1857,22 +1857,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35b3bc8b29ee6e64ba244d8c2b48206f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeAux: 0
+  activeWeapon: 0
+  currentDifficulty: 0
   gun: {fileID: 1086354623400698471}
   enemy: {fileID: 6555690658405321989}
   misil: {fileID: 7182049915634637076, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
   lanzador: {fileID: 1660650110185404199}
   seguir: {fileID: 0}
-  veldisparo: 5
   rangeX: 30
   rangeY: 30
   rangeZ: 30
-  pistol: 0
-  submachinegun: 1
-  argun: 0
+  firstShotDelay: 1
   pistoldelay: 0
   submachinegundelay: 0.05
   argundelay: 0
+  argunshootdelay: 0
+  submachineshootdelay: 0
+  pistolshootdelay: 0
+  audioSource: {fileID: 0}
+  ArClip: {fileID: 0}
+  SubmachineClip: {fileID: 0}
+  GunClip: {fileID: 0}
+  Playerlayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &5443488030121446437
 GameObject:
   m_ObjectHideFlags: 0
@@ -2467,6 +2475,8 @@ GameObject:
   - component: {fileID: 117205097628512510}
   - component: {fileID: 5923871274316467888}
   - component: {fileID: 4201761660710483072}
+  - component: {fileID: 9055586936545671569}
+  - component: {fileID: 5720479144598518259}
   m_Layer: 0
   m_Name: Y Bot (submachinegun)
   m_TagString: Enemy
@@ -2531,6 +2541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b18754fbfce334e8dfe15f7f96a986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: 0
 --- !u!136 &4201761660710483072
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2551,6 +2562,52 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!136 &9055586936545671569
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6555690658405321989}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!136 &5720479144598518259
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6555690658405321989}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}

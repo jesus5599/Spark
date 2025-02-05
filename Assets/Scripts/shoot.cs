@@ -97,7 +97,10 @@ public class shoot : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        Destroy(gameObject);
+        if (!other.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+        }
     }
     private void AdjustShootVelocity()
     {
