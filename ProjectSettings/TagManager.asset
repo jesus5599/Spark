@@ -10,6 +10,7 @@ TagManager:
   - Parry
   - VolumeSliderTag
   - finish
+  - Proyectil
   layers:
   - Default
   - TransparentFX

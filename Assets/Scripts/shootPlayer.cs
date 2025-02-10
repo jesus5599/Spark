@@ -35,7 +35,7 @@ public class shootPlayer : MonoBehaviour
         GameObject impacto = Instantiate(particle, position, rotation);
         impacto.SetActive(true);
 
-        yield return new WaitForSeconds(0.5f); // Esperar antes de destruir el efecto (ajústalo según sea necesario)
+        yield return new WaitForSeconds(0.1f); // Esperar antes de destruir el efecto (ajústalo según sea necesario)
 
         
         Destroy(gameObject); // Destruir la bala después de mostrar el impacto

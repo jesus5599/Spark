@@ -183,7 +183,7 @@ public class Controladorjugador : MonoBehaviour
             float seconds = currentTime % 60; // Segundos sobrantes
 
             // Formatear el texto como MM:SS.ss
-            tiempopartida.text = $"Tiempo: {minutes:00}:{seconds:00.00}";
+            tiempopartida.text = $"Time: {minutes:00}:{seconds:00.00}";
         }
         
         if (UnifiedMenuController.isPaused)
