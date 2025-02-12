@@ -11,6 +11,7 @@ TagManager:
   - VolumeSliderTag
   - finish
   - Proyectil
+  - Plataforma
   layers:
   - Default
   - TransparentFX
