@@ -12,22 +12,28 @@ public class Boton : MonoBehaviour
     public bool seDesactivaPorTiempo = false;   // Si se desactiva por tiempo
     public float tiempoParaDesactivar = 5f;     // Tiempo para desactivar
     public bool mantenerActivadosCuandoTodos = false;   // Si se mantienen activados cuando todos estén activados
-
+    public bool pisable, disparable;
     private bool temporizadorActivaldo = false; // Para evitar el temporizador si todos están activados
     private bool todosActivados = false; // Si todos los botones del grupo están activados
-
+    
     private void Start()
     {
         render = GetComponent<Renderer>();
         ActualizarMaterial();
         ControladorPuertasYBotones.Instance.RegistrarBoton(this);
+        if (pisable == false && disparable == false)
+        {
+            pisable = true;
+            disparable = true;
+        }
+       
     }
-
+  
     private void OnTriggerEnter(Collider other)
     {
         if (activado) return; // Evitar múltiples activaciones
-
-        ActivarBoton();
+        if (other.CompareTag("Player")) if(pisable == true && !activado)ActivarBoton();        
+        if (other.CompareTag("Proyectil"))if (disparable == true && !activado) ActivarBoton();
     }
 
     private void ActivarBoton()
@@ -62,7 +68,7 @@ public class Boton : MonoBehaviour
         }
     }
 
-    private void DesactivarBoton()
+    public void DesactivarBoton()
     {
         if (!activado) return;
 

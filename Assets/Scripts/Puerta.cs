@@ -35,7 +35,7 @@ public class Puerta : MonoBehaviour
     {
         while (Vector3.Distance(transform.localPosition, destino) > 0.1f) // Mientras no esté cerca de la posición objetivo en el espacio local
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, destino, Time.deltaTime * velocidadDeMovimiento); // Movimiento suave en espacio local
+            transform.localPosition = Vector3.Lerp(transform.localPosition, destino, Time.unscaledDeltaTime * velocidadDeMovimiento); // Movimiento suave en espacio local
             yield return null; // Espera hasta el siguiente frame
         }
 

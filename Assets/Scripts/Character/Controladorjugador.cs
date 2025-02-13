@@ -30,10 +30,11 @@ public class Controladorjugador : MonoBehaviour
     // Configuración de wall run
     public float wallRunSpeed = 10f ;
     public float wallRunDuration = 1.5f;
-
+    // Radio del SphereCast
+    public float sphereRadius = 0.5f;
 
     //configuracion walljump
-    
+
     public float wallJumpUpForce;
     public float wallJumpSideForce;
     public float wallJumpTime = .25f, wallJumpSpeed = 20f;
@@ -129,6 +130,7 @@ public class Controladorjugador : MonoBehaviour
     public Difficulty currentDifficulty;
 
     public LineRendererProgress progress;
+    public ControladorPuertasYBotones botones;
     private PlayerInput playerInput; // Referencia al componente PlayerInput
 
     private Vector3 lastPlatformPosition;
@@ -488,8 +490,7 @@ public class Controladorjugador : MonoBehaviour
 
         Vector3 positionray = new Vector3(transform.position.x, transform.position.y + salidarayos, transform.position.z);
 
-        // Radio del SphereCast
-        float sphereRadius = 0.5f;
+        
 
         // Detectar paredes a los lados del jugador con SphereCast
         Debug.DrawRay(positionray, -transform.right * wallDetectionDistance, Color.red);
@@ -860,7 +861,8 @@ public class Controladorjugador : MonoBehaviour
     public void Muerto()
     {
         StopAllCoroutines();
-        progress.StopAllCoroutines();
+        progress.StopAllCoroutines(); 
+        botones.ApagarTodosLosBotones();
         TimeLight.intensity = targetIntensitytime;
         TimeLight.color = originalColortime;
         DashLight.intensity = targetIntensitydash;
@@ -875,6 +877,7 @@ public class Controladorjugador : MonoBehaviour
         progress.PointsToOrigin();
         Animationtime = 1;
         run = true;
+
         Time.timeScale = 0;
 
         // Llamar a la pantalla de muerte

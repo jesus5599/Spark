@@ -5,9 +5,9 @@ public class ControladorPuertasYBotones : MonoBehaviour
 {
     public static ControladorPuertasYBotones Instance;
 
-    private Dictionary<int, List<Boton>> botonesPorID = new Dictionary<int, List<Boton>>();
-    private Dictionary<int, List<Puerta>> puertasPorID = new Dictionary<int, List<Puerta>>();
-    private Dictionary<int, int> botonesActivadosPorID = new Dictionary<int, int>();
+    [SerializeField] private Dictionary<int, List<Boton>> botonesPorID = new Dictionary<int, List<Boton>>();
+    [SerializeField] private Dictionary<int, List<Puerta>> puertasPorID = new Dictionary<int, List<Puerta>>();
+    [SerializeField] private Dictionary<int, int> botonesActivadosPorID = new Dictionary<int, int>();
 
     private void Awake()
     {
@@ -53,6 +53,19 @@ public class ControladorPuertasYBotones : MonoBehaviour
         {
             botonesActivadosPorID[id]--;
             VerificarEstadoPuertas(id);
+        }
+    }
+    public void ApagarTodosLosBotones()
+    {
+        foreach (var kvp in botonesPorID)
+        {
+            foreach (var boton in kvp.Value)
+            {
+                boton.DesactivarBoton(); // Suponiendo que Boton tenga un método Desactivar()
+            }
+
+            botonesActivadosPorID[kvp.Key] = 0; // Restablecer el contador de botones activados
+            VerificarEstadoPuertas(kvp.Key); // Actualizar el estado de las puertas
         }
     }
 
