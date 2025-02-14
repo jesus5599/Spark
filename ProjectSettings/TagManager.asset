@@ -9,6 +9,10 @@ TagManager:
   - checkpoint
   - Parry
   - VolumeSliderTag
+  - finish
+  - Proyectil
+  - Plataforma
+  - ObjetivoBala
   layers:
   - Default
   - TransparentFX
@@ -22,10 +26,10 @@ TagManager:
   - player
   - enemy
   - Parry
-  - 
-  - 
-  - 
-  - 
+  - Escenario
+  - noWallrun
+  - YesShotTriggers
+  - ObjetivoBala
   - 
   - 
   - 

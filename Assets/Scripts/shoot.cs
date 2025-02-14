@@ -7,10 +7,12 @@ public class shoot : MonoBehaviour
     public float speed;
     public enum Difficulty { Easy, Normal, Hard }
     public Difficulty currentDifficulty;
-
+    public GameObject particle;
+    public GameObject flash;
     private void Start()
     {
         StartCoroutine(Destroy());
+        StartCoroutine(ShowFlash());
         AdjustShootVelocity();
         LoadDifficulty();
 
@@ -30,22 +32,75 @@ public class shoot : MonoBehaviour
         yield return new WaitForSeconds(7);
         Destroy(gameObject);
     }
+    
+    IEnumerator ShowFlash()
+    {
+        GameObject destello;
+        destello = Instantiate(flash, transform.position, transform.rotation);
+        destello.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0);
+        
+    }
+    IEnumerator ShowImpact(Vector3 position, Vector3 normal)
+    {
+        // Crear el impacto en el punto de colisión con la rotación hacia la normal
+        Quaternion rotation = Quaternion.LookRotation(normal);
+        GameObject impacto = Instantiate(particle, position, rotation);
+        impacto.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f); // Esperar antes de destruir el efecto (ajústalo según sea necesario)
+
+        
+        Destroy(gameObject); // Destruir la bala después de mostrar el impacto
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        
-        Destroy(gameObject);
+        // Obtener el primer punto de contacto
+        ContactPoint contact = collision.contacts[0];
 
+        // Obtener la posición del impacto
+        Vector3 hitPosition = contact.point;
+
+        // Obtener la normal de la superficie impactada
+        Vector3 hitNormal = contact.normal;
+
+        // Desplazar el impacto un poco hacia atrás en la dirección de la normal
+        Vector3 adjustedPosition = hitPosition - hitNormal * -0.15f; // Ajusta 0.1f según necesites
+
+        // Iniciar la corrutina con la nueva posición ajustada
+        StartCoroutine(ShowImpact(adjustedPosition, hitNormal));
     }
-    private void OnTriggerEnter(Collider collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-collision.GetComponent<Collider>().GetComponent<parry>()?.Shoot();
-        Destroy(gameObject);
+
+        if (other.CompareTag("Parry"))
+        {
+            // Obtener la posición del impacto
+            Vector3 hitPosition = other.ClosestPoint(transform.position);
+
+            // Calcular la normal de la superficie simulada
+            Vector3 hitNormal = (transform.position - hitPosition).normalized;
+
+            // Desplazar el impacto un poco hacia atrás en la dirección de la normal
+            Vector3 adjustedPosition = hitPosition - hitNormal * -0.15f; // Ajusta 0.1f según necesites
+
+            // Iniciar la corrutina con la nueva posición y normal ajustada
+            StartCoroutine(ShowImpact(adjustedPosition, hitNormal));           
+        }
+
+
+        other.GetComponent<Collider>().GetComponent<parry>()?.Shoot();
+        
 
     }
     private void OnTriggerStay(Collider other)
     {
-        Destroy(gameObject);
+        if (!other.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+        }
     }
     private void AdjustShootVelocity()
     {

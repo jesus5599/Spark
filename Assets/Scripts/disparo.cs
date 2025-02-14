@@ -17,6 +17,7 @@ public class disparo : MonoBehaviour
     public GameObject bala1, bala2, bala3, bala4, bala5, bala6;
     public AudioSource audioSource; // Componente AudioSource para reproducir sonido
     public AudioClip disparoClip,recargaClip;   // Sonido del disparo
+    public GameObject flash;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,15 +34,7 @@ public class disparo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Calculate the direction of the missile in the world space
-        Vector3 fwd = lanzador.TransformDirection(Vector3.forward);
-        
-
-        // Get the direction vector from the launcher to the target 
-        Vector3 difference = targetObject.transform.position - transform.position;
-        // Calculate the rotation needed to face the target in 3D space
-        Quaternion rotation = Quaternion.LookRotation(difference);
-        brazo.transform.rotation = rotation;
+       
 
         if (municionactual <= 0 && recarga==true)
         {
@@ -50,7 +43,24 @@ public class disparo : MonoBehaviour
         }
 
         if (disparoarma == true && municionactual > 0)
-        { Shoot(); }
+        {
+            StartCoroutine(ShowFlash()); 
+            Shoot();
+        }
+    }
+    void LateUpdate()
+    {
+        // Calculate the direction of the missile in the world space
+        Vector3 fwd = lanzador.TransformDirection(Vector3.forward);
+
+
+        // Get the direction vector from the launcher to the target 
+        Vector3 difference = targetObject.transform.position - transform.position;
+        // Calculate the rotation needed to face the target in 3D space
+        Quaternion rotation = Quaternion.LookRotation(difference);
+        brazo.transform.rotation = rotation;
+
+     
     }
     private void Shoot()
     {
@@ -126,6 +136,14 @@ public class disparo : MonoBehaviour
 
 
     }
-    
+    IEnumerator ShowFlash()
+    {
+        GameObject destello;
+        destello = Instantiate(flash, lanzador.position, lanzador.rotation);
+        destello.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0);
+
+    }
+
 }
 
