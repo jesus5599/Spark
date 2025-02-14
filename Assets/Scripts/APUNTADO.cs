@@ -13,7 +13,7 @@ public class APUNTADO : MonoBehaviour
     public GameObject enemy;
     public Rigidbody misil;
     public Transform lanzador;
-    public Transform seguir;
+    private Transform seguir;
     public float rangeX = 6f;
     public float rangeY = 6f;
     public float rangeZ = 6f;
@@ -48,7 +48,10 @@ public class APUNTADO : MonoBehaviour
         isShooting = false;
         hasEnteredRange = false;
     }
-
+    public void Start()
+    {
+        seguir = GameObject.FindWithTag("ObjetivoBala").transform;
+    }
     void Update()
     {
         if (UnifiedMenuController.isDeath)

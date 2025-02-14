@@ -12,6 +12,7 @@ TagManager:
   - finish
   - Proyectil
   - Plataforma
+  - ObjetivoBala
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - Escenario
   - noWallrun
   - YesShotTriggers
-  - 
+  - ObjetivoBala
   - 
   - 
   - 
