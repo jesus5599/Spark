@@ -3225,22 +3225,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35b3bc8b29ee6e64ba244d8c2b48206f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeAux: 0
+  activeWeapon: 0
+  currentDifficulty: 0
   gun: {fileID: 4028444784965996416}
   enemy: {fileID: 8817084246775663209}
   misil: {fileID: 7182049915634637076, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
   lanzador: {fileID: 6699136937867913332}
   seguir: {fileID: 0}
-  veldisparo: 5
   rangeX: 30
   rangeY: 30
   rangeZ: 30
-  pistol: 0
-  submachinegun: 0
-  argun: 1
+  firstShotDelay: 1
   pistoldelay: 0
   submachinegundelay: 0
   argundelay: 0.15
+  argunshootdelay: 0
+  submachineshootdelay: 0
+  pistolshootdelay: 0
+  audioSource: {fileID: 0}
+  ArClip: {fileID: 0}
+  SubmachineClip: {fileID: 0}
+  GunClip: {fileID: 0}
+  Playerlayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8783178882212122419
 GameObject:
   m_ObjectHideFlags: 0
@@ -3321,6 +3329,7 @@ GameObject:
   - component: {fileID: 3244791255104390527}
   - component: {fileID: 1650913134953075636}
   - component: {fileID: 4643349534816598464}
+  - component: {fileID: 2060545462283424093}
   m_Layer: 0
   m_Name: Y Bot (ARgun)
   m_TagString: Enemy
@@ -3385,6 +3394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b18754fbfce334e8dfe15f7f96a986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: 0
 --- !u!136 &4643349534816598464
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3405,6 +3415,29 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!136 &2060545462283424093
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8817084246775663209}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}

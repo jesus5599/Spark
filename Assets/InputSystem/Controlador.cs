@@ -293,6 +293,17 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""7acf301b-ce89-4edd-a886-9ce20a68adff"",
+                    ""path"": ""<XRController>{RightHand}/thumbstickClicked"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch/Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""b66f4283-0c55-4e13-9934-ba05d4366779"",
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",

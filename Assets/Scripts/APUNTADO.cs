@@ -13,56 +13,77 @@ public class APUNTADO : MonoBehaviour
     public GameObject enemy;
     public Rigidbody misil;
     public Transform lanzador;
-    public Transform seguir;
+    private Transform seguir;
     public float rangeX = 6f;
     public float rangeY = 6f;
     public float rangeZ = 6f;
 
-    // Valores predeterminados para los tiempos de disparo
-    public float pistoldelay = 1f;
-    public float submachinegundelay = 0.2f;
-    public float argundelay = 0.5f;
-    public float argunshootdelay,submachineshootdelay,pistolshootdelay;
-    public AudioSource audioSource;
-    public AudioClip ArClip, SubmachineClip, GunClip;
-    [SerializeField]
+    public float firstShotDelay = 1f; // Retraso en el primer disparo al entrar en rango
+
+    private bool hasEnteredRange = false; // Indica si el objetivo ha entrado en rango
     private bool canShoot = true;
     private bool isShooting = false;
 
+    public float pistoldelay = 1f;
+    public float submachinegundelay = 0.2f;
+    public float argundelay = 0.5f;
+    public float argunshootdelay, submachineshootdelay, pistolshootdelay;
+
+    public AudioSource audioSource;
+    public AudioClip ArClip, SubmachineClip, GunClip;
+    public LayerMask Playerlayer;
     private void OnEnable()
     {
-        canShoot = true; // Permitir disparos al activar el objeto
+        canShoot = true;
         isShooting = false;
-        LoadDifficulty();  // Cargar la dificultad desde PlayerPrefs
-        AdjustWeaponDelays(); // Ajustar los tiempos de disparo según la dificultad
+        hasEnteredRange = false;
+        LoadDifficulty();
+        AdjustWeaponDelays();
     }
 
     private void OnDisable()
     {
-        StopAllCoroutines(); // Detener todas las corrutinas en ejecución
-        canShoot = true;     // Reiniciar el estado de disparo
+        StopAllCoroutines();
+        canShoot = true;
         isShooting = false;
+        hasEnteredRange = false;
     }
-
+    public void Start()
+    {
+        seguir = GameObject.FindWithTag("ObjetivoBala").transform;
+    }
     void Update()
     {
         if (UnifiedMenuController.isDeath)
         {
             StopAllCoroutines();
-            canShoot = true;     // Reiniciar el estado de disparo
+            canShoot = true;
             isShooting = false;
+            hasEnteredRange = false;
             return;
         }
-        // Salir si el objeto no está activo o no puede disparar
+
+        ShowRange();
+
         if (!gameObject.activeInHierarchy || !canShoot)
             return;
 
-        // Verificar si el objetivo está en rango
         if (IsTargetInRange())
         {
             AimAtTarget();
 
-            // Disparar según el arma activa
+            // Si es la primera vez que entra en rango, esperar el primer disparo
+            if (!hasEnteredRange)
+            {
+                hasEnteredRange = true;
+                StartCoroutine(DelayedFirstShot());
+                return;
+            }
+
+            // No disparar si hay un obstáculo en el camino
+            if (IsObstacleInWay())
+                return;
+
             if (canShoot && !isShooting)
             {
                 switch (activeWeapon)
@@ -79,6 +100,10 @@ public class APUNTADO : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            hasEnteredRange = false; // Reiniciar estado si el objetivo sale del rango
+        }
     }
 
     private bool IsTargetInRange()
@@ -86,6 +111,42 @@ public class APUNTADO : MonoBehaviour
         return Mathf.Abs(transform.position.x - seguir.position.x) <= rangeX &&
                Mathf.Abs(transform.position.y - seguir.position.y) <= rangeY &&
                Mathf.Abs(transform.position.z - seguir.position.z) <= rangeZ;
+    }
+
+    private bool IsObstacleInWay()
+    {
+        int excludePlayerLayer = ~Playerlayer.value; // Invertir bitmask para excluir la capa específica
+        RaycastHit hit;
+        Vector3 direction = (seguir.position - lanzador.position).normalized;
+        float distance = Vector3.Distance(lanzador.position, seguir.position);
+
+        if (Physics.Raycast(lanzador.position, direction, out hit, distance+1, excludePlayerLayer))
+        {
+            if (hit.collider.gameObject != seguir.gameObject)
+            {
+                return true; // Hay un obstáculo en el camino
+            }
+        }
+        return false;
+    }
+
+    private IEnumerator DelayedFirstShot()
+    {
+        yield return new WaitForSeconds(firstShotDelay);
+        hasEnteredRange = true; // Permitir disparos después del retraso inicial
+    }
+
+    private void ShowRange()
+    {
+        Debug.DrawRay(transform.position, Vector3.right * rangeX, Color.red);
+        Debug.DrawRay(transform.position, Vector3.up * rangeY, Color.green);
+        Debug.DrawRay(transform.position, Vector3.forward * rangeZ, Color.blue);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1, 1, 1, 0.5f);
+        Gizmos.DrawWireCube(transform.position, new Vector3(rangeX * 2, rangeY * 2, rangeZ * 2));
     }
 
     private void AimAtTarget()
@@ -102,7 +163,6 @@ public class APUNTADO : MonoBehaviour
 
     private void LoadDifficulty()
     {
-        // Cargar la dificultad desde PlayerPrefs. Si no se ha guardado, se asume dificultad Normal.
         if (PlayerPrefs.HasKey("Difficulty"))
         {
             int difficultyValue = PlayerPrefs.GetInt("Difficulty");
@@ -110,25 +170,24 @@ public class APUNTADO : MonoBehaviour
         }
         else
         {
-            currentDifficulty = Difficulty.Normal; // Valor por defecto
+            currentDifficulty = Difficulty.Normal;
         }
     }
 
     private void AdjustWeaponDelays()
     {
-        // Ajusta los tiempos de disparo según la dificultad
         switch (currentDifficulty)
         {
             case Difficulty.Easy:
-                pistoldelay = 1.5f; // Mayor delay en dificultad fácil
+                pistoldelay = 1.5f;
                 submachinegundelay = 0.2f;
                 argundelay = 0.2f;
-                pistolshootdelay =2f;
-                submachineshootdelay =3f;
-                argunshootdelay =2.5f;
+                pistolshootdelay = 2f;
+                submachineshootdelay = 3f;
+                argunshootdelay = 2.5f;
                 break;
             case Difficulty.Normal:
-                pistoldelay = 1f; // Delay estándar en dificultad normal
+                pistoldelay = 1f;
                 submachinegundelay = 0.1f;
                 argundelay = 0.1f;
                 pistolshootdelay = 1f;
@@ -136,12 +195,12 @@ public class APUNTADO : MonoBehaviour
                 argunshootdelay = 1f;
                 break;
             case Difficulty.Hard:
-                pistoldelay = 0.5f; // Menor delay en dificultad difícil
+                pistoldelay = 0.5f;
                 submachinegundelay = 0.075f;
                 argundelay = 0.075f;
-                pistolshootdelay = .5f;
-                submachineshootdelay = .5f;
-                argunshootdelay = .75f;
+                pistolshootdelay = 0.5f;
+                submachineshootdelay = 0.5f;
+                argunshootdelay = 0.75f;
                 break;
         }
     }
@@ -149,29 +208,21 @@ public class APUNTADO : MonoBehaviour
     private IEnumerator Pistolshot()
     {
         isShooting = true;
-
         PlayAudio(GunClip);
-        Rigidbody misilInstanc = Instantiate(misil, lanzador.position, lanzador.rotation);
-        misilInstanc.gameObject.SetActive(true);
-
+        Instantiate(misil, lanzador.position, lanzador.rotation).gameObject.SetActive(true);
         yield return new WaitForSeconds(pistolshootdelay);
-
         isShooting = false;
     }
 
     private IEnumerator ARshot()
     {
         isShooting = true;
-
-        
         for (int i = 0; i < 3; i++)
         {
             PlayAudio(ArClip);
-            Rigidbody misilInstanc = Instantiate(misil, lanzador.position, lanzador.rotation);
-            misilInstanc.gameObject.SetActive(true);
+            Instantiate(misil, lanzador.position, lanzador.rotation).gameObject.SetActive(true);
             yield return new WaitForSeconds(argundelay);
         }
-
         yield return new WaitForSeconds(argunshootdelay);
         isShooting = false;
     }
@@ -179,16 +230,12 @@ public class APUNTADO : MonoBehaviour
     private IEnumerator Submachineshot()
     {
         isShooting = true;
-
-        
         for (int i = 0; i < 10; i++)
         {
             PlayAudio(SubmachineClip);
-            Rigidbody misilInstanc = Instantiate(misil, lanzador.position, lanzador.rotation);
-            misilInstanc.gameObject.SetActive(true);
+            Instantiate(misil, lanzador.position, lanzador.rotation).gameObject.SetActive(true);
             yield return new WaitForSeconds(submachinegundelay);
         }
-
         yield return new WaitForSeconds(submachineshootdelay);
         isShooting = false;
     }
@@ -201,13 +248,13 @@ public class APUNTADO : MonoBehaviour
         }
     }
 
-    // Para cambiar la dificultad y guardarla en PlayerPrefs
     public void SetDifficulty(Difficulty newDifficulty)
     {
         currentDifficulty = newDifficulty;
         PlayerPrefs.SetInt("Difficulty", (int)newDifficulty);
-        PlayerPrefs.Save();  // Guardar la dificultad en PlayerPrefs
+        PlayerPrefs.Save();
     }
+
     public void StopCorrutine()
     {
         StopAllCoroutines();

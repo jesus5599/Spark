@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using Cinemachine;
 using static UnityEngine.UI.Image;
 using System;
@@ -9,6 +9,7 @@ using UnityEngine.SocialPlatforms;
 using UnityEngine.Windows;
 using UnityEngine.UIElements;
 using System.Security.Cryptography;
+using UnityEngine.SceneManagement;
 
 public class Controladorjugador : MonoBehaviour
 {
@@ -20,19 +21,20 @@ public class Controladorjugador : MonoBehaviour
     [SerializeField] private Vector3 playerVelocity;
     private Controlador controlador;
 
-    // ConfiguraciÛn de movimiento b·sico
+    // Configuraci√≥n de movimiento b√°sico
     public float playerSpeed = 2.0f;
     public float jumpHeight = 1.0f;
     public float gravityValue = -9.81f;
     public bool groundedPlayer;
     
-    // ConfiguraciÛn de wall run
+    // Configuraci√≥n de wall run
     public float wallRunSpeed = 10f ;
     public float wallRunDuration = 1.5f;
-
+    // Radio del SphereCast
+    public float sphereRadius = 0.5f;
 
     //configuracion walljump
-    
+
     public float wallJumpUpForce;
     public float wallJumpSideForce;
     public float wallJumpTime = .25f, wallJumpSpeed = 20f;
@@ -40,15 +42,15 @@ public class Controladorjugador : MonoBehaviour
 
     public bool isWallRunning = false;
     private Vector3 wallNormal;
-    private Vector3 preWallRunVelocity; // DirecciÛn antes de wall run
-    private Vector3 entryDirection; // DirecciÛn al entrar en el wall run
+    private Vector3 preWallRunVelocity; // Direcci√≥n antes de wall run
+    private Vector3 entryDirection; // Direcci√≥n al entrar en el wall run
     private float wallRunTimer;
 
-    // ConfiguraciÛn de detecciÛn de suelo
+    // Configuraci√≥n de detecci√≥n de suelo
     public float groundCheckDistance = 1f;
     public LayerMask groundLayer;
 
-    // ConfiguraciÛn de detecciÛn de la pared
+    // Configuraci√≥n de detecci√≥n de la pared
     public float wallDetectionDistance = 1f;
     public float  salidarayos = .9f;
     public LayerMask wallLayer;
@@ -60,30 +62,39 @@ public class Controladorjugador : MonoBehaviour
     //Configuracion parar el tiempo
     public float TimeCooldown,TimeSlowed;
     public bool timeslow;
+    public Light TimeLight;
+    float targetIntensitytime = 4f; // Intensidad m√°xima de la luz
+    Color originalColortime;
 
-    // Variables para el control de la c·mara con el ratÛn
+    // Variables para el control de la c√°mara con el rat√≥n
     public CinemachineVirtualCamera virtualCamera; // Referencia a la Cinemachine Virtual Camera
+    public Vector3 alturacamara, alturacamaraslide;
     public Transform playerBody; // Referencia al cuerpo del jugador (para moverlo horizontalmente)
     public float Sensitivity;
     public float SensitivityX = 2.0f; // Sensibilidad  en el eje X
     public float SensitivityY = 2.0f; // Sensibilidad en el eje Y
 
-    private float xRotation = 0f; // RotaciÛn en el eje X (vertical)
+    private float xRotation = 0f; // Rotaci√≥n en el eje X (vertical)
     public Transform Cabeza;
 
     //Configuracion de dash
     public float dashSpeed, dashCooldown;
     public bool dashEnable;
-    public ParticleSystem DashParticles; // Sistema de partÌculas
+    public ParticleSystem DashParticles; // Sistema de part√≠culas
+    public Light DashLight;
+    float targetIntensitydash = 4f; // Intensidad m√°xima de la luz
+    Color originalColordash;
+
     //Configuracion de las animaciones
     private Animator animate;
     public float speedx, speedz;
     bool paredright, paredleft;
+    public float Animationtime;
 
     //Configuracion del deslizamiento
     public bool isSliding;         
     public float slideSpeed = 10f;                 // Velocidad del deslizamiento
-    public float slideDuration = 1f;              // DuraciÛn del deslizamiento
+    public float slideDuration = 1f;              // Duraci√≥n del deslizamiento
     public float crouchHeight = 0.9f;             // Altura al agacharse
     public float originalHeight = 1.8f;             // Altura original                
     private float slideTimer = 0f;    
@@ -100,11 +111,16 @@ public class Controladorjugador : MonoBehaviour
 
     public AudioSource audioSource; // Componente AudioSource para reproducir sonido
     public AudioClip pasosClip;   // Sonido de correr
-    bool run=true;
+   public bool run=true;
 
     public Vector3 checkpointposition;
-    private int currentCheckpointID = 0; // ID del ˙ltimo checkpoint alcanzado
+    public Quaternion checkpointrotation;
+    private int currentCheckpointID = 0; // ID del √∫ltimo checkpoint alcanzado
     private EnemyManager enemyManager; // Referencia al gestor de enemigos
+    public float currentTime; // Tiempo actual del jugador
+    private float checkpointTime; // Tiempo registrado en el checkpoint
+    private bool isDead = false; // Estado del jugador
+    [SerializeField] private TMPro.TextMeshProUGUI tiempopartida; // Asignar en el Inspector
 
     public GameObject parry;
     public float timeparry, parrycooldown;
@@ -114,11 +130,22 @@ public class Controladorjugador : MonoBehaviour
     public Difficulty currentDifficulty;
 
     public LineRendererProgress progress;
+    public ControladorPuertasYBotones botones;
     private PlayerInput playerInput; // Referencia al componente PlayerInput
+
+    private Vector3 lastPlatformPosition;
+    private Transform currentPlatform = null;
+
     #endregion
     #region Awake Start Update
     void Awake()
     {
+        run = true;
+        Animationtime = 1;
+        targetIntensitytime = TimeLight.intensity ;
+        originalColortime = TimeLight.color ;
+         targetIntensitydash = DashLight.intensity ;
+         originalColordash= DashLight.color ;
         characterController = GetComponent<CharacterController>();
         controlador = new Controlador();
         virtualCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
@@ -129,17 +156,49 @@ public class Controladorjugador : MonoBehaviour
         isSliding = false;
         tocandotecho = false;
         checkpointposition= transform.position;
+        checkpointrotation = transform.rotation;
         enemyManager = FindObjectOfType<EnemyManager>(); // Encuentra el gestor de enemigos
-        Isparring=true;
+        
+        Isparring =true;
 
     }
     private void Start()
     {
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;  
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        // Busca un GameObject llamado "Texto" y obtiene el componente TextMeshProUGUI
+        GameObject textObject = GameObject.Find("tiempo");
+
+        if (textObject != null)
+        {
+            tiempopartida = textObject.GetComponent<TMPro.TextMeshProUGUI>();
+            tiempopartida.text = "Texto actualizado!";
+        }
+        else
+        {
+            Debug.LogWarning("No se encontr√≥ un GameObject llamado 'tiempo'.");
+        }
     }
     void Update()
     {
+        if (currentPlatform != null)
+        {
+            // Calcula cu√°nto se ha movido la plataforma y mueve el personaje con ella
+            Vector3 deltaMovement = currentPlatform.position - lastPlatformPosition;
+            characterController.Move(deltaMovement);
 
+            // Actualiza la posici√≥n anterior de la plataforma
+            lastPlatformPosition = currentPlatform.position;
+        }
+        if (tiempopartida != null)
+        {
+            // Convertir el tiempo total transcurrido a minutos y segundos
+            int minutes = Mathf.FloorToInt(currentTime / 60); // Minutos enteros
+            float seconds = currentTime % 60; // Segundos sobrantes
+
+            // Formatear el texto como MM:SS.ss
+            tiempopartida.text = $"Time: {minutes:00}:{seconds:00.00}";
+        }
+        
         if (UnifiedMenuController.isPaused)
         {
             UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -197,10 +256,10 @@ public class Controladorjugador : MonoBehaviour
 
 
         }
-        // Mover la c·mara 
+        // Mover la c√°mara 
         PlayerLook();
 
-        // Verificar si el jugador est· en el suelo
+        // Verificar si el jugador est√° en el suelo
         CheckGroundStatus();
 
         // Aplicar movimiento y salto
@@ -244,7 +303,7 @@ public class Controladorjugador : MonoBehaviour
         {
             StopSlide();
         }
-        // Deslizar mientras el temporizador estÈ activo
+        // Deslizar mientras el temporizador est√© activo
         if (isSliding)
         {
             Slide();
@@ -258,6 +317,11 @@ public class Controladorjugador : MonoBehaviour
         {
             StartCoroutine(Parry());
         }
+        //Tiempo
+        if (!isDead)
+        {
+            currentTime += Time.unscaledDeltaTime;
+        }
 
         if (playerVelocity.y < -100)
         { 
@@ -270,12 +334,12 @@ public class Controladorjugador : MonoBehaviour
     private void Jump()
     {
         
-        // Saltar si est· en el suelo
+        // Saltar si est√° en el suelo
         if (controlador.Player.Jump.triggered && groundedPlayer && !isOnRamp && !tocandotecho)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
         }
-        // Saltar si est· en el muro
+        // Saltar si est√° en el muro
         if (controlador.Player.Jump.triggered && isWallRunning)
         {
             WallJump();
@@ -295,7 +359,7 @@ public class Controladorjugador : MonoBehaviour
     private void CheckGroundStatus()
     {
         int excludeGroundLayer = ~groundLayer.value;
-        // Usar raycast para verificar si el jugador est· en el suelo
+        // Usar raycast para verificar si el jugador est√° en el suelo
         Vector3 origin = transform.position;
         Vector3 direction = -transform.up;
         Debug.DrawRay(origin, direction * groundCheckDistance, Color.green);
@@ -309,7 +373,7 @@ public class Controladorjugador : MonoBehaviour
             groundedPlayer = false;
         }
 
-        // Reiniciar velocidad vertical si est· en el suelo
+        // Reiniciar velocidad vertical si est√° en el suelo
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
@@ -357,86 +421,119 @@ public class Controladorjugador : MonoBehaviour
         Vector2 lookInput = controlador.Player.Look.ReadValue<Vector2>();
         float lookX = lookInput.x * SensitivityX * Time.unscaledDeltaTime;
         float lookY = lookInput.y * SensitivityY * Time.unscaledDeltaTime;
-        Debug.Log(lookInput.x + "  " + lookInput.y);
+        //Debug.Log(lookInput.x + "  " + lookInput.y);
 
-        // RotaciÛn vertical (c·mara y cabeza)
+        // Rotaci√≥n vertical (c√°mara y cabeza)
         xRotation -= lookY;
-        xRotation = Mathf.Clamp(xRotation, -80f, 56f); // Limitar la rotaciÛn vertical
+        xRotation = Mathf.Clamp(xRotation, -80f, 56f); // Limitar la rotaci√≥n vertical
         Quaternion verticalRotation = Quaternion.Euler(xRotation, 0f, 0f);
         virtualCamera.transform.localRotation = verticalRotation;
         Cabeza.transform.localRotation = verticalRotation;
 
-        // RotaciÛn horizontal (cuerpo del jugador)
+        // Rotaci√≥n horizontal (cuerpo del jugador)
         playerBody.Rotate(Vector3.up * lookX);
     }
 
 
     #endregion
-    
-    IEnumerator Dash(Vector3 moveDir)       
+
+    IEnumerator Dash(Vector3 moveDir)
     {
-        dashEnable = false;               
+        // Guardar el color original de la luz
+        originalColordash = DashLight.color;
+
+        // Cambiar intensidad a 0 e iniciar el color rojo
+        DashLight.intensity = 0;
+        DashLight.color = Color.red; // Cambiar el color a rojo
+        dashEnable = false;
+
         float startTime = Time.unscaledTime;
         DashParticles.gameObject.SetActive(true);
+
+        // Movimiento del dash
         while (Time.unscaledTime < startTime + wallJumpTime)
         {
             characterController.Move(moveDir * dashSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
+
         DashParticles.gameObject.SetActive(false);
-        yield return new WaitForSeconds(dashCooldown);
+
+        // Proceso de recarga
+         float elapsedTime = 0f;
+        float rechargeTime = dashCooldown; // Tiempo que tarda en recargarse completamente
+        targetIntensitydash = 4f; // Intensidad m√°xima de la luz
+
+        while (elapsedTime < rechargeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / rechargeTime;
+
+            // Interpolar intensidad de la luz y color (rojo -> original)
+            DashLight.intensity = Mathf.Lerp(0, targetIntensitydash, t);
+            DashLight.color = Color.Lerp(Color.red, originalColordash, t);
+            yield return null;
+        }
+
+        // Asegurar que la luz est√° completamente cargada
+        DashLight.intensity = targetIntensitydash;
+        DashLight.color = originalColordash;
         dashEnable = true;
     }
-  
+
+
+
     #region Wallrun
     private void CheckForWall()
     {
-        int excludeWallLayer = ~wallLayer.value; // Invierte el bitmask para excluir la capa especÌfica
+        int excludeWallLayer = ~wallLayer.value; // Invertir bitmask para excluir la capa espec√≠fica
+
+        Vector3 positionray = new Vector3(transform.position.x, transform.position.y + salidarayos, transform.position.z);
 
         
-        
 
-        // Detectar paredes a los lados del jugador
-        Vector3 positionray = new Vector3 (transform.position.x,transform.position.y+salidarayos,transform.position.z);
+        // Detectar paredes a los lados del jugador con SphereCast
         Debug.DrawRay(positionray, -transform.right * wallDetectionDistance, Color.red);
         Debug.DrawRay(positionray, transform.right * wallDetectionDistance, Color.blue);
-        wallLeft = Physics.Raycast(positionray, -transform.right, out hitLeft, wallDetectionDistance, excludeWallLayer);
-        wallRight = Physics.Raycast(positionray, transform.right, out hitRight, wallDetectionDistance, excludeWallLayer);
+
+        wallLeft = Physics.SphereCast(positionray, sphereRadius, -transform.right, out hitLeft, wallDetectionDistance, excludeWallLayer);
+        wallRight = Physics.SphereCast(positionray, sphereRadius, transform.right, out hitRight, wallDetectionDistance, excludeWallLayer);
 
         if (wallLeft || wallRight)
         {
             if (wallLeft) { paredleft = true; paredright = false; }
-        else if (wallRight) { paredright = true; paredleft = false; }
+            else if (wallRight) { paredright = true; paredleft = false; }
+
             wallNormal = wallLeft ? hitLeft.normal : hitRight.normal;
             StartWallRun(wallNormal);
-
         }
     }
+
 
     private void StartWallRun(Vector3 wallNormal)
     {
         isWallRunning = true;
         wallRunTimer = wallRunDuration;
 
-        // Guardar la direcciÛn de movimiento previa
+        // Guardar la direcci√≥n de movimiento previa
         preWallRunVelocity = playerVelocity;
 
-        // Almacenar la direcciÛn de entrada al wall run (la direcciÛn de movimiento al momento de entrar)
+        // Almacenar la direcci√≥n de entrada al wall run (la direcci√≥n de movimiento al momento de entrar)
         entryDirection = transform.forward;
 
         // Desactivar la gravedad temporalmente durante el wall run
         playerVelocity.y = 0; // Cancelar efecto de gravedad durante el wall run
 
-        // Calcular la direcciÛn del movimiento sobre la pared
+        // Calcular la direcci√≥n del movimiento sobre la pared
         Vector3 wallRunDirection = Vector3.Cross(wallNormal, Vector3.up).normalized; // Movimiento paralelo a la pared
 
-        // Ajustar la direcciÛn para que coincida con la entrada inicial
+        // Ajustar la direcci√≥n para que coincida con la entrada inicial
         if (Vector3.Dot(wallRunDirection, entryDirection) < 0)
         {
-            wallRunDirection = -wallRunDirection; // Asegurarse de que el movimiento sea en la misma direcciÛn de entrada
+            wallRunDirection = -wallRunDirection; // Asegurarse de que el movimiento sea en la misma direcci√≥n de entrada
         }
 
-        // Establecer la velocidad del jugador en la direcciÛn del wall run
+        // Establecer la velocidad del jugador en la direcci√≥n del wall run
         playerVelocity = wallRunDirection * wallRunSpeed ;
     }
 
@@ -499,20 +596,52 @@ public class Controladorjugador : MonoBehaviour
 
 
     #region Timestop
-    IEnumerator TimeStop() 
+    IEnumerator TimeStop()
     {
+        // Guardar el color original de la luz
+        originalColortime = TimeLight.color;
+
+        // Cambiar intensidad a 0 e iniciar el color rojo
+        TimeLight.intensity = 0;
+        TimeLight.color = Color.red; // Cambiar el color a rojo
+        Animationtime = 5;
         timeslow = false;
-            SlowDownTime();
-        yield return new WaitForSeconds(TimeSlowed*.2f);
+
+        // Activar el tiempo ralentizado
+        SlowDownTime();
+        yield return new WaitForSeconds(TimeSlowed * 0.2f);
+
+        // Restaurar la animaci√≥n
+        Animationtime = 1;
         RestoreTime();
-        yield return new WaitForSeconds(TimeCooldown);
+
+        // Proceso de recarga
+         float elapsedTime = 0f;
+        float rechargeTime = TimeCooldown; // Tiempo que tarda en recargarse completamente
+        targetIntensitytime = 4f; // Intensidad m√°xima de la luz
+
+        while (elapsedTime < rechargeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / rechargeTime;
+
+            // Interpolar intensidad de la luz y color (rojo -> original)
+            TimeLight.intensity = Mathf.Lerp(0, targetIntensitytime, t);
+            TimeLight.color = Color.Lerp(Color.red, originalColortime, t);
+            yield return null;
+        }
+
+        // Asegurar que la luz est√° completamente cargada
+        TimeLight.intensity = targetIntensitytime;
+        TimeLight.color = originalColortime;
         timeslow = true;
     }
-    // Ralentiza el tiempo al 50% de su velocidad normal
+
+    // Ralentiza el tiempo al 20% de su velocidad normal
     public void SlowDownTime()
     {
         Time.timeScale = 0.2f; // Tiempo a la mitad de velocidad
-        Time.fixedDeltaTime = 0.02f * Time.timeScale; // Ajusta el fixedDeltaTime para mantener la fÌsica sincronizada
+        Time.fixedDeltaTime = 0.02f * Time.timeScale; // Ajusta el fixedDeltaTime para mantener la f√≠sica sincronizada
         timelow.gameObject.SetActive(true);
     }
 
@@ -537,8 +666,20 @@ public class Controladorjugador : MonoBehaviour
         // Reducir la altura del CharacterController
         characterController.height = crouchHeight;
         characterController.center = new Vector3(0f, crouchHeight/2, 0f);
+        CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 
-        // Capturar la direcciÛn de movimiento actual
+        // Verifica si hay un Capsule Collider
+        if (capsuleCollider != null)
+        {
+            // Modificar el centro del collider
+            capsuleCollider.center = new Vector3(0f, crouchHeight / 2, 0f); // Cambia las coordenadas seg√∫n necesites
+
+            // Modificar la altura del collider
+            capsuleCollider.height = crouchHeight; // Cambia este valor seg√∫n necesites
+
+            Debug.Log("Capsule Collider modificado.");
+        }
+        // Capturar la direcci√≥n de movimiento actual
         slideDirection = transform.forward * slideSpeed;
     }
 
@@ -584,7 +725,19 @@ public class Controladorjugador : MonoBehaviour
         // Restaurar la altura original del CharacterController
         characterController.height = originalHeight;
         characterController.center = new Vector3(0f, originalHeight/2, 0f);
+        CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 
+        // Verifica si hay un Capsule Collider
+        if (capsuleCollider != null)
+        {
+            // Modificar el centro del collider
+            capsuleCollider.center = new Vector3(0f, originalHeight / 2, 0f); // Cambia las coordenadas seg√∫n necesites
+
+            // Modificar la altura del collider
+            capsuleCollider.height = originalHeight; // Cambia este valor seg√∫n necesites
+
+            Debug.Log("Capsule Collider modificado.");
+        }
         playerVelocity = new Vector3(0, playerVelocity.y, 0);
     }
     bool IsSomethingAbove()
@@ -608,7 +761,7 @@ public class Controladorjugador : MonoBehaviour
     }
     bool IsOnRamp()
     {
-        // Verificar si el personaje est· sobre una rampa
+        // Verificar si el personaje est√° sobre una rampa
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, slideLayer))
         {
             return true;
@@ -643,34 +796,77 @@ public class Controladorjugador : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log("Trigger con: " + other.name);
-        if (other.transform.CompareTag("checkpoint"))
+
+        if (other.CompareTag("checkpoint"))
         {
-            // Actualiza la posiciÛn e ID del checkpoint
             checkpointposition = other.transform.position;
+            checkpointrotation = other.transform.rotation;
+            checkpointTime = currentTime;
             currentCheckpointID = other.GetComponent<Checkpoint>().checkpointID;
             other.gameObject.SetActive(false);
             Debug.Log("Checkpoint alcanzado: " + currentCheckpointID);
         }
-        else if (other.transform.CompareTag("Enemy"))
+        else if (other.CompareTag("Enemy"))
         {
             Muerto();
         }
+        else if (other.CompareTag("finish"))
+        {
+            UnifiedMenuController menuController = FindObjectOfType<UnifiedMenuController>();
+            SaveSystem sistemaGuardado = FindObjectOfType<SaveSystem>();
+
+            if (menuController != null)
+            {
+                sistemaGuardado.SaveNewTime(currentTime);
+                menuController.ShowNextLevelMenu(SceneManager.GetActiveScene().buildIndex);
+            }
+            else
+            {
+                Debug.LogError("No se encontr√≥ un objeto de tipo UnifiedMenuController en la escena.");
+            }
+
+            Time.timeScale = 0f;
+        }
+
+        // ‚úÖ Se asigna como hijo del hijo de la plataforma
+        if (other.CompareTag("Plataforma"))
+        {
+            currentPlatform = other.transform;
+            lastPlatformPosition = currentPlatform.position;
+        }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Plataforma"))
+        {
+            currentPlatform = null;
+        }
+    }
+
+
 
     public void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("ColisiÛn con: " + collision.gameObject.name);
+        Debug.Log("Colisi√≥n con: " + collision.gameObject.name);
         
         if (collision.transform.CompareTag("Enemy"))
         {
             Muerto();
         }
+        
     }
+    
 
     public void Muerto()
     {
         StopAllCoroutines();
-        progress.StopAllCoroutines();        
+        progress.StopAllCoroutines(); 
+        botones.ApagarTodosLosBotones();
+        TimeLight.intensity = targetIntensitytime;
+        TimeLight.color = originalColortime;
+        DashLight.intensity = targetIntensitydash;
+        DashLight.color = originalColordash;
         timeslow = true;
         counter = false;
         Isparring = true;
@@ -679,6 +875,9 @@ public class Controladorjugador : MonoBehaviour
         timelow.gameObject.SetActive(false);
         DashParticles.gameObject.SetActive(false);
         progress.PointsToOrigin();
+        Animationtime = 1;
+        run = true;
+
         Time.timeScale = 0;
 
         // Llamar a la pantalla de muerte
@@ -689,7 +888,7 @@ public class Controladorjugador : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No se encontrÛ un objeto de tipo UnifiedMenuController en la escena.");
+            Debug.LogError("No se encontr√≥ un objeto de tipo UnifiedMenuController en la escena.");
         }
     }
 
@@ -702,6 +901,7 @@ public class Controladorjugador : MonoBehaviour
 
         Debug.Log("Reapareciendo en: " + checkpointposition);
         transform.position = checkpointposition; // Mueve al jugador
+        transform.rotation = checkpointrotation; // Orienta al jugador
         enemyManager.RespawnEnemies(currentCheckpointID);
         if (characterController != null)
         {
@@ -716,11 +916,11 @@ public class Controladorjugador : MonoBehaviour
     {
         if (isSliding)
         {
-            virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = new Vector3(0f, 0.66f, 0.17f);
+            virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = alturacamaraslide;
         }
         else
         {
-            virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = new Vector3(0f, 1.62f, 0.17f);
+            virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = alturacamara;
         }
     }
     IEnumerator Runsound()
@@ -760,6 +960,7 @@ public class Controladorjugador : MonoBehaviour
         animate.SetBool("paredleft", paredleft);
         animate.SetBool("slide", isSliding);
         animate.SetBool("parry", counter);
+        animate.SetFloat("Tiempo", Animationtime);
     }
 
     private void LoadDifficulty()
@@ -777,7 +978,7 @@ public class Controladorjugador : MonoBehaviour
     }
     private void AdjustHabilitiesDelays()
     {
-        // Ajusta los tiempos de disparo seg˙n la dificultad
+        // Ajusta los tiempos de disparo seg√∫n la dificultad
         switch (currentDifficulty)
         {
             case Difficulty.Easy:
