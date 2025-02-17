@@ -13,6 +13,8 @@ TagManager:
   - Proyectil
   - Plataforma
   - ObjetivoBala
+  - objetivocanvas
+  - rotacioncanvas
   layers:
   - Default
   - TransparentFX

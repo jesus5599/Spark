@@ -249,7 +249,7 @@ public class UnifiedMenuController : MonoBehaviour
         PlayerPrefs.SetInt("Difficulty", difficulty); // Guardar dificultad seleccionada
         gameData = new GameData { currentLevel = 1, score = 0 }; // Reiniciar datos
         SaveGame(gameData);                                      // Guardar nueva partida
-        SceneManager.LoadScene("level1");          // Cargar la escena principal del juego
+        SceneManager.LoadScene(1);          // Cargar la escena principal del juego
     }
 
     // Reiniciar el nivel actual

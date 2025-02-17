@@ -382,7 +382,7 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1be4e9b9-9bed-4d8b-999b-c9e1f9895dfd"",
-                    ""path"": ""<XRController>{LeftHand}/{SecondaryButton}"",
+                    ""path"": ""<XRController>{RightHand}/{SecondaryButton}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";XR"",

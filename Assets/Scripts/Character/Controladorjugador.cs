@@ -136,6 +136,8 @@ public class Controladorjugador : MonoBehaviour
     private Vector3 lastPlatformPosition;
     private Transform currentPlatform = null;
 
+    public bool vr;
+    public GameObject puntapistola;
     #endregion
     #region Awake Start Update
     void Awake()
@@ -240,9 +242,20 @@ public class Controladorjugador : MonoBehaviour
         HandleAnimations();
 
         int excludeParryLayer = ~ParryLayer.value;
-        Vector3 puntopantalla = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
-        Ray rayo = Camera.main.ScreenPointToRay(puntopantalla);
         RaycastHit hit;
+        Ray rayo;
+
+        // Verificar si es VR o no y definir el rayo correspondiente
+        if (vr)
+        {
+            Transform puntoDisparo = puntapistola.transform; // Asegurar que puntapistola está asignado
+            rayo = new Ray(puntoDisparo.position, puntoDisparo.forward);
+        }
+        else
+        {
+            Vector3 puntopantalla = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
+            rayo = Camera.main.ScreenPointToRay(puntopantalla);
+        }
 
         // Manejar el Disparo
         if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
@@ -252,10 +265,11 @@ public class Controladorjugador : MonoBehaviour
                 disparo.puntoimpacto = hit.point;
                 disparo.disparoarma = true;
                 timeAux = Time.unscaledTime;
+
+                if (vr) Debug.Log("VRRRR"); // Solo imprime si es VR
             }
-
-
         }
+
         // Mover la cámara 
         PlayerLook();
 

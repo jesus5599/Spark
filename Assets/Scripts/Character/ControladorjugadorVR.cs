@@ -115,6 +115,9 @@ public class ControladorjugadorVR : MonoBehaviour
 
     public LineRendererProgress progress;
     private PlayerInput playerInput; // Referencia al componente PlayerInput
+
+    public bool vr;
+    public GameObject puntapistola;
     #endregion
     #region Awake Start Update
     void Awake()
@@ -177,7 +180,7 @@ public class ControladorjugadorVR : MonoBehaviour
         RaycastHit hit;
 
         // Manejar el Disparo
-        if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
+        if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo && vr==false)
         {
             if (Physics.Raycast(rayo, out hit, 1000, excludeParryLayer))
             {
@@ -188,6 +191,26 @@ public class ControladorjugadorVR : MonoBehaviour
 
 
         }
+        
+        RaycastHit hitVR;
+
+        // Define el GameObject desde donde se disparará el rayo
+        Transform puntoDisparo = puntapistola.transform; // Reemplaza 'gameObject' por la referencia correcta si es necesario
+
+        // Crear el rayo desde el GameObject en la dirección hacia adelante
+        Ray rayoVR = new Ray(puntoDisparo.position, puntoDisparo.forward);
+
+        // Manejar el Disparo
+        if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo && vr==true)
+        {
+            if (Physics.Raycast(rayo, out hit, 1000, excludeParryLayer))
+            {
+                disparo.puntoimpacto = hit.point;
+                disparo.disparoarma = true;
+                timeAux = Time.unscaledTime;
+            }
+        }
+
         // Mover la cámara 
         PlayerLook();
 
