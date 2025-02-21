@@ -327,7 +327,7 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4381b446-de7f-4bbb-a6fc-315acb2130d6"",
-                    ""path"": ""<XRController>{LeftHand}/{PrimaryButton}"",
+                    ""path"": ""<XRController>{LeftHand}/{GripButton}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";XR"",
@@ -382,7 +382,7 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1be4e9b9-9bed-4d8b-999b-c9e1f9895dfd"",
-                    ""path"": ""<XRController>{RightHand}/{SecondaryButton}"",
+                    ""path"": ""<XRController>{RightHand}/{GripButton}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";XR"",
