@@ -129,6 +129,14 @@ public class UnifiedMenuController : MonoBehaviour
             DeactivateMenu(DeathMenu);
             DeactivateMenu(LevelFinishMenu);
         }
+        if (scene.name == ("Survive"))
+        {
+            SurviveMode = true;
+        }
+        else
+        {
+            SurviveMode = false;
+        }
     }
     public void OnPause(InputAction.CallbackContext context)
     {
@@ -342,7 +350,10 @@ public class UnifiedMenuController : MonoBehaviour
         Debug.Log("Pantalla de muerte activada.");
         // Implementa la lógica para mostrar la DeathScreen
         OpenMenu(DeathMenu);
-        if (SurviveMode)  SetTransparency(false); // Hacer visible
+        if (SurviveMode)
+        {
+            SetTransparency(false); // Hacer visible
+        }
            
                          
         }

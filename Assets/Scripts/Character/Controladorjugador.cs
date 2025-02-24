@@ -136,6 +136,7 @@ public class Controladorjugador : MonoBehaviour
     private Vector3 lastPlatformPosition;
     private Transform currentPlatform = null;
 
+    public bool survivalmode;
     #endregion
     #region Awake Start Update
     void Awake()
@@ -981,15 +982,22 @@ public class Controladorjugador : MonoBehaviour
 
     private void LoadDifficulty()
     {
-        // Cargar la dificultad desde PlayerPrefs. Si no se ha guardado, se asume dificultad Normal.
-        if (PlayerPrefs.HasKey("Difficulty"))
+        if (!survivalmode)
         {
-            int difficultyValue = PlayerPrefs.GetInt("Difficulty");
-            currentDifficulty = (Difficulty)difficultyValue;
+            if (PlayerPrefs.HasKey("Difficulty"))
+            {
+                int difficultyValue = PlayerPrefs.GetInt("Difficulty");
+                currentDifficulty = (Difficulty)difficultyValue;
+            }
+            else
+            {
+                currentDifficulty = Difficulty.Normal;
+            }
         }
+
         else
         {
-            currentDifficulty = Difficulty.Normal; // Valor por defecto
+            currentDifficulty = Difficulty.Easy;
         }
     }
     private void AdjustHabilitiesDelays()

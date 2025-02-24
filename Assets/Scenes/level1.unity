@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2417656560748200119, guid: 7104522f4ebe3ee43821b7542c7c3d21, type: 3}
+      propertyPath: SurviveMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3995307746675415047, guid: 7104522f4ebe3ee43821b7542c7c3d21, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -265,9 +269,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 96275229524057946, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803554887730308213, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2393177746212411858, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3476790731769104421, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
       propertyPath: m_Name
       value: Level1 Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954613992932307126, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189015964395184822, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5293941949396126696, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
       propertyPath: m_LocalPosition.x
@@ -308,6 +332,10 @@ PrefabInstance:
     - target: {fileID: 5293941949396126696, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324564975765938704, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

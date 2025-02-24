@@ -32,6 +32,7 @@ public class APUNTADO : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip ArClip, SubmachineClip, GunClip;
     public LayerMask Playerlayer;
+    public bool survivalmode;
     private void OnEnable()
     {
         canShoot = true;
@@ -169,15 +170,22 @@ public class APUNTADO : MonoBehaviour
     }
 
     private void LoadDifficulty()
-    {
-        if (PlayerPrefs.HasKey("Difficulty"))
+    { if (!survivalmode)
         {
-            int difficultyValue = PlayerPrefs.GetInt("Difficulty");
-            currentDifficulty = (Difficulty)difficultyValue;
+            if (PlayerPrefs.HasKey("Difficulty"))
+            {
+                int difficultyValue = PlayerPrefs.GetInt("Difficulty");
+                currentDifficulty = (Difficulty)difficultyValue;
+            }
+            else
+            {
+                currentDifficulty = Difficulty.Normal;
+            }
         }
+      
         else
         {
-            currentDifficulty = Difficulty.Normal;
+            currentDifficulty = Difficulty.Easy;
         }
     }
 

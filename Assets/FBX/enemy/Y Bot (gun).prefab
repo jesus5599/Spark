@@ -899,10 +899,10 @@ MonoBehaviour:
   enemy: {fileID: 3015137355764449126}
   misil: {fileID: 0}
   lanzador: {fileID: 349796717556395850}
-  rangeX: 40
-  rangeY: 30
-  rangeZ: 40
-  firstShotDelay: 1
+  rangeX: 30
+  rangeY: 50
+  rangeZ: 30
+  firstShotDelay: 2
   pistoldelay: 2
   submachinegundelay: 0
   argundelay: 0
@@ -915,7 +915,8 @@ MonoBehaviour:
   GunClip: {fileID: 8300000, guid: 9af520edbb5a6bb45adc4e55f3e83d9f, type: 3}
   Playerlayer:
     serializedVersion: 2
-    m_Bits: 3584
+    m_Bits: 19968
+  survivalmode: 0
 --- !u!82 &6370131425165346261
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1124,13 +1125,13 @@ GameObject:
   - component: {fileID: 935419180805564478}
   - component: {fileID: 6644901131859703830}
   - component: {fileID: 5022120621224854758}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Y Bot (gun)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5782604321555974274
 Transform:
   m_ObjectHideFlags: 0
@@ -1141,7 +1142,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.69148785, z: 0, w: 0.72238815}
   m_LocalPosition: {x: -201.28, y: -79.69, z: -34.667}
-  m_LocalScale: {x: 1.5000002, y: 1.5, z: 1.5000002}
+  m_LocalScale: {x: 1.500001, y: 1.5, z: 1.500001}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4716721696847841621}
@@ -1249,6 +1250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   stoppingDistance: 10
+  isSurviveActive: 0
 --- !u!195 &5022120621224854758
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1259,7 +1261,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
