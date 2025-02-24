@@ -43,7 +43,7 @@ public class UnifiedMenuController : MonoBehaviour
     public TextMeshProUGUI textMeshPro;
     // Opcional: Desactivar el botón de "Continuar" si no hay partida guardada
     public UnityEngine.UI.Button continueButton; // Referencia al botón de "Continuar"
-   
+    public bool SurviveMode;
 
 
     private void Start()
@@ -308,26 +308,31 @@ public class UnifiedMenuController : MonoBehaviour
     }  
     public void Continue()
     {
-        if (isDeath) 
+        if (isDeath)
         {
-            Debug.Log("¡Cualquier botón ha sido presionado!");
-            Controladorjugador DeathController = FindObjectOfType<Controladorjugador>();
-            if (DeathController != null)
-            {
-                
-                DeactivateMenu(mainMenu);
-                DeactivateMenu(pauseMenu);
-                DeactivateMenu(optionsMenu);
-                DeactivateMenu(difficultyMenu);
-                DeactivateMenu(DeathMenu);
-                DeathController.respawn();
-                isDeath = false;
+            if(SurviveMode){ RestartLevel(); }
+            else {
+                Debug.Log("¡Cualquier botón ha sido presionado!");
+                Controladorjugador DeathController = FindObjectOfType<Controladorjugador>();
+                if (DeathController != null)
+                {
+
+                    DeactivateMenu(mainMenu);
+                    DeactivateMenu(pauseMenu);
+                    DeactivateMenu(optionsMenu);
+                    DeactivateMenu(difficultyMenu);
+                    DeactivateMenu(DeathMenu);
+                    DeathController.respawn();
+                    isDeath = false;
+                }
+                else
+                {
+                    Debug.LogError("No se encontró un objeto de tipo Controlador jugador en la escena.");
+                }
             }
-            else
-            {
-                Debug.LogError("No se encontró un objeto de tipo Controlador jugador en la escena.");
-            }
+            
         }
+        
         
     }
 
@@ -337,7 +342,10 @@ public class UnifiedMenuController : MonoBehaviour
         Debug.Log("Pantalla de muerte activada.");
         // Implementa la lógica para mostrar la DeathScreen
         OpenMenu(DeathMenu);
-    }
+        if (SurviveMode)  SetTransparency(false); // Hacer visible
+           
+                         
+        }
 
 
 
@@ -435,7 +443,11 @@ public class UnifiedMenuController : MonoBehaviour
             }
         }
     }
-
+    public void Survivemode()
+    {
+        PlayerPrefs.SetInt("Difficulty", 1); // Guardar dificultad seleccionada
+        SceneManager.LoadScene("Survive");
+    }
 
 
 

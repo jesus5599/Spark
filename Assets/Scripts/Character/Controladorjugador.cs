@@ -160,6 +160,22 @@ public class Controladorjugador : MonoBehaviour
         enemyManager = FindObjectOfType<EnemyManager>(); // Encuentra el gestor de enemigos
         
         Isparring =true;
+        if (botones == null)
+        {
+            botones = FindObjectOfType<ControladorPuertasYBotones>(); // Buscar en la escena
+
+            if (botones == null) // Si no se encuentra en la escena
+            {
+                Debug.LogWarning("No se encontró el componente 'ControladorPuertasYBotones' en la escena.");
+                // Si no se encuentra, añadirlo al objeto actual
+                botones = gameObject.AddComponent<ControladorPuertasYBotones>();
+                Debug.Log("Se ha añadido el componente 'ControladorPuertasYBotones' automáticamente.");
+            }
+            else
+            {
+                Debug.Log("Se ha encontrado el componente 'ControladorPuertasYBotones' en la escena.");
+            }
+        }
 
     }
     private void Start()
