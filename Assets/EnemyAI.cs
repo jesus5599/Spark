@@ -26,7 +26,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        animate.SetBool("Correr", perseguir);
+        if(animate !=null) animate.SetBool("Correr", perseguir);
         // Comprobar si la variable isSurviveActive es false
         if (!isSurviveActive)
         {

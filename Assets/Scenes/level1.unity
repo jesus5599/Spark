@@ -333,6 +333,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6798787147323545556, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
+      propertyPath: m_TagString
+      value: CanvasEscena
+      objectReference: {fileID: 0}
     - target: {fileID: 8324564975765938704, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
       propertyPath: m_IsActive
       value: 1

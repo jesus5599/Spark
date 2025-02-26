@@ -40,11 +40,7 @@ public class EnemySpawner : MonoBehaviour
             // Acelerar el spawn con el tiempo
             currentSpawnRate = Mathf.Max(0.5f, currentSpawnRate - spawnAcceleration);
             waveCount++;           
-            Enemy enemyScript = instantiatedEnemy.GetComponent<Enemy>();
-            if (enemyScript != null)
-            {
-                minimap.AddEnemyToMinimap(enemyScript); // ✅ Agregar enemigo al minimapa
-            }
+           
         }
     }
 

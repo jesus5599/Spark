@@ -44,10 +44,12 @@ public class UnifiedMenuController : MonoBehaviour
     // Opcional: Desactivar el botón de "Continuar" si no hay partida guardada
     public UnityEngine.UI.Button continueButton; // Referencia al botón de "Continuar"
     public bool SurviveMode;
-
+    public GameObject CanvasEscena;
 
     private void Start()
     {
+        CanvasEscena = GameObject.FindWithTag("CanvasEscena");
+        if (CanvasEscena != null) CanvasEscena.SetActive(true);
         UpdateContinueButton();
         // Intentar cargar los datos guardados al iniciar el juego
         gameData = LoadGame() ?? new GameData { currentLevel = 1, score = 0 };
@@ -109,6 +111,8 @@ public class UnifiedMenuController : MonoBehaviour
         isDeath = false;
         isWin = false;
         SetTransparency(true); // Hacer transparente
+        CanvasEscena = GameObject.FindWithTag("CanvasEscena");
+        if (CanvasEscena != null) CanvasEscena.SetActive(true);
 
         // Verificar si es la escena principal y activar el menú adecuado
         if (scene.buildIndex == 0)
@@ -144,10 +148,16 @@ public class UnifiedMenuController : MonoBehaviour
         {
             // Cambiar estado de pausa
             if (isPaused)
-            { if (SceneManager.GetActiveScene().buildIndex > 0) { ResumeGame(); } }
+            { 
+                if (SceneManager.GetActiveScene().buildIndex > 0) { ResumeGame(); }
+                if(CanvasEscena != null) CanvasEscena.SetActive(true);
+            }
 
             else
-            { if (SceneManager.GetActiveScene().buildIndex > 0) { PauseGame(); } }
+            { 
+                if (SceneManager.GetActiveScene().buildIndex > 0) { PauseGame(); }
+                if (CanvasEscena != null) CanvasEscena.SetActive(false);
+            }
                
         }
     }
@@ -166,6 +176,7 @@ public class UnifiedMenuController : MonoBehaviour
 
             // Activar el menú de pausa
             OpenMenu(pauseMenu);
+            if (CanvasEscena != null) CanvasEscena.SetActive(false);
         }
         
     }
@@ -182,6 +193,7 @@ public class UnifiedMenuController : MonoBehaviour
 
             // Cerrar el menú de pausa
             CloseAllMenus();
+            if (CanvasEscena != null) CanvasEscena.SetActive(true);
         }
     }
 
@@ -298,6 +310,7 @@ public class UnifiedMenuController : MonoBehaviour
 
         ActivateMenu(LevelFinishMenu);
         SetTransparency(false); // Hacer visible
+        if (CanvasEscena != null) CanvasEscena.SetActive(false);
     }
   
     private void OnEnable()
@@ -318,7 +331,8 @@ public class UnifiedMenuController : MonoBehaviour
     {
         if (isDeath)
         {
-            if(SurviveMode){ RestartLevel(); }
+            
+            if (SurviveMode){ RestartLevel(); }
             else {
                 Debug.Log("¡Cualquier botón ha sido presionado!");
                 Controladorjugador DeathController = FindObjectOfType<Controladorjugador>();
@@ -354,7 +368,7 @@ public class UnifiedMenuController : MonoBehaviour
         {
             SetTransparency(false); // Hacer visible
         }
-           
+           if (CanvasEscena != null) CanvasEscena.SetActive(false);
                          
         }
 

@@ -13,10 +13,7 @@ public class Minimap : MonoBehaviour
 
     void Start()
     {
-        foreach (Enemy enemy in FindObjectsOfType<Enemy>())
-        {
-            AddEnemyToMinimap(enemy);
-        }
+       
     }
 
     void Update()
@@ -26,18 +23,10 @@ public class Minimap : MonoBehaviour
             UpdateIcon(enemy.Key);
         }
 
-        minimapPanel.localRotation = Quaternion.Euler(0, 0, player.eulerAngles.y);
+       
     }
 
-    public void AddEnemyToMinimap(Enemy enemy)
-    {
-        if (enemyIcons.ContainsKey(enemy.transform)) return;
-
-        GameObject icon = Instantiate(iconPrefab, minimapPanel);
-        icon.GetComponent<Image>().color = enemy.iconColor;
-        icon.GetComponent<RectTransform>().sizeDelta = new Vector2(10, 10); // Ajustar tamaño de los iconos
-        enemyIcons[enemy.transform] = icon;
-    }
+  
 
     public void RemoveEnemyFromMinimap(Enemy enemy)
     {

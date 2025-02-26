@@ -220,12 +220,14 @@ public class Controladorjugador : MonoBehaviour
         {
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             UnityEngine.Cursor.visible = true;
+            Debug.Log("raton desbloqueado");
             return;
         }
         else
         {
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            UnityEngine.Cursor.visible = true;
+            UnityEngine.Cursor.visible = false;
+            Debug.Log("raton bloqueado");
         }
         if (UnifiedMenuController.isDeath)
         {
@@ -240,7 +242,7 @@ public class Controladorjugador : MonoBehaviour
         {
             
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            UnityEngine.Cursor.visible = true;
+            UnityEngine.Cursor.visible = false;
         }
 
 
