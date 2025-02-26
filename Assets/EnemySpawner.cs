@@ -1,18 +1,22 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject[] enemyPrefabs; // Diferentes tipos de enemigos (ordenados de débil a fuerte)
-    public Transform[] spawnPoints; // Puntos de aparición
+    public GameObject[] enemyPrefabs; // Diferentes tipos de enemigos (ordenados de dÃ©bil a fuerte)
+    public Transform[] spawnPoints; // Puntos de apariciÃ³n
     public float initialSpawnRate = 3f; // Tiempo inicial entre spawns
-    public float spawnAcceleration = 0.05f; // Aceleración del spawn
+    public float spawnAcceleration = 0.05f; // AceleraciÃ³n del spawn
     private float currentSpawnRate;
     public int waveCount = 1; // Contador de oleadas
+   
+    public Minimap minimap; // Referencia al minimapa
+
 
     void Start()
     {
-        currentSpawnRate = initialSpawnRate;
+    minimap = FindObjectOfType<Minimap>(); // Buscar el minimapa en la escena
+    currentSpawnRate = initialSpawnRate;
         StartCoroutine(SpawnEnemies());
     }
 
@@ -35,7 +39,12 @@ public class EnemySpawner : MonoBehaviour
 
             // Acelerar el spawn con el tiempo
             currentSpawnRate = Mathf.Max(0.5f, currentSpawnRate - spawnAcceleration);
-            waveCount++;
+            waveCount++;           
+            Enemy enemyScript = instantiatedEnemy.GetComponent<Enemy>();
+            if (enemyScript != null)
+            {
+                minimap.AddEnemyToMinimap(enemyScript); // âœ… Agregar enemigo al minimapa
+            }
         }
     }
 
@@ -65,7 +74,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (enemyPrefabs.Length == 3)
         {
-            // Calculamos la progresión de probabilidades según la oleada
+            // Calculamos la progresiÃ³n de probabilidades segÃºn la oleada
             float weakProb = Mathf.Max(10f, 70f - waveCount * 2f);   // Disminuye con el tiempo
             float mediumProb = Mathf.Clamp(20f + waveCount * 1f, 20f, 50f); // Aumenta lentamente
             float strongProb = 100f - (weakProb + mediumProb); // Lo que falta para llegar a 100%
@@ -76,7 +85,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            // Si hay más o menos enemigos, distribuir de forma personalizada
+            // Si hay mÃ¡s o menos enemigos, distribuir de forma personalizada
             for (int i = 0; i < enemyPrefabs.Length; i++)
             {
                 probabilities[i] = 100f / enemyPrefabs.Length;
