@@ -898,11 +898,17 @@ public class Controladorjugador : MonoBehaviour
         run = true;
 
         Time.timeScale = 0;
-
+        
+        SaveSystem sistemaGuardado = FindObjectOfType<SaveSystem>();
         // Llamar a la pantalla de muerte
         UnifiedMenuController menuController = FindObjectOfType<UnifiedMenuController>();
         if (menuController != null)
         {
+            if (survivalmode) 
+            { 
+                sistemaGuardado.SaveNewTime(currentTime);
+                survivalmode = false;
+            }
             menuController.ShowDeathScreen();
         }
         else
