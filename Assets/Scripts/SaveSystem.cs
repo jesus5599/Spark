@@ -39,7 +39,7 @@ public class SaveSystem : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI bestTimesText;
     [SerializeField] private string currentLevel = "level1";
-
+    public bool survivemode;
     private void Start()
     {
         LoadTimes();
@@ -63,12 +63,23 @@ public class SaveSystem : MonoBehaviour
         }
 
         // Añadir el tiempo y ordenar
-        existingEntry.value.bestTimes.Add(new TimeEntry { time = newTime });
-        existingEntry.value.bestTimes = existingEntry.value.bestTimes
-            .OrderBy(entry => entry.time)
-            .Take(MaxBestTimes)
-            .ToList();
+        if (!survivemode)
+        {
+            existingEntry.value.bestTimes.Add(new TimeEntry { time = newTime });
+            existingEntry.value.bestTimes = existingEntry.value.bestTimes
+                .OrderBy(entry => entry.time)
+                .Take(MaxBestTimes)
+                .ToList();
+        }
+        else 
+        {
+            existingEntry.value.bestTimes.Add(new TimeEntry { time = newTime });
+            existingEntry.value.bestTimes = existingEntry.value.bestTimes
+                .OrderByDescending(entry => entry.time)
+                .Take(MaxBestTimes)
+                .ToList();
 
+        }
         SaveTimes();
         UpdateBestTimesText();
     }

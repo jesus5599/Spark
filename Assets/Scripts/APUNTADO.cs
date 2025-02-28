@@ -32,6 +32,7 @@ public class APUNTADO : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip ArClip, SubmachineClip, GunClip;
     public LayerMask Playerlayer;
+    public bool survivalmode;
     private void OnEnable()
     {
         canShoot = true;
@@ -80,12 +81,10 @@ public class APUNTADO : MonoBehaviour
                 return;
             }
 
-            // No disparar si hay un obstáculo en el camino
-            if (IsObstacleInWay())
-                return;
-
-            if (canShoot && !isShooting)
+            // Si puede disparar, se detiene
+            if (!IsObstacleInWay() && canShoot && !isShooting)
             {
+                EnemyAI.shoot = true; // Detener movimiento
                 switch (activeWeapon)
                 {
                     case WeaponType.Pistol:
@@ -99,12 +98,21 @@ public class APUNTADO : MonoBehaviour
                         break;
                 }
             }
+            else
+            {
+                // Si no puede disparar (obstáculo en el camino) y está en rango, sigue moviéndose hacia el objetivo
+                EnemyAI.shoot = false; // No detenerse si no puede disparar
+                
+            }
         }
         else
         {
             hasEnteredRange = false; // Reiniciar estado si el objetivo sale del rango
+            EnemyAI.shoot = false; // Permitir movimiento fuera del rango
+            
         }
     }
+
 
     private bool IsTargetInRange()
     {
@@ -162,15 +170,22 @@ public class APUNTADO : MonoBehaviour
     }
 
     private void LoadDifficulty()
-    {
-        if (PlayerPrefs.HasKey("Difficulty"))
+    { if (!survivalmode)
         {
-            int difficultyValue = PlayerPrefs.GetInt("Difficulty");
-            currentDifficulty = (Difficulty)difficultyValue;
+            if (PlayerPrefs.HasKey("Difficulty"))
+            {
+                int difficultyValue = PlayerPrefs.GetInt("Difficulty");
+                currentDifficulty = (Difficulty)difficultyValue;
+            }
+            else
+            {
+                currentDifficulty = Difficulty.Normal;
+            }
         }
+      
         else
         {
-            currentDifficulty = Difficulty.Normal;
+            currentDifficulty = Difficulty.Easy;
         }
     }
 

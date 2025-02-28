@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3286868723467361093}
   - component: {fileID: 8647884063389337029}
   - component: {fileID: 7281585179044834975}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 6002024123092737587}
   - component: {fileID: 7182049915634637076}
   - component: {fileID: 4606076410746163857}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: balaEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -113,9 +113,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1296842949995610663}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -100, z: 0}
-  m_LocalScale: {x: 1.3199999, y: 0.50800014, z: 1.3200003}
+  m_LocalScale: {x: 1.3199999, y: 0.50800014, z: 1.3200002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3556211473157343655}
@@ -138,9 +138,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c30bff9335e2c724889cf924572f1c56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 30
   currentDifficulty: 0
-  particle: {fileID: 0}
+  particle: {fileID: 1672942582962306660}
   flash: {fileID: 0}
 --- !u!54 &7182049915634637076
 Rigidbody:
@@ -165,10 +165,10 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 3
+  m_CollisionDetection: 2
 --- !u!65 &4606076410746163857
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 3500343979209778023}
   - component: {fileID: 7985688839063815267}
   - component: {fileID: 7832471699838126562}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Object002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 7514655661759651923}
   - component: {fileID: 8313698196987579010}
   - component: {fileID: 6501535046171501024}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Object004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 6516275295129486706}
   - component: {fileID: 2780385959282134271}
   - component: {fileID: 2359414340010785304}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Cylinder001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,9 +456,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1924338202727225501}
     m_Modifications:
+    - target: {fileID: 1017566096282904768, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 3473529909581181512, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
       propertyPath: m_Name
       value: vfx_Projectile_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3473529909581181512, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4559080999636468818, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
       propertyPath: m_LocalScale.x
@@ -512,6 +520,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5287990389288925174, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 5830850444779986723, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0
@@ -535,6 +547,10 @@ PrefabInstance:
     - target: {fileID: 6010611732222195546, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
       propertyPath: m_Parameters.colorGradient.key0.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139904261238893799, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8240415215158998338, guid: bc142210df3ec4545a4e3e1f21e00da7, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
@@ -566,13 +582,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1924338202727225501}
     m_Modifications:
+    - target: {fileID: 2491576256362421057, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
       propertyPath: m_Name
       value: vfx_Impact_01
       objectReference: {fileID: 0}
     - target: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3987749403610019982, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5376181070979290840, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5521277632010768499, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
       propertyPath: m_LocalScale.x

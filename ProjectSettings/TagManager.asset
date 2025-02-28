@@ -13,8 +13,7 @@ TagManager:
   - Proyectil
   - Plataforma
   - ObjetivoBala
-  - objetivocanvas
-  - rotacioncanvas
+  - CanvasEscena
   layers:
   - Default
   - TransparentFX
@@ -32,7 +31,7 @@ TagManager:
   - noWallrun
   - YesShotTriggers
   - ObjetivoBala
-  - 
+  - Norender
   - 
   - 
   - 
@@ -51,9 +50,6 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: New Layer 1
-    uniqueID: 2042548721
     locked: 0
   m_RenderingLayers:
   - Default

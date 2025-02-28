@@ -136,6 +136,8 @@ public class Controladorjugador : MonoBehaviour
     private Vector3 lastPlatformPosition;
     private Transform currentPlatform = null;
 
+    public bool survivalmode;
+
     public bool vr;
     public GameObject puntapistola;
     #endregion
@@ -162,6 +164,22 @@ public class Controladorjugador : MonoBehaviour
         enemyManager = FindObjectOfType<EnemyManager>(); // Encuentra el gestor de enemigos
         
         Isparring =true;
+        if (botones == null)
+        {
+            botones = FindObjectOfType<ControladorPuertasYBotones>(); // Buscar en la escena
+
+            if (botones == null) // Si no se encuentra en la escena
+            {
+                Debug.LogWarning("No se encontró el componente 'ControladorPuertasYBotones' en la escena.");
+                // Si no se encuentra, añadirlo al objeto actual
+                botones = gameObject.AddComponent<ControladorPuertasYBotones>();
+                Debug.Log("Se ha añadido el componente 'ControladorPuertasYBotones' automáticamente.");
+            }
+            else
+            {
+                Debug.Log("Se ha encontrado el componente 'ControladorPuertasYBotones' en la escena.");
+            }
+        }
 
     }
     private void Start()
@@ -205,12 +223,14 @@ public class Controladorjugador : MonoBehaviour
         {
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             UnityEngine.Cursor.visible = true;
+            Debug.Log("raton desbloqueado");
             return;
         }
         else
         {
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            UnityEngine.Cursor.visible = true;
+            UnityEngine.Cursor.visible = false;
+            Debug.Log("raton bloqueado");
         }
         if (UnifiedMenuController.isDeath)
         {
@@ -225,7 +245,7 @@ public class Controladorjugador : MonoBehaviour
         {
             
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            UnityEngine.Cursor.visible = true;
+            UnityEngine.Cursor.visible = false;
         }
 
 
@@ -241,7 +261,7 @@ public class Controladorjugador : MonoBehaviour
 
         HandleAnimations();
 
-        int excludeParryLayer = ~ParryLayer.value;
+        int excludeParryLayer = ~ParryLayer.value;            
         RaycastHit hit;
         Ray rayo;
 
@@ -256,20 +276,6 @@ public class Controladorjugador : MonoBehaviour
             Vector3 puntopantalla = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
             rayo = Camera.main.ScreenPointToRay(puntopantalla);
         }
-
-        // Manejar el Disparo
-        if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
-        {
-            if (Physics.Raycast(rayo, out hit, 1000, excludeParryLayer))
-            {
-                disparo.puntoimpacto = hit.point;
-                disparo.disparoarma = true;
-                timeAux = Time.unscaledTime;
-
-                if (vr) Debug.Log("VRRRR"); // Solo imprime si es VR
-            }
-        }
-
         // Mover la cámara 
         PlayerLook();
 
@@ -893,11 +899,17 @@ public class Controladorjugador : MonoBehaviour
         run = true;
 
         Time.timeScale = 0;
-
+        
+        SaveSystem sistemaGuardado = FindObjectOfType<SaveSystem>();
         // Llamar a la pantalla de muerte
         UnifiedMenuController menuController = FindObjectOfType<UnifiedMenuController>();
         if (menuController != null)
         {
+            if (survivalmode) 
+            { 
+                sistemaGuardado.SaveNewTime(currentTime);
+                survivalmode = false;
+            }
             menuController.ShowDeathScreen();
         }
         else
@@ -979,15 +991,22 @@ public class Controladorjugador : MonoBehaviour
 
     private void LoadDifficulty()
     {
-        // Cargar la dificultad desde PlayerPrefs. Si no se ha guardado, se asume dificultad Normal.
-        if (PlayerPrefs.HasKey("Difficulty"))
+        if (!survivalmode)
         {
-            int difficultyValue = PlayerPrefs.GetInt("Difficulty");
-            currentDifficulty = (Difficulty)difficultyValue;
+            if (PlayerPrefs.HasKey("Difficulty"))
+            {
+                int difficultyValue = PlayerPrefs.GetInt("Difficulty");
+                currentDifficulty = (Difficulty)difficultyValue;
+            }
+            else
+            {
+                currentDifficulty = Difficulty.Normal;
+            }
         }
+
         else
         {
-            currentDifficulty = Difficulty.Normal; // Valor por defecto
+            currentDifficulty = Difficulty.Easy;
         }
     }
     private void AdjustHabilitiesDelays()
