@@ -45,7 +45,7 @@ public class UnifiedMenuController : MonoBehaviour
     public UnityEngine.UI.Button continueButton; // Referencia al botón de "Continuar"
     public bool SurviveMode;
     public GameObject CanvasEscena;
-
+    public bool VR;
     private void Start()
     {
         CanvasEscena = GameObject.FindWithTag("CanvasEscena");
@@ -269,7 +269,7 @@ public class UnifiedMenuController : MonoBehaviour
         PlayerPrefs.SetInt("Difficulty", difficulty); // Guardar dificultad seleccionada
         gameData = new GameData { currentLevel = 1, score = 0 }; // Reiniciar datos
         SaveGame(gameData);                                      // Guardar nueva partida
-        SceneManager.LoadScene("level1");          // Cargar la escena principal del juego
+        SceneManager.LoadScene(1);          // Cargar la escena principal del juego
     }
 
     // Reiniciar el nivel actual
@@ -397,10 +397,19 @@ public class UnifiedMenuController : MonoBehaviour
     // Método para pasar al siguiente nivel y guardar el progreso
     public void LevelCompleted(int score)
     {
-        
-        // Cargar el siguiente nivel
-        SceneManager.LoadScene("level" + gameData.currentLevel);
-        Time.timeScale = 1f;
+
+        if (VR == true)
+        {
+            // Cargar el siguiente nivel
+            SceneManager.LoadScene("level" + gameData.currentLevel + "VR");
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            // Cargar el siguiente nivel
+            SceneManager.LoadScene("level" + gameData.currentLevel);
+            Time.timeScale = 1f;
+        }
     }
 
     // Guardar los datos en un archivo cifrado en Base64
@@ -431,6 +440,10 @@ public class UnifiedMenuController : MonoBehaviour
         if (gameData != null && gameData.currentLevel > 1)
         {
             SceneManager.LoadScene("level" + gameData.currentLevel); // Cargar nivel guardado
+        }
+        else if (gameData != null && gameData.currentLevel > 1 && VR == true)
+        {
+            SceneManager.LoadScene("level" + gameData.currentLevel + "VR"); // Cargar nivel guardado de VR
         }
         else
         {

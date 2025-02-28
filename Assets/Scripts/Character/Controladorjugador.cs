@@ -137,6 +137,9 @@ public class Controladorjugador : MonoBehaviour
     private Transform currentPlatform = null;
 
     public bool survivalmode;
+
+    public bool vr;
+    public GameObject puntapistola;
     #endregion
     #region Awake Start Update
     void Awake()
@@ -258,22 +261,20 @@ public class Controladorjugador : MonoBehaviour
 
         HandleAnimations();
 
-        int excludeParryLayer = ~ParryLayer.value;
-        Vector3 puntopantalla = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
-        Ray rayo = Camera.main.ScreenPointToRay(puntopantalla);
+        int excludeParryLayer = ~ParryLayer.value;            
         RaycastHit hit;
+        Ray rayo;
 
-        // Manejar el Disparo
-        if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
+        // Verificar si es VR o no y definir el rayo correspondiente
+        if (vr)
         {
-            if (Physics.Raycast(rayo, out hit, 1000, excludeParryLayer))
-            {
-                disparo.puntoimpacto = hit.point;
-                disparo.disparoarma = true;
-                timeAux = Time.unscaledTime;
-            }
-
-
+            Transform puntoDisparo = puntapistola.transform; // Asegurar que puntapistola está asignado
+            rayo = new Ray(puntoDisparo.position, puntoDisparo.forward);
+        }
+        else
+        {
+            Vector3 puntopantalla = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
+            rayo = Camera.main.ScreenPointToRay(puntopantalla);
         }
         // Mover la cámara 
         PlayerLook();
