@@ -276,6 +276,22 @@ public class Controladorjugador : MonoBehaviour
             Vector3 puntopantalla = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
             rayo = Camera.main.ScreenPointToRay(puntopantalla);
         }
+
+        // Manejar el Disparo
+        if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
+        {
+            if (Physics.Raycast(rayo, out hit, 1000, excludeParryLayer))
+            {
+                disparo.puntoimpacto = hit.point;
+                disparo.disparoarma = true;
+                timeAux = Time.unscaledTime;
+
+                if (vr) Debug.Log("VRRRR"); // Solo imprime si es VR
+            }
+        }
+
+
+
         // Mover la cámara 
         PlayerLook();
 
@@ -439,6 +455,7 @@ public class Controladorjugador : MonoBehaviour
 
         // Leer entrada de movimiento
         Vector2 lookInput = controlador.Player.Look.ReadValue<Vector2>();
+
         float lookX = lookInput.x * SensitivityX * Time.unscaledDeltaTime;
         float lookY = lookInput.y * SensitivityY * Time.unscaledDeltaTime;
         //Debug.Log(lookInput.x + "  " + lookInput.y);
@@ -899,14 +916,14 @@ public class Controladorjugador : MonoBehaviour
         run = true;
 
         Time.timeScale = 0;
-        
+
         SaveSystem sistemaGuardado = FindObjectOfType<SaveSystem>();
         // Llamar a la pantalla de muerte
         UnifiedMenuController menuController = FindObjectOfType<UnifiedMenuController>();
         if (menuController != null)
         {
-            if (survivalmode) 
-            { 
+            if (survivalmode)
+            {
                 sistemaGuardado.SaveNewTime(currentTime);
                 survivalmode = false;
             }

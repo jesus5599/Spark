@@ -133,7 +133,7 @@ public class UnifiedMenuController : MonoBehaviour
             DeactivateMenu(DeathMenu);
             DeactivateMenu(LevelFinishMenu);
         }
-        if (scene.name == ("Survive"))
+        if (scene.name == ("Survive")|| scene.name == ("SurviveVR"))
         {
             SurviveMode = true;
         }
@@ -333,6 +333,7 @@ public class UnifiedMenuController : MonoBehaviour
         {
             
             if (SurviveMode){ RestartLevel(); }
+
             else {
                 Debug.Log("¡Cualquier botón ha sido presionado!");
                 Controladorjugador DeathController = FindObjectOfType<Controladorjugador>();
@@ -484,7 +485,8 @@ public class UnifiedMenuController : MonoBehaviour
     public void Survivemode()
     {
         PlayerPrefs.SetInt("Difficulty", 1); // Guardar dificultad seleccionada
-        SceneManager.LoadScene("Survive");
+        if (VR) SceneManager.LoadScene("SurviveVR");
+        else { SceneManager.LoadScene("Survive"); }
     }
 
 
