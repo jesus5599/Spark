@@ -15,7 +15,7 @@ public class parry : MonoBehaviour
     public LayerMask ParryLayer;
     public AudioClip parryClip;
     public AudioSource audioSource;
-
+    public bool vr;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,18 +34,28 @@ public class parry : MonoBehaviour
         {
             audioSource.PlayOneShot(parryClip);
         }
-        Vector3 puntopantalla = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
-        Ray rayo = Camera.main.ScreenPointToRay(puntopantalla);
+         
+        int excludeParryLayer = ~ParryLayer.value;
         RaycastHit hit;
+        Ray rayo;
+
+        // Verificar si es VR o no y definir el rayo correspondiente
+        if (vr)
+        {
+            Transform puntoDisparo = lanzador.transform; // Asegurar que puntapistola está asignado
+            rayo = new Ray(puntoDisparo.position, puntoDisparo.forward);
+        }
+        else
+        {
+            Vector3 puntopantalla = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
+            rayo = Camera.main.ScreenPointToRay(puntopantalla);
+        }
         Physics.Raycast(rayo, out hit, 1000, ~ParryLayer.value);
         puntoimpacto = hit.point;
         Rigidbody misilInstanc;
         misilInstanc = Instantiate(misil, lanzador.position, lanzador.rotation);
         misilInstanc.transform.LookAt(puntoimpacto);
         misilInstanc.gameObject.SetActive(true);
-
-
-
 
 
     }

@@ -63,7 +63,7 @@ public class CanvasVR : MonoBehaviour
             canvas.transform.LookAt(targetrot);
             canvas.transform.Rotate(0, 180, 0); // Corrige la orientación para que no se vea al revés
 
-            Debug.Log("Canvas movido a: " + newPosition + " y rotado hacia el objetivo.");
+            //Debug.Log("Canvas movido a: " + newPosition + " y rotado hacia el objetivo.");
         }
     }
 }

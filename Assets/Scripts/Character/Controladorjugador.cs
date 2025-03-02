@@ -447,15 +447,14 @@ public class Controladorjugador : MonoBehaviour
 
     private void PlayerLook()
     {
-        
-            SensitivityX = Sensitivity;
-            SensitivityY = Sensitivity;
-        
-        
+
+        SensitivityX = Sensitivity;
+        SensitivityY = Sensitivity;
+
+
 
         // Leer entrada de movimiento
         Vector2 lookInput = controlador.Player.Look.ReadValue<Vector2>();
-
         float lookX = lookInput.x * SensitivityX * Time.unscaledDeltaTime;
         float lookY = lookInput.y * SensitivityY * Time.unscaledDeltaTime;
         //Debug.Log(lookInput.x + "  " + lookInput.y);
@@ -470,6 +469,7 @@ public class Controladorjugador : MonoBehaviour
         // Rotación horizontal (cuerpo del jugador)
         playerBody.Rotate(Vector3.up * lookX);
     }
+
 
 
     #endregion

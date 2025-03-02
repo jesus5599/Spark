@@ -488,7 +488,21 @@ public class UnifiedMenuController : MonoBehaviour
         if (VR) SceneManager.LoadScene("SurviveVR");
         else { SceneManager.LoadScene("Survive"); }
     }
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus && !isDeath && !isWin)
+        {
+            PauseGame();
+        }
+    }
 
+    void OnApplicationPause(bool isPaused)
+    {
+        if (isPaused && !isDeath && !isWin)
+        {
+            PauseGame();
+        }
+    }
 
 
 
