@@ -10,6 +10,7 @@ using UnityEngine.Windows;
 using UnityEngine.UIElements;
 using System.Security.Cryptography;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR;
 
 public class Controladorjugador : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class Controladorjugador : MonoBehaviour
     public float jumpHeight = 1.0f;
     public float gravityValue = -9.81f;
     public bool groundedPlayer;
-    
+    public GameObject mesh;
     // Configuración de wall run
     public float wallRunSpeed = 10f ;
     public float wallRunDuration = 1.5f;
@@ -292,8 +293,7 @@ public class Controladorjugador : MonoBehaviour
 
 
 
-        // Mover la cámara 
-        PlayerLook();
+      
 
         // Verificar si el jugador está en el suelo
         CheckGroundStatus();
@@ -425,7 +425,7 @@ public class Controladorjugador : MonoBehaviour
         Vector3 move = new Vector3(input.x, 0, input.y);
         move = virtualCamera.transform.TransformDirection(move);
         move.y = 0;
-        move = (transform.forward * move.z + transform.right * move.x).normalized;
+        move = (mesh.transform.forward * move.z + mesh.transform.right * move.x).normalized;
         speedx = input.y;
         speedz = input.x;
         characterController.Move(move * Time.unscaledDeltaTime * playerSpeed);
@@ -468,6 +468,7 @@ public class Controladorjugador : MonoBehaviour
 
         // Rotación horizontal (cuerpo del jugador)
         playerBody.Rotate(Vector3.up * lookX);
+       // mesh.transform.Rotate(Vector3.up * lookX);
     }
 
 
@@ -717,7 +718,7 @@ public class Controladorjugador : MonoBehaviour
             Debug.Log("Capsule Collider modificado.");
         }
         // Capturar la dirección de movimiento actual
-        slideDirection = transform.forward * slideSpeed;
+        slideDirection = mesh.transform.forward * slideSpeed;
     }
 
     void Slide()
@@ -1067,5 +1068,10 @@ public class Controladorjugador : MonoBehaviour
     private void OnDisable()
     {
         controlador.Disable();
+    }
+    private void LateUpdate()
+    {
+        // Mover la cámara 
+        PlayerLook();
     }
 }

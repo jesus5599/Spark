@@ -382,6 +382,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223497508}
   m_Mesh: {fileID: -5478810309405723935, guid: 693e20194b69ada4887f16b23edd56eb, type: 3}
+--- !u!1001 &485233592
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 768730287999509775, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_Name
+      value: PlayerVR
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829184696117224116, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 57.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829184696117224116, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829184696117224116, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -44.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829184696117224116, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829184696117224116, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829184696117224116, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829184696117224116, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829184696117224116, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829184696117224116, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829184696117224116, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
 --- !u!1 &495685887 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4706452340541456491, guid: c8a555480d1a66a40a81438acd97df46, type: 3}
@@ -1990,6 +2047,10 @@ PrefabInstance:
     - target: {fileID: 5220259765243442239, guid: 3757f6360fabe514abd128d83f7580c1, type: 3}
       propertyPath: m_Name
       value: CameraPlayerVR (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5220259765243442239, guid: 3757f6360fabe514abd128d83f7580c1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6502967594161418613, guid: 3757f6360fabe514abd128d83f7580c1, type: 3}
       propertyPath: misil
@@ -4379,3 +4440,4 @@ SceneRoots:
   - {fileID: 1733107701}
   - {fileID: 1504374518}
   - {fileID: 2136105930}
+  - {fileID: 485233592}

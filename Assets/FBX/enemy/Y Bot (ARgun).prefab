@@ -3177,7 +3177,6 @@ GameObject:
   - component: {fileID: 9195807294589307806}
   - component: {fileID: 4982633236705985339}
   - component: {fileID: 8027119967404540311}
-  - component: {fileID: 1063832904663138462}
   m_Layer: 0
   m_Name: ARgun
   m_TagString: Untagged
@@ -3243,7 +3242,7 @@ MonoBehaviour:
   argunshootdelay: 0
   submachineshootdelay: 0
   pistolshootdelay: 0
-  audioSource: {fileID: 1063832904663138462}
+  audioSource: {fileID: 0}
   ArClip: {fileID: 8300000, guid: f85b22825ddb2334cb6c56cf9d6e8a5a, type: 3}
   SubmachineClip: {fileID: 8300000, guid: 19a6640076f0121438b5c858b9da86d3, type: 3}
   GunClip: {fileID: 8300000, guid: 9af520edbb5a6bb45adc4e55f3e83d9f, type: 3}
@@ -3252,103 +3251,6 @@ MonoBehaviour:
     m_Bits: 19968
   survivalmode: 0
 --- !u!82 &8027119967404540311
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8418849138707353892}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!82 &1063832904663138462
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3654,6 +3556,7 @@ MonoBehaviour:
   target: {fileID: 0}
   stoppingDistance: 10
   isSurviveActive: 0
+  perseguir: 0
 --- !u!195 &8219921064412564906
 NavMeshAgent:
   m_ObjectHideFlags: 0
