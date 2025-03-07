@@ -26443,8 +26443,8 @@ MonoBehaviour:
   m_Camera: {fileID: 19603442659425905}
   m_OriginBaseGameObject: {fileID: 1091675918585883794}
   m_CameraFloorOffsetObject: {fileID: 8293007286185724918}
-  m_RequestedTrackingOriginMode: 1
-  m_CameraYOffset: 1.12
+  m_RequestedTrackingOriginMode: 0
+  m_CameraYOffset: 1.7
 --- !u!114 &4016593702060183771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60757,7 +60757,7 @@ Transform:
   m_GameObject: {fileID: 3401865962735926511}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.009, y: 0, z: -0.089}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -60781,7 +60781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character: {fileID: 3401865962735926511}
   camara: {fileID: 7030477666888607674}
-  Character2: {fileID: 8293007286185724918}
+  Character2: {fileID: 3804606702634405111}
   xrrig: {fileID: 1091675918585883794}
 --- !u!1 &3403449909481722220
 GameObject:
@@ -66396,7 +66396,7 @@ Transform:
   m_GameObject: {fileID: 3804606702634405111}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.88, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -66478,7 +66478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrackingType: 0
-  m_UpdateType: 2
+  m_UpdateType: 0
   m_IgnoreTrackingState: 0
   m_PositionInput:
     m_UseReference: 1
@@ -113604,7 +113604,7 @@ Transform:
   m_GameObject: {fileID: 8293007286185724918}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.77, z: 0}
+  m_LocalPosition: {x: 0, y: 1.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
