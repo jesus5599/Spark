@@ -270,14 +270,27 @@ public class Controladorjugador : MonoBehaviour
         {
             Transform puntoDisparo = puntapistola.transform; // Asegurar que puntapistola está asignado
             rayo = new Ray(puntoDisparo.position, puntoDisparo.forward);
+            
         }
         else
         {
             Vector3 puntopantalla = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
             rayo = Camera.main.ScreenPointToRay(puntopantalla);
+            
         }
-        // Mover la cámara 
-        PlayerLook();
+
+        // Manejar el Disparo
+        if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
+        {
+            if (Physics.Raycast(rayo, out hit))
+            {
+                disparo.puntoimpacto = hit.point;
+                disparo.disparoarma = true;
+                timeAux = Time.time;
+            }
+        }
+    // Mover la cámara 
+    PlayerLook();
 
         // Verificar si el jugador está en el suelo
         CheckGroundStatus();
