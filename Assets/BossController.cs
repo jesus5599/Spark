@@ -10,12 +10,13 @@ public class BossController : MonoBehaviour
     public Transform laserSpawnPoint;
     public Transform missileSpawnPoint;
     public Transform[] weakPoints;
+    public Transform[] sweepingLaserPoints;
 
     private int weakPointsDestroyed = 0;
     private int phaseTwoHealth = 3;
     private bool isPhaseTwo = false;
     private bool isFuryMode = false;
-    private float rotationSpeed = 100f;
+    private float rotationSpeed = 1000f;
 
     void Start()
     {
@@ -71,22 +72,25 @@ public class BossController : MonoBehaviour
     IEnumerator FireHomingMissile()
     {
         GameObject missile = Instantiate(missilePrefab, missileSpawnPoint.position, Quaternion.identity);
+        missile.SetActive(true);
         HomingMissile missileScript = missile.GetComponent<HomingMissile>();
-        missileScript.SetTarget(GameObject.FindGameObjectWithTag("Player").transform);
+        missileScript.SetTarget(GameObject.FindGameObjectWithTag("ObjetivoBala").transform);
         yield return new WaitForSeconds(0.5f);
     }
 
     // **Láser giratorio (solo gira mientras dispara)**
     IEnumerator FireRotatingLasers()
     {
-        float rotationTime = 3f;
+        float rotationTime = 5f;
         float elapsedTime = 0f;
         while (elapsedTime < rotationTime)
         {
-            transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
-            foreach (Transform pos in weakPoints)
+            transform.Rotate(0,  0, rotationSpeed * Time.deltaTime );
+            foreach (Transform pos in sweepingLaserPoints)
             {
-                Instantiate(trackingLaserPrefab, pos.position, pos.rotation);
+
+                GameObject laser = Instantiate(sweepingLaserPrefab, pos.position, pos.rotation);
+                laser.SetActive(true);
             }
             elapsedTime += 0.5f;
             yield return new WaitForSeconds(0.5f);

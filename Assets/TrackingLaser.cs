@@ -12,10 +12,20 @@ public class TrackingLaser : MonoBehaviour
     public float maxLaserDistance = 10f; // Distancia máxima del láser
     public float delayFactor = 0.5f; // Qué tan lento sigue al jugador
 
+    public Material trackingMaterial; // Material cuando rastrea
+    public Material firingMaterial; // Material cuando dispara
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("ObjetivoBala").transform;
+
+        // Hacer que el láser comience apuntando hacia abajo
+        predictedTarget = transform.position + Vector3.down * maxLaserDistance;
+
+        // Asignar material inicial (tracking)
+        lineRenderer.material = trackingMaterial;
+
         StartCoroutine(TrackAndFire());
     }
 
@@ -32,7 +42,8 @@ public class TrackingLaser : MonoBehaviour
             yield return null;
         }
 
-        // Dispara el láser en la última posición rastreada
+        // Cambiar a material de disparo antes de activar el láser
+        lineRenderer.material = firingMaterial;
         UpdateLaser(predictedTarget, false);
         yield return new WaitForSeconds(laserDuration);
 
