@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.Audio;
+using System.Collections;
+using System.Collections.Generic;
 
 public class ConstantLaser : MonoBehaviour
 {
@@ -15,6 +18,7 @@ public class ConstantLaser : MonoBehaviour
         // Inicializar el LineRenderer y configurarlo
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2; // Necesitamos dos puntos para el láser (inicio y fin)
+        StartCoroutine(DestroyLaser());
     }
 
     void Update()
@@ -57,5 +61,12 @@ public class ConstantLaser : MonoBehaviour
 
         // Establecer la posición final del láser (donde termina)
         lineRenderer.SetPosition(1, endPosition);
+       
+    }
+    IEnumerator DestroyLaser()
+    {
+        Debug.Log("rayo morision");
+        yield return new WaitForSeconds(.5f);
+        Destroy(gameObject);
     }
 }

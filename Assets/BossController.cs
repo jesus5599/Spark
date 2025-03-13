@@ -6,6 +6,7 @@ public class BossController : MonoBehaviour
     public GameObject trackingLaserPrefab;
     public GameObject missilePrefab;
     public GameObject explosionPrefab;
+    public GameObject explosionPrefab2;
     public GameObject sweepingLaserPrefab;
     public Transform laserSpawnPoint;
     public Transform missileSpawnPoint;
@@ -16,10 +17,16 @@ public class BossController : MonoBehaviour
     private int phaseTwoHealth = 3;
     private bool isPhaseTwo = false;
     private bool isFuryMode = false;
-    private float rotationSpeed = 1000f;
-
+    private float rotationSpeed = 100f;
+    public AudioSource audioSource; // Componente AudioSource para reproducir sonido
+    public AudioClip music1,music2,music3,explosion,explosion2;   
     void Start()
     {
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+        audioSource.PlayOneShot(music1);
         StartCoroutine(AttackPatternPhaseOne());
     }
 
@@ -53,6 +60,8 @@ public class BossController : MonoBehaviour
             }
             else if (phaseTwoHealth == 1 && !isFuryMode)
             {
+                Debug.Log("AAA acceder corutina");
+                isFuryMode = true;
                 StartCoroutine(OverloadAttack());
             }
         }
@@ -86,6 +95,7 @@ public class BossController : MonoBehaviour
         while (elapsedTime < rotationTime)
         {
             transform.Rotate(0,  0, rotationSpeed * Time.deltaTime );
+             
             foreach (Transform pos in sweepingLaserPoints)
             {
 
@@ -110,11 +120,28 @@ public class BossController : MonoBehaviour
     // **Ataque de Sobrecarga**
     IEnumerator OverloadAttack()
     {
+        Debug.Log("AAA dentro corutina");
         isFuryMode = true;
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(2f);
-        StartCoroutine(FuryAttackPattern());
+        Debug.Log("AAA isfurymode");
+        audioSource.Stop();
+        Debug.Log("AAA audiostop");
+
+        GameObject explosionInstance = Instantiate(explosionPrefab2, transform.position, Quaternion.identity);
+        explosionInstance.SetActive(true);
+        Debug.Log("AAA activeexplos");
+        audioSource.PlayOneShot(explosion2);
+        Debug.Log("AAA audiosexp");
+        yield return new WaitForSeconds(2.9f);
+        Debug.Log("AAA waitforsec");
+        audioSource.Stop();
+        Debug.Log("AAA audiostop");
+        audioSource.PlayOneShot(music3);
+        Debug.Log("AAA music3");
+
+
+        // StartCoroutine(FuryAttackPattern());
     }
+
 
     // **Modo Furia**
     IEnumerator FuryAttackPattern()
@@ -155,6 +182,7 @@ public class BossController : MonoBehaviour
     }
     IEnumerator FallToGround()
     {
+        audioSource.Stop();
         float fallSpeed =15f;
         while (transform.position.y > 0) // Hasta que llegue al suelo
         {
@@ -165,7 +193,11 @@ public class BossController : MonoBehaviour
         transform.position = new Vector3(transform.position.x, 0, transform.position.z); // Asegurar que quede en el suelo
 
         Instantiate(explosionPrefab, transform.position, Quaternion.identity); // Efecto de impacto
-
+        audioSource.PlayOneShot(explosion);
+        explosionPrefab.SetActive(true);
+        yield return new WaitForSeconds(2.9f);
+        audioSource.Stop();
+        audioSource.PlayOneShot(music2);
         StartCoroutine(AttackPatternPhaseTwo()); // Comenzar la Fase 2
     }
     // **Recibe daño en Fase 2**
