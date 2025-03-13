@@ -282,7 +282,7 @@ public class Controladorjugador : MonoBehaviour
         // Manejar el Disparo
         if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
         {
-            if (Physics.Raycast(rayo, out hit))
+            if (Physics.Raycast(rayo, out hit, 1000, excludeParryLayer))
             {
                 disparo.puntoimpacto = hit.point;
                 disparo.disparoarma = true;

@@ -45,7 +45,9 @@ public class shootPlayer : MonoBehaviour
         if (other.CompareTag("Boss"))
         {
             other.GetComponent<BossController>().TakeDamage();
+            Destroy(gameObject);
         }
+
     }
     private void OnCollisionEnter(Collision collision)
     {

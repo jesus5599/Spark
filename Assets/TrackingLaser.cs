@@ -14,7 +14,7 @@ public class TrackingLaser : MonoBehaviour
 
     public Material trackingMaterial; // Material cuando rastrea
     public Material firingMaterial; // Material cuando dispara
-
+    public LayerMask Layer;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -62,8 +62,11 @@ public class TrackingLaser : MonoBehaviour
         Vector3 endPosition = transform.position + direction * maxLaserDistance;
 
         // Si hay un objeto en el camino, el láser se detiene ahí
+        int excludeParryLayer = ~Layer.value;
+        
+        
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, direction, out hit, maxLaserDistance))
+        if (Physics.Raycast(transform.position, direction, out hit, maxLaserDistance,excludeParryLayer))
         {
             endPosition = hit.point;
             if (!charging && hit.collider.CompareTag("Player"))
