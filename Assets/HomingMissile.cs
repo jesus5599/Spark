@@ -21,6 +21,7 @@ public class HomingMissile : MonoBehaviour
 
     void Update()
     {
+        if (misil == null) Destroy(gameObject);
         pursuitTimer += Time.deltaTime; // Aumentar el contador
 
         if (target != null && pursuitTimer < pursuitDuration)
@@ -87,21 +88,23 @@ public class HomingMissile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Obtener el primer punto de contacto
-        ContactPoint contact = collision.contacts[0];
+       
+            // Obtener el primer punto de contacto
+            ContactPoint contact = collision.contacts[0];
 
-        // Obtener la posición del impacto
-        Vector3 hitPosition = contact.point;
+            // Obtener la posición del impacto
+            Vector3 hitPosition = contact.point;
 
-        // Obtener la normal de la superficie impactada
-        Vector3 hitNormal = contact.normal;
+            // Obtener la normal de la superficie impactada
+            Vector3 hitNormal = contact.normal;
 
-        // Desplazar el impacto un poco hacia atrás en la dirección de la normal
-        Vector3 adjustedPosition = hitPosition - hitNormal * -0.15f; // Ajusta 0.1f según necesites
+            // Desplazar el impacto un poco hacia atrás en la dirección de la normal
+            Vector3 adjustedPosition = hitPosition - hitNormal * -0.15f; // Ajusta 0.1f según necesites
 
-        // Iniciar la corrutina con la nueva posición ajustada
-        StartCoroutine(ShowImpact(adjustedPosition, hitNormal));
-        misil.gameObject.SetActive(false);
+            // Iniciar la corrutina con la nueva posición ajustada
+            StartCoroutine(ShowImpact(adjustedPosition, hitNormal));
+            misil.gameObject.SetActive(false);
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -129,7 +132,7 @@ public class HomingMissile : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (!other.CompareTag("Enemy") && !other.CompareTag("Plataforma"))
+        if (!other.CompareTag("Enemy") && !other.CompareTag("Plataforma") && !other.CompareTag("Boss"))
         {
             Destroy(gameObject);
         }

@@ -12,7 +12,7 @@ public class ConstantLaser : MonoBehaviour
 
     public Material normalMaterial; // Material por defecto
     public Material hitMaterial; // Material cuando golpea al jugador
-
+    public LayerMask Layer;
     void Start()
     {
         // Inicializar el LineRenderer y configurarlo
@@ -34,10 +34,11 @@ public class ConstantLaser : MonoBehaviour
         // Obtener la dirección fija del láser
         Vector3 direction = transform.TransformDirection(laserDirection);
         Vector3 endPosition = transform.position + direction * maxLaserDistance;
-
+        // Si hay un objeto en el camino, el láser se detiene ahí
+        int excludeParryLayer = ~Layer.value;
         // Si hay un objeto en el camino, el láser se detiene ahí
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, direction, out hit, maxLaserDistance))
+        if (Physics.Raycast(transform.position, direction, out hit, maxLaserDistance, excludeParryLayer))
         {
             endPosition = hit.point;
 
@@ -66,7 +67,7 @@ public class ConstantLaser : MonoBehaviour
     IEnumerator DestroyLaser()
     {
         Debug.Log("rayo morision");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(5f);
         Destroy(gameObject);
     }
 }

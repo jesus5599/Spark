@@ -1,20 +1,21 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class BossWeakPoint : MonoBehaviour
+public class damageboss : MonoBehaviour
 {
     public BossController boss;
     public GameObject cableroto;
     public GameObject cableentero;
-    public SphereCollider SphereCollider1;
+    public MeshCollider MeshCollider1;
     public LayerMask ExcludeLayer;
-    public static bool inmune = false;
+    public static bool inmune = true;
     public Material MatReposo, MatInmune;
     private static bool isCoroutineRunning = false; // Controla una única corrutina para todos
-
+    public bool nimune=inmune;
     public enum Difficulty { Easy, Normal, Hard }
     public Difficulty currentDifficulty;
-    private float invencibilitytime;
+    public float invencibilitytime;
 
     private void Start()
     {
@@ -22,48 +23,71 @@ public class BossWeakPoint : MonoBehaviour
         LoadDifficulty();
         cableentero.SetActive(true);
         cableroto.SetActive(false);
-        SphereCollider1 = GetComponent<SphereCollider>();
-        StartCoroutine(InmuneGlobal());
+        MeshCollider1 = GetComponent<MeshCollider>();
+        
     }
-
+    
+    public void Update()
+    { nimune = inmune;
+    if (inmune) MeshCollider1.enabled = false;
+    else MeshCollider1.enabled = true;
+        
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Proyectil"))
         {
-            cableentero.SetActive(false);
-            cableroto.SetActive(true);
 
-            // Deshabilitar el collider del objeto golpeado
-            SphereCollider1.enabled = false;
-            
-            SphereCollider1.excludeLayers = ExcludeLayer;
-            if (boss != null)
-            {
-                boss.WeakPointDestroyed();
-            }
+            if (!inmune)
+            {  // Deshabilitar el collider del objeto golpeado
+                MeshCollider1.enabled = false;
 
-            // Iniciar inmunidad en todos los objetos
-            if (!isCoroutineRunning)
-            {
-                StartCoroutine(InmuneGlobal());
+                if (boss != null)
+                {
+                    boss.TakeDamage();
+                }
+                MeshCollider1.excludeLayers = ExcludeLayer;
+                // Iniciar inmunidad en todos los objetos
+                if (!isCoroutineRunning)
+                {
+                    StartCoroutine(InmuneGlobal());
+                }
+                cableentero.SetActive(false);
+                cableroto.SetActive(true);
             }
+           
         }
+    }
+    public void Inmunidad()
+    {
+        
+       
+            Debug.Log("Inmunidad para todos");
+        StopAllCoroutines();
+        StartCoroutine(InmuneGlobal());
+        
     }
 
     IEnumerator InmuneGlobal()
     {
+        Debug.Log("Inmunidad global");
         isCoroutineRunning = true;
         inmune = true;
 
         // Obtener todos los objetos de la escena con este script
-        BossWeakPoint[] weakPoints = FindObjectsOfType<BossWeakPoint>();
+        damageboss[] weakPoints = FindObjectsOfType<damageboss>();
 
         // Deshabilitar colisiones y cambiar materiales en todos los objetos
-        foreach (BossWeakPoint wp in weakPoints)
+        foreach (damageboss wp in weakPoints)
         {
-            wp.SphereCollider1.enabled = false;
+            wp.MeshCollider1.enabled = false;
             if (wp.cableentero != null)
                 wp.cableentero.GetComponent<Renderer>().material = MatInmune;
+            if (BossController.dañofase2 == 2)
+            {
+                wp.invencibilitytime += 6;
+
+            }
         }
 
         yield return new WaitForSeconds(invencibilitytime); // Mantener inmunidad fija por 5 segundos
@@ -72,7 +96,7 @@ public class BossWeakPoint : MonoBehaviour
 
         for (int i = 0; i < 10; i++) // 10 parpadeos en total
         {
-            foreach (BossWeakPoint wp in weakPoints)
+            foreach (damageboss wp in weakPoints)
             {
                 if (wp.cableentero != null)
                 {
@@ -83,7 +107,7 @@ public class BossWeakPoint : MonoBehaviour
             yield return new WaitForSeconds(tiempoEspera); // Espera el tiempo actual
 
             // Reducir progresivamente el tiempo de espera (se acelera)
-            tiempoEspera *= 0.8f; 
+            tiempoEspera *= 0.8f;
 
             // Límite mínimo de tiempo para evitar parpadeo instantáneo
             if (tiempoEspera < 0.1f)
@@ -94,14 +118,16 @@ public class BossWeakPoint : MonoBehaviour
 
 
         // Restaurar colisiones y materiales en todos los objetos
-        foreach (BossWeakPoint wp in weakPoints)
+        foreach (damageboss wp in weakPoints)
         {
-            wp.SphereCollider1.enabled = true;
+            wp.MeshCollider1.enabled = true;
             if (wp.cableentero != null)
                 wp.cableentero.GetComponent<Renderer>().material = MatReposo;
+           
+            
         }
 
-        inmune = false;
+        
         isCoroutineRunning = false;
     }
     #region Dificult
@@ -129,19 +155,19 @@ public class BossWeakPoint : MonoBehaviour
         switch (currentDifficulty)
         {
             case Difficulty.Easy:
-                
-                invencibilitytime = 2.71f;
-               
+
+                invencibilitytime = 3.71f;
+
                 break;
             case Difficulty.Normal:
-                
+
                 invencibilitytime = 4.71f;
-                
+
                 break;
             case Difficulty.Hard:
-                
-                invencibilitytime = 6.71f;
-                
+
+                invencibilitytime = 5.71f;
+
                 break;
         }
     }

@@ -15,6 +15,9 @@ public class TrackingLaser : MonoBehaviour
     public Material trackingMaterial; // Material cuando rastrea
     public Material firingMaterial; // Material cuando dispara
     public LayerMask Layer;
+
+    public enum Difficulty { Easy, Normal, Hard }
+    public Difficulty currentDifficulty;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -25,7 +28,8 @@ public class TrackingLaser : MonoBehaviour
 
         // Asignar material inicial (tracking)
         lineRenderer.material = trackingMaterial;
-
+        AdjustShootVelocity();
+        LoadDifficulty();
         StartCoroutine(TrackAndFire());
     }
 
@@ -76,5 +80,39 @@ public class TrackingLaser : MonoBehaviour
         }
 
         lineRenderer.SetPosition(1, endPosition);
+    }
+    private void AdjustShootVelocity()
+    {
+        // Ajusta los tiempos de disparo según la dificultad
+        switch (currentDifficulty)
+        {
+            case Difficulty.Easy:
+               delayFactor = 3;
+                break;
+            case Difficulty.Normal:
+                delayFactor = 4;
+                break;
+            case Difficulty.Hard:
+                delayFactor = 5;
+                break;
+        }
+    }
+    private void LoadDifficulty()
+    {
+        // Cargar la dificultad desde PlayerPrefs. Si no se ha guardado, se asume dificultad Normal.
+        if (PlayerPrefs.HasKey("Difficulty"))
+        {
+            int difficultyValue = PlayerPrefs.GetInt("Difficulty");
+            currentDifficulty = (Difficulty)difficultyValue;
+        }
+        else
+        {
+            currentDifficulty = Difficulty.Normal; // Valor por defecto
+        }
+    }
+    private void OnEnable()
+    {
+        AdjustShootVelocity();
+        LoadDifficulty();
     }
 }
