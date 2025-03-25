@@ -29,6 +29,7 @@ public class UnifiedMenuController : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;    // Menú de opciones
     [SerializeField] private GameObject difficultyMenu; // Menú de selección de dificultad
     [SerializeField] private GameObject DeathMenu; // Menú de muerte
+    [SerializeField] private GameObject DeathMenuSurvival; // Menú de muerte
     [SerializeField] private GameObject LevelFinishMenu; // Menú de siguiente nivel
     [SerializeReference] public static bool isPaused = false;
     [SerializeReference] public static bool isDeath = false;// Estado del juego (pausado o no)
@@ -72,6 +73,7 @@ public class UnifiedMenuController : MonoBehaviour
         DeactivateMenu(optionsMenu);
         DeactivateMenu(difficultyMenu);
         DeactivateMenu(DeathMenu);
+        DeactivateMenu(DeathMenuSurvival);
         DeactivateMenu(LevelFinishMenu);
         Time.timeScale = 1f; // Asegurar que el tiempo comience normal
        
@@ -122,6 +124,7 @@ public class UnifiedMenuController : MonoBehaviour
             DeactivateMenu(optionsMenu);
             DeactivateMenu(difficultyMenu);
             DeactivateMenu(DeathMenu);
+            DeactivateMenu(DeathMenuSurvival);
             DeactivateMenu(LevelFinishMenu);
         }
         else
@@ -131,10 +134,11 @@ public class UnifiedMenuController : MonoBehaviour
             DeactivateMenu(optionsMenu);
             DeactivateMenu(difficultyMenu);
             DeactivateMenu(DeathMenu);
+            DeactivateMenu(DeathMenuSurvival);
             DeactivateMenu(LevelFinishMenu);
         }
         if (scene.name == ("Survive"))
-        {
+        { 
             SurviveMode = true;
         }
         else
@@ -331,8 +335,8 @@ public class UnifiedMenuController : MonoBehaviour
     {
         if (isDeath)
         {
-            
-            if (SurviveMode){ RestartLevel(); }
+            if (CanvasEscena != null) CanvasEscena.SetActive(true);
+            if (SurviveMode|| SceneManager.GetActiveScene().buildIndex == 0) { RestartLevel(); }
             else {
                 Debug.Log("¡Cualquier botón ha sido presionado!");
                 Controladorjugador DeathController = FindObjectOfType<Controladorjugador>();
@@ -344,6 +348,7 @@ public class UnifiedMenuController : MonoBehaviour
                     DeactivateMenu(optionsMenu);
                     DeactivateMenu(difficultyMenu);
                     DeactivateMenu(DeathMenu);
+                    DeactivateMenu(DeathMenuSurvival);
                     DeathController.respawn();
                     isDeath = false;
                 }
@@ -363,12 +368,17 @@ public class UnifiedMenuController : MonoBehaviour
         isDeath = true;
         Debug.Log("Pantalla de muerte activada.");
         // Implementa la lógica para mostrar la DeathScreen
-        OpenMenu(DeathMenu);
+
         if (SurviveMode)
         {
+            OpenMenu(DeathMenuSurvival);
             SetTransparency(false); // Hacer visible
         }
-           if (CanvasEscena != null) CanvasEscena.SetActive(false);
+        else
+        {
+            OpenMenu(DeathMenu);
+        }
+            if (CanvasEscena != null) CanvasEscena.SetActive(false);
                          
         }
 
@@ -401,13 +411,13 @@ public class UnifiedMenuController : MonoBehaviour
         if (VR == true)
         {
             // Cargar el siguiente nivel
-            SceneManager.LoadScene("level" + gameData.currentLevel + "VR");
+            SceneManager.LoadScene(gameData.currentLevel);
             Time.timeScale = 1f;
         }
         else
         {
             // Cargar el siguiente nivel
-            SceneManager.LoadScene("level" + gameData.currentLevel);
+            SceneManager.LoadScene(gameData.currentLevel);
             Time.timeScale = 1f;
         }
     }
@@ -436,14 +446,17 @@ public class UnifiedMenuController : MonoBehaviour
 
     // Método para continuar la partida desde el nivel guardado
     public void ContinueGame()
-    {
+    { if (gameData.currentLevel > 3)
+        {
+            gameData.currentLevel = 3;
+        }
         if (gameData != null && gameData.currentLevel > 1)
         {
-            SceneManager.LoadScene("level" + gameData.currentLevel); // Cargar nivel guardado
+            SceneManager.LoadScene( gameData.currentLevel); // Cargar nivel guardado
         }
         else if (gameData != null && gameData.currentLevel > 1 && VR == true)
         {
-            SceneManager.LoadScene("level" + gameData.currentLevel + "VR"); // Cargar nivel guardado de VR
+            SceneManager.LoadScene(gameData.currentLevel); // Cargar nivel guardado de VR
         }
         else
         {

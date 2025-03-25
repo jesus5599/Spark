@@ -3,7 +3,8 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 [System.Serializable]
 public class TimeEntry
 {
@@ -38,6 +39,7 @@ public class SaveSystem : MonoBehaviour
     private const int MaxBestTimes = 5;
 
     [SerializeField] private TextMeshProUGUI bestTimesText;
+    [SerializeField] private TextMeshProUGUI bestTimesText1;
     [SerializeField] private string currentLevel = "level1";
     public bool survivemode;
     private void Start()
@@ -45,7 +47,18 @@ public class SaveSystem : MonoBehaviour
         LoadTimes();
         UpdateBestTimesText();
     }
-
+    public void Update()
+    {
+        string nombreescena = SceneManager.GetActiveScene().name;
+        if (nombreescena == ("Survive"))
+        {
+            survivemode = true;
+        }
+        else
+        {
+            survivemode = false;
+        }
+    }
     public void SetCurrentLevel(string levelName)
     {
         currentLevel = levelName;
@@ -157,18 +170,20 @@ public class SaveSystem : MonoBehaviour
         if (existingEntry != null && existingEntry.value.bestTimes.Count > 0)
         {
             bestTimesText.text = $"Top 5 Times for {currentLevel}:\n";
-
+            bestTimesText1.text = $"Top 5 Times for {currentLevel}:\n";
             int rank = 1;
             foreach (var entry in existingEntry.value.bestTimes)
             {
                 string formattedTime = FormatTime(entry.time);
                 bestTimesText.text += $"{rank}. {formattedTime}\n";
+                bestTimesText1.text += $"{rank}. {formattedTime}\n";
                 rank++;
             }
         }
         else
         {
             bestTimesText.text = $"Top 5 Times for {currentLevel}:\nNo Data Yet";
+            bestTimesText1.text = $"Top 5 Times for {currentLevel}:\nNo Data Yet";
         }
     }
 

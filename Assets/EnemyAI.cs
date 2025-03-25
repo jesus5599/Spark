@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,8 +12,15 @@ public class EnemyAI : MonoBehaviour
     public bool isSurviveActive = true; // Variable booleana para controlar si el enemigo puede moverse
     private Animator animate;
     public bool perseguir;
+    
+    public APUNTADO apuntar;
+    public bool muerto;
+    public int randomnum;
+    public bool gun,ar,sub;
     void Start()
     {
+        apuntar = GetComponentInChildren<APUNTADO>();
+        randomnum = Random.Range(0, 1);
         animate = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -23,18 +31,37 @@ public class EnemyAI : MonoBehaviour
             Debug.LogWarning("No se encontró un jugador en la escena.");
         }
     }
+    private void OnEnable()
+    {
+        muerto= false;
+        
+    }
 
+    private void OnDisable()
+    {
+        muerto = false;
+    }
+    public void Muerto()
+    { 
+    muerto = true;
+    }
     void Update()
     {
         if(animate !=null) animate.SetBool("Correr", perseguir);
+        if (animate != null) animate.SetBool("morido", muerto);
+        if (animate != null) animate.SetInteger("tipmort", randomnum);
+        if (animate != null) animate.SetBool("gun", gun);
+        if (animate != null) animate.SetBool("AR", ar);
+        if (animate != null) animate.SetBool("Sub", sub);
         // Comprobar si la variable isSurviveActive es false
-        if (!isSurviveActive)
+        if (!isSurviveActive || muerto)
         {
+            agent.isStopped = true;
             return; // Si isSurviveActive es false, no hacer nada
         }
 
         // Lógica de movimiento y comportamiento del enemigo si isSurviveActive es true
-        if (target != null && !shoot)
+        if (target != null && !shoot && !muerto)
         {
             float distance = Vector3.Distance(transform.position, target.position);
 
