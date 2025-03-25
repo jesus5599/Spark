@@ -336,7 +336,7 @@ public class UnifiedMenuController : MonoBehaviour
         if (isDeath)
         {
             if (CanvasEscena != null) CanvasEscena.SetActive(true);
-            if (SurviveMode|| SceneManager.GetActiveScene().buildIndex == 0) { RestartLevel(); }
+            if (SurviveMode|| SceneManager.GetActiveScene().buildIndex == 3) { RestartLevel(); }
             else {
                 Debug.Log("¡Cualquier botón ha sido presionado!");
                 Controladorjugador DeathController = FindObjectOfType<Controladorjugador>();
@@ -407,19 +407,27 @@ public class UnifiedMenuController : MonoBehaviour
     // Método para pasar al siguiente nivel y guardar el progreso
     public void LevelCompleted(int score)
     {
-
-        if (VR == true)
+        if (gameData.currentLevel > 3)
         {
-            // Cargar el siguiente nivel
+            gameData.currentLevel = 0;
             SceneManager.LoadScene(gameData.currentLevel);
-            Time.timeScale = 1f;
         }
-        else
+        else 
         {
-            // Cargar el siguiente nivel
-            SceneManager.LoadScene(gameData.currentLevel);
-            Time.timeScale = 1f;
+            if (VR == true)
+            {
+                // Cargar el siguiente nivel
+                SceneManager.LoadScene(gameData.currentLevel);
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                // Cargar el siguiente nivel
+                SceneManager.LoadScene(gameData.currentLevel);
+                Time.timeScale = 1f;
+            }
         }
+        
     }
 
     // Guardar los datos en un archivo cifrado en Base64
@@ -450,18 +458,24 @@ public class UnifiedMenuController : MonoBehaviour
         {
             gameData.currentLevel = 3;
         }
-        if (gameData != null && gameData.currentLevel > 1)
+        else 
         {
-            SceneManager.LoadScene( gameData.currentLevel); // Cargar nivel guardado
+            if (gameData != null && gameData.currentLevel > 1)
+            {
+                SceneManager.LoadScene(gameData.currentLevel); // Cargar nivel guardado
+            }
+            else if (gameData != null && gameData.currentLevel > 1 && VR == true)
+            {
+                SceneManager.LoadScene(gameData.currentLevel); // Cargar nivel guardado de VR
+            }
+            else
+            {
+
+                Debug.Log("No hay una partida guardada. " + " apagando boton" + gameData.currentLevel);
+                continueButton.interactable = false;
+            }
         }
-        else if (gameData != null && gameData.currentLevel > 1 && VR == true)
-        {
-            SceneManager.LoadScene(gameData.currentLevel); // Cargar nivel guardado de VR
-        }
-        else
-        {
-            Debug.Log("No hay una partida guardada.");
-        }
+        
     }
     // Actualizar la interactividad del botón según si hay partida guardada
     // Actualizar la interactividad del botón según los datos guardados
@@ -470,21 +484,25 @@ public class UnifiedMenuController : MonoBehaviour
         if (continueButton != null)
         {
             bool saveExists = File.Exists(SaveFilePath);
-
+            Debug.Log("progreso. "+saveExists);
             if (saveExists)
             {
                 // Cargar datos del archivo y verificar el nivel
                 string encryptedData = File.ReadAllText(SaveFilePath);
                 string jsonData = Encoding.UTF8.GetString(Convert.FromBase64String(encryptedData));
                 GameData gameData = JsonUtility.FromJson<GameData>(jsonData);
-
+                if (gameData.currentLevel > 3)
+                {
+                    gameData.currentLevel = 0;
+                }
                 // El botón es interactuable solo si el nivel guardado es mayor que 1
                 continueButton.interactable = gameData.currentLevel > 1;
-
-                if (gameData.currentLevel == 1)
+                Debug.Log("nivel actual" + gameData.currentLevel);
+                if (gameData.currentLevel <= 1)
                 {
                     Debug.Log("No hay progreso más allá del nivel 1. El botón de 'Continuar' está desactivado.");
                 }
+                
             }
             else
             {
