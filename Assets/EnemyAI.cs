@@ -49,7 +49,7 @@ public class EnemyAI : MonoBehaviour
     {
         if(animate !=null) animate.SetBool("Correr", perseguir);
         if (animate != null) animate.SetBool("morido", muerto);
-        if (animate != null) animate.SetInteger("tipmort", randomnum);
+        
         if (animate != null) animate.SetBool("gun", gun);
         if (animate != null) animate.SetBool("AR", ar);
         if (animate != null) animate.SetBool("Sub", sub);

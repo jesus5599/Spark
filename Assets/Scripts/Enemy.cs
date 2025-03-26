@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public APUNTADO apuntar;
     public CapsuleCollider capsuleCollider;
     public CapsuleCollider capsuleTrigger;
+    public Rigidbody rb;
     void Start()
     {
         CapsuleCollider[] colliders = GetComponents<CapsuleCollider>();
@@ -25,7 +26,7 @@ public class Enemy : MonoBehaviour
                 capsuleCollider = col; // Asigna el Collider normal
             }
         }
-
+        rb = GetComponentInChildren<Rigidbody>();
         apuntar = GetComponentInChildren<APUNTADO>();
         enemy = GetComponent<EnemyAI>();
         animate = GetComponent<Animator>();
@@ -47,7 +48,9 @@ public class Enemy : MonoBehaviour
         enemy.Muerto();
         capsuleCollider.enabled = false;
         capsuleTrigger.enabled = false;
+        rb.useGravity = false;
         yield return new WaitForSeconds(3f);
+        rb.useGravity = true;
         capsuleCollider.enabled = true;
         capsuleTrigger.enabled = true;
         gameObject.SetActive(false); // Desactiva el enemigo cuando es derrotado    

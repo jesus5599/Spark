@@ -11952,6 +11952,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -27.906288
       objectReference: {fileID: 0}
+    - target: {fileID: 5356198590436298000, guid: 5fed3cb3247a40343bd2a2b47a1cd848, type: 3}
+      propertyPath: misil
+      value: 
+      objectReference: {fileID: 4412391605878187271}
     - target: {fileID: 5446531619905305945, guid: 5fed3cb3247a40343bd2a2b47a1cd848, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -3.9712584
@@ -12231,7 +12235,7 @@ PrefabInstance:
     - target: {fileID: 7340337563696313790, guid: 5fed3cb3247a40343bd2a2b47a1cd848, type: 3}
       propertyPath: apuntar
       value: 
-      objectReference: {fileID: 521934814272856994}
+      objectReference: {fileID: 0}
     - target: {fileID: 7340337563696313790, guid: 5fed3cb3247a40343bd2a2b47a1cd848, type: 3}
       propertyPath: iconColor.b
       value: 1
@@ -12419,17 +12423,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6161654830954781472}
   m_SourcePrefab: {fileID: 100100000, guid: 5fed3cb3247a40343bd2a2b47a1cd848, type: 3}
---- !u!114 &521934814272856994 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2249900519262909533, guid: 5fed3cb3247a40343bd2a2b47a1cd848, type: 3}
-  m_PrefabInstance: {fileID: 1731361827973322751}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35b3bc8b29ee6e64ba244d8c2b48206f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3589618612167305369 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3015137355764449126, guid: 5fed3cb3247a40343bd2a2b47a1cd848, type: 3}
@@ -42011,10 +42004,6 @@ PrefabInstance:
     - target: {fileID: 8817084246775663209, guid: dcfcab3f94d64f24980fbda3cd6a6e14, type: 3}
       propertyPath: m_Name
       value: Y Bot (ARgun)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8817084246775663209, guid: dcfcab3f94d64f24980fbda3cd6a6e14, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8821023331641121009, guid: dcfcab3f94d64f24980fbda3cd6a6e14, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
