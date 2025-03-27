@@ -364,6 +364,18 @@ PrefabInstance:
       propertyPath: m_CullingMask.m_Bits
       value: 65535
       objectReference: {fileID: 0}
+    - target: {fileID: 6486431086272303300, guid: 679864feab06c7c49b8a282c52ac9b6c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 58.099007
+      objectReference: {fileID: 0}
+    - target: {fileID: 6486431086272303300, guid: 679864feab06c7c49b8a282c52ac9b6c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.8166122
+      objectReference: {fileID: 0}
+    - target: {fileID: 6486431086272303300, guid: 679864feab06c7c49b8a282c52ac9b6c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -44.43785
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1140,9 +1152,17 @@ PrefabInstance:
       propertyPath: flash
       value: 
       objectReference: {fileID: 2106280357}
+    - target: {fileID: 5572305344243674041, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 7653033583450298150, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
       propertyPath: m_Name
       value: Enemy_Sub
+      objectReference: {fileID: 0}
+    - target: {fileID: 7653033583450298150, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1164,6 +1184,10 @@ PrefabInstance:
     - target: {fileID: 6752977303356578976, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
       propertyPath: m_Name
       value: Enemy_Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 6752977303356578976, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7850046319332833447, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1204,6 +1228,10 @@ PrefabInstance:
     - target: {fileID: 7850046319332833447, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918670193541354273, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: m_Constraints
+      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1262,9 +1290,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3635105113489846293, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 6914695107680777131, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
       propertyPath: m_Name
       value: Enemy_Ar
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914695107680777131, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -258,7 +258,7 @@ public class UnifiedMenuController : MonoBehaviour
     // Regresar al menú principal desde cualquier menú
     public void BackToMain()
     {
-        SceneManager.LoadScene(0);
+        LoadingScreenManager.LoadScene(0);
     }
 
     // Iniciar un nuevo juego (abre selección de dificultad)
@@ -273,14 +273,15 @@ public class UnifiedMenuController : MonoBehaviour
         PlayerPrefs.SetInt("Difficulty", difficulty); // Guardar dificultad seleccionada
         gameData = new GameData { currentLevel = 1, score = 0 }; // Reiniciar datos
         SaveGame(gameData);                                      // Guardar nueva partida
-        SceneManager.LoadScene(1);          // Cargar la escena principal del juego
+        LoadingScreenManager.LoadScene(1);
     }
 
     // Reiniciar el nivel actual
     public void RestartLevel()
     {
         Time.timeScale = 1f; // Asegurarse de que el tiempo se reanude antes de recargar
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Recargar la escena actual
+        LoadingScreenManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Recargar la escena actual
     }
 
     // Salir del juego
@@ -410,20 +411,22 @@ public class UnifiedMenuController : MonoBehaviour
         if (gameData.currentLevel > 3)
         {
             gameData.currentLevel = 0;
-            SceneManager.LoadScene(gameData.currentLevel);
+            LoadingScreenManager.LoadScene(gameData.currentLevel);
         }
         else 
         {
             if (VR == true)
             {
                 // Cargar el siguiente nivel
-                SceneManager.LoadScene(gameData.currentLevel);
+                LoadingScreenManager.LoadScene(gameData.currentLevel);
+                
                 Time.timeScale = 1f;
             }
             else
             {
                 // Cargar el siguiente nivel
-                SceneManager.LoadScene(gameData.currentLevel);
+                LoadingScreenManager.LoadScene(gameData.currentLevel);
+               
                 Time.timeScale = 1f;
             }
         }
@@ -515,7 +518,7 @@ public class UnifiedMenuController : MonoBehaviour
     public void Survivemode()
     {
         PlayerPrefs.SetInt("Difficulty", 1); // Guardar dificultad seleccionada
-        SceneManager.LoadScene("Survive");
+        LoadingScreenManager.LoadScene(4);
     }
 
 

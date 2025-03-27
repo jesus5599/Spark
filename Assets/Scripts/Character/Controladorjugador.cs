@@ -140,6 +140,9 @@ public class Controladorjugador : MonoBehaviour
 
     public bool vr;
     public GameObject puntapistola;
+
+    public GameObject CinematicCamera; // Referencia a la Cinemachine Virtual Camera
+    public GameObject muñeco;
     #endregion
     #region Awake Start Update
     void Awake()
@@ -845,6 +848,16 @@ public class Controladorjugador : MonoBehaviour
         }
         else if (other.CompareTag("finish"))
         {
+            characterController.Move(new Vector3(10000,10000,10000) * Time.unscaledDeltaTime);
+            muñeco.gameObject.SetActive(true);
+            CinematicCamera.gameObject.SetActive(true);
+           
+            controlador.Disable();
+            StartCoroutine(finishlevel());
+        }
+         IEnumerator finishlevel()
+        {
+            yield return new WaitForSeconds(3f);
             UnifiedMenuController menuController = FindObjectOfType<UnifiedMenuController>();
             SaveSystem sistemaGuardado = FindObjectOfType<SaveSystem>();
 
@@ -860,7 +873,6 @@ public class Controladorjugador : MonoBehaviour
 
             Time.timeScale = 0f;
         }
-
         // ✅ Se asigna como hijo del hijo de la plataforma
         if (other.CompareTag("Plataforma"))
         {
