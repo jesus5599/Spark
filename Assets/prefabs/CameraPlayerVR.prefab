@@ -1364,6 +1364,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character: {fileID: 6504220904577372098}
   camara: {fileID: 4018258779805766160}
+  Character2: {fileID: 0}
+  xrrig: {fileID: 0}
 --- !u!108 &3966122924508224439 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 503934109878693784, guid: 5be55559ff3f5e4439f45221dfa4a6d7, type: 3}
