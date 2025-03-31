@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -34,7 +35,8 @@ public class parry : MonoBehaviour
         {
             audioSource.PlayOneShot(parryClip);
         }
-         
+
+
         int excludeParryLayer = ~ParryLayer.value;
         RaycastHit hit;
         Ray rayo;
@@ -42,7 +44,7 @@ public class parry : MonoBehaviour
         // Verificar si es VR o no y definir el rayo correspondiente
         if (vr)
         {
-            Transform puntoDisparo = lanzador.transform; // Asegurar que puntapistola está asignado
+            Transform puntoDisparo = lanzador.transform; // Asegurar que puntapistola est? asignado
             rayo = new Ray(puntoDisparo.position, puntoDisparo.forward);
         }
         else
@@ -50,13 +52,13 @@ public class parry : MonoBehaviour
             Vector3 puntopantalla = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
             rayo = Camera.main.ScreenPointToRay(puntopantalla);
         }
+
         Physics.Raycast(rayo, out hit, 1000, ~ParryLayer.value);
         puntoimpacto = hit.point;
         Rigidbody misilInstanc;
         misilInstanc = Instantiate(misil, lanzador.position, lanzador.rotation);
         misilInstanc.transform.LookAt(puntoimpacto);
         misilInstanc.gameObject.SetActive(true);
-
 
     }
 

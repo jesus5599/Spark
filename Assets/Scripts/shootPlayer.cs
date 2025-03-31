@@ -40,7 +40,15 @@ public class shootPlayer : MonoBehaviour
         
         Destroy(gameObject); // Destruir la bala después de mostrar el impacto
     }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Boss"))
+        {
+            other.GetComponent<BossController>().TakeDamage();
+            Destroy(gameObject);
+        }
 
+    }
     private void OnCollisionEnter(Collision collision)
     {
         // Mostrar siempre el objeto con el que colisiona

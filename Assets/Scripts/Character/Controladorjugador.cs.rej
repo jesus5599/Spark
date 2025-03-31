@@ -1,0 +1,15 @@
+diff a/Assets/Scripts/Character/Controladorjugador.cs b/Assets/Scripts/Character/Controladorjugador.cs	(rejected hunks)
+@@ -265,10 +265,11 @@
+                 disparo.puntoimpacto = hit.point;
+                 disparo.disparoarma = true;
+                 timeAux = Time.unscaledTime;
+-            }
+-
+ 
++                if (vr) Debug.Log("VRRRR"); // Solo imprime si es VR
++            }
+         }
++
+         // Mover la cámara 
+         PlayerLook();
+ 
