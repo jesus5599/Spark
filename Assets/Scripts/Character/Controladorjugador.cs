@@ -544,7 +544,12 @@ public class Controladorjugador : MonoBehaviour
             capsuleCollider.center = mesh.transform.localPosition + new Vector3(0, .9f, 0);
             characterController.center = mesh.transform.localPosition + new Vector3(0, .9f, 0);
         }
-
+        else 
+        {
+            Debug.Log("deslizandose");
+            capsuleCollider.center = mesh.transform.localPosition + new Vector3(0, .45f, 0);
+            characterController.center = mesh.transform.localPosition + new Vector3(0, .45f, 0);
+        }
     }
 
     #region Wallrun
@@ -814,7 +819,7 @@ public class Controladorjugador : MonoBehaviour
         {
             tocandotecho = true;
             // Si hay algo encima, continuar deslizando
-            slideTimer = 0.2f; // Extender temporalmente el deslizamiento
+            slideTimer = 0.5f; // Extender temporalmente el deslizamiento
         }
         else
         {
