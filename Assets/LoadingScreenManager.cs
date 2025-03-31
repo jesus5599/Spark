@@ -24,7 +24,8 @@ public class LoadingScreenManager : MonoBehaviour
     public static void LoadScene(int sceneIndex)
     {
         PlayerPrefs.SetInt("NextScene", sceneIndex);
-        SceneManager.LoadScene("LoadingScreen");
+
+        SceneManager.LoadScene(5);
     }
 
     IEnumerator LoadSceneAsync(int sceneIndex)

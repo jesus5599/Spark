@@ -15,8 +15,14 @@ EditorBuildSettings:
     path: Assets/Scenes/level2VR.unity
     guid: 8f1477f753bcbbc43b6f72f94811a6d2
   - enabled: 1
+    path: Assets/Scenes/BossVR.unity
+    guid: 14e30bd33a6f58649bc0520679f276c4
+  - enabled: 1
     path: Assets/Scenes/SurviveVR.unity
     guid: 7f069f637e633544b83ab04f38de2e36
+  - enabled: 1
+    path: Assets/Scenes/LoadingScreenVR.unity
+    guid: 786d067ad64ca504ab99715c1291afd4
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e63e05bbb59a058439d21c4e2bcb933d, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}

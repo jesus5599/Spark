@@ -26532,7 +26532,6 @@ MonoBehaviour:
   jumpHeight: 3
   gravityValue: -9.81
   groundedPlayer: 0
-  mesh: {fileID: 3401865962735926511}
   wallRunSpeed: 10
   wallRunDuration: 0.5
   sphereRadius: 0.5
@@ -26549,7 +26548,7 @@ MonoBehaviour:
   salidarayos: 0.9
   wallLayer:
     serializedVersion: 2
-    m_Bits: 27136
+    m_Bits: 31232
   tiempodisparo: 0.5
   timeAux: 0
   TimeCooldown: 4
@@ -26610,6 +26609,9 @@ MonoBehaviour:
   survivalmode: 0
   vr: 1
   puntapistola: {fileID: 3412243797337727034}
+  CinematicCamera: {fileID: 0}
+  "mu\xF1eco": {fileID: 0}
+  mesh: {fileID: 3401865962735926511}
   capsuleCollider: {fileID: 0}
 --- !u!114 &6953524307269685588
 MonoBehaviour:
