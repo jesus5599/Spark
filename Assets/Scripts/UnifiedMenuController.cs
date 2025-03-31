@@ -137,7 +137,7 @@ public class UnifiedMenuController : MonoBehaviour
             DeactivateMenu(DeathMenuSurvival);
             DeactivateMenu(LevelFinishMenu);
         }
-        if (scene.name == ("Survive"))
+        if (scene.name == ("Survive") || scene.name == ("SurviveVR"))
         { 
             SurviveMode = true;
         }
@@ -521,7 +521,21 @@ public class UnifiedMenuController : MonoBehaviour
         LoadingScreenManager.LoadScene(4);
     }
 
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus && !isDeath && !isWin && SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            ResumeGame();
+        }
+    }
 
+    void OnApplicationPause(bool isPaused)
+    {
+        if (isPaused && !isDeath && !isWin && SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            PauseGame();
+        }
+    }
 
 
 

@@ -143,6 +143,9 @@ public class Controladorjugador : MonoBehaviour
 
     public GameObject CinematicCamera; // Referencia a la Cinemachine Virtual Camera
     public GameObject muñeco;
+
+    public GameObject mesh;
+    public CapsuleCollider capsuleCollider;
     #endregion
     #region Awake Start Update
     void Awake()
@@ -165,8 +168,8 @@ public class Controladorjugador : MonoBehaviour
         checkpointposition= transform.position;
         checkpointrotation = transform.rotation;
         enemyManager = FindObjectOfType<EnemyManager>(); // Encuentra el gestor de enemigos
-        
-        Isparring =true;
+        capsuleCollider = GetComponent<CapsuleCollider>();
+        Isparring = true;
         if (botones == null)
         {
             botones = FindObjectOfType<ControladorPuertasYBotones>(); // Buscar en la escena
@@ -282,6 +285,7 @@ public class Controladorjugador : MonoBehaviour
             
         }
 
+
         // Manejar el Disparo
         if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
         {
@@ -289,12 +293,16 @@ public class Controladorjugador : MonoBehaviour
             {
                 disparo.puntoimpacto = hit.point;
                 disparo.disparoarma = true;
-                timeAux = Time.time;
+                timeAux = Time.unscaledTime;
+
+                if (vr) Debug.Log("VRRRR"); // Solo imprime si es VR
             }
         }
-    // Mover la cámara 
-    PlayerLook();
-
+        if (!vr)
+        {
+            // Mover la cámara 
+            PlayerLook();
+        }
         // Verificar si el jugador está en el suelo
         CheckGroundStatus();
 
@@ -363,7 +371,11 @@ public class Controladorjugador : MonoBehaviour
         { 
         playerVelocity.y = -100;
         }
-
+        if (vr)
+        { 
+        Coliders();
+        }
+        
     }
     #endregion
     #region Jump and movement
@@ -425,7 +437,12 @@ public class Controladorjugador : MonoBehaviour
         Vector3 move = new Vector3(input.x, 0, input.y);
         move = virtualCamera.transform.TransformDirection(move);
         move.y = 0;
-        move = (transform.forward * move.z + transform.right * move.x).normalized;
+        if (!vr)
+        { move = (transform.forward * move.z + transform.right * move.x).normalized; }
+        else
+        {
+            move = (mesh.transform.forward * move.z + mesh.transform.right * move.x).normalized;
+        }
         speedx = input.y;
         speedz = input.x;
         characterController.Move(move * Time.unscaledDeltaTime * playerSpeed);
@@ -517,23 +534,51 @@ public class Controladorjugador : MonoBehaviour
         dashEnable = true;
     }
 
+    private void Coliders()
+    {
+        if (!isSliding)
+        {
+            Debug.Log("no deslizandose");
+            capsuleCollider.center = mesh.transform.localPosition + new Vector3(0, .9f, 0);
+            characterController.center = mesh.transform.localPosition + new Vector3(0, .9f, 0);
+        }
 
+    }
 
     #region Wallrun
     private void CheckForWall()
     {
+        Vector3 positionray;
         int excludeWallLayer = ~wallLayer.value; // Invertir bitmask para excluir la capa específica
-
-        Vector3 positionray = new Vector3(transform.position.x, transform.position.y + salidarayos, transform.position.z);
-
+        if (!vr)
+        {
+             positionray = new Vector3(transform.position.x, transform.position.y + salidarayos, transform.position.z);
+        }
         
+        else 
+        {
+             positionray = new Vector3(mesh.transform.position.x, mesh.transform.position.y + salidarayos, mesh.transform.position.z); 
+        }
 
-        // Detectar paredes a los lados del jugador con SphereCast
-        Debug.DrawRay(positionray, -transform.right * wallDetectionDistance, Color.red);
-        Debug.DrawRay(positionray, transform.right * wallDetectionDistance, Color.blue);
 
-        wallLeft = Physics.SphereCast(positionray, sphereRadius, -transform.right, out hitLeft, wallDetectionDistance, excludeWallLayer);
-        wallRight = Physics.SphereCast(positionray, sphereRadius, transform.right, out hitRight, wallDetectionDistance, excludeWallLayer);
+        if (!vr)
+        {
+            // Detectar paredes a los lados del jugador con SphereCast
+            Debug.DrawRay(positionray, -transform.right * wallDetectionDistance, Color.red);
+            Debug.DrawRay(positionray, transform.right * wallDetectionDistance, Color.blue);
+            wallLeft = Physics.SphereCast(positionray, sphereRadius, -transform.right, out hitLeft, wallDetectionDistance, excludeWallLayer);
+            wallRight = Physics.SphereCast(positionray, sphereRadius, transform.right, out hitRight, wallDetectionDistance, excludeWallLayer);
+
+        }
+        else
+        {
+            Debug.DrawRay(positionray, mesh.transform.right * wallDetectionDistance, Color.red);
+            Debug.DrawRay(positionray, -mesh.transform.right * wallDetectionDistance, Color.blue);
+            wallLeft = Physics.SphereCast(positionray, sphereRadius, -mesh.transform.right, out hitLeft, wallDetectionDistance, excludeWallLayer);
+            wallRight = Physics.SphereCast(positionray, sphereRadius, mesh.transform.right, out hitRight, wallDetectionDistance, excludeWallLayer);
+        }
+
+    
 
         if (wallLeft || wallRight)
         {
@@ -701,22 +746,44 @@ public class Controladorjugador : MonoBehaviour
         }
         // Reducir la altura del CharacterController
         characterController.height = crouchHeight;
-        characterController.center = new Vector3(0f, crouchHeight/2, 0f);
+        if (!vr)
+        {
+            characterController.center = new Vector3(0f, crouchHeight / 2, 0f);
+        }
+        else 
+        {
+            characterController.center = new Vector3(mesh.transform.localPosition.x,  .45f, mesh.transform.localPosition.z);
+        }
+       
+        
         CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 
         // Verifica si hay un Capsule Collider
         if (capsuleCollider != null)
         {
-            // Modificar el centro del collider
-            capsuleCollider.center = new Vector3(0f, crouchHeight / 2, 0f); // Cambia las coordenadas según necesites
-
-            // Modificar la altura del collider
-            capsuleCollider.height = crouchHeight; // Cambia este valor según necesites
+            if (!vr)
+            {
+                // Modificar el centro del collider
+                capsuleCollider.center = new Vector3(0f, crouchHeight / 2, 0f); // Cambia las coordenadas según necesites
+            }
+            else
+            {
+                capsuleCollider.center = characterController.center = new Vector3(mesh.transform.localPosition.x, .45f, mesh.transform.localPosition.z);
+            }
+                // Modificar la altura del collider
+                capsuleCollider.height = crouchHeight; // Cambia este valor según necesites
 
             Debug.Log("Capsule Collider modificado.");
         }
-        // Capturar la dirección de movimiento actual
-        slideDirection = transform.forward * slideSpeed;
+        if (!vr)
+        {
+            // Capturar la dirección de movimiento actual
+            slideDirection = transform.forward * slideSpeed;
+        }
+        else
+        {
+            slideDirection = mesh.transform.forward * slideSpeed;
+        }
     }
 
     void Slide()
@@ -760,15 +827,32 @@ public class Controladorjugador : MonoBehaviour
 
         // Restaurar la altura original del CharacterController
         characterController.height = originalHeight;
-        characterController.center = new Vector3(0f, originalHeight/2, 0f);
+        if (!vr)
+        {
+           
+            characterController.center = new Vector3(0f, originalHeight / 2, 0f);
+        }
+        else
+        {
+            characterController.center = characterController.center = new Vector3(mesh.transform.localPosition.x,.9f, mesh.transform.localPosition.z);
+        }
+        
         CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 
         // Verifica si hay un Capsule Collider
         if (capsuleCollider != null)
         {
-            // Modificar el centro del collider
-            capsuleCollider.center = new Vector3(0f, originalHeight / 2, 0f); // Cambia las coordenadas según necesites
+            
+            if (!vr)
+            {
 
+                // Modificar el centro del collider
+                capsuleCollider.center = new Vector3(0f, originalHeight / 2, 0f); // Cambia las coordenadas según necesites
+            }
+            else
+            {
+                capsuleCollider.center = characterController.center = new Vector3(mesh.transform.localPosition.x, .9f, mesh.transform.localPosition.z);
+            }
             // Modificar la altura del collider
             capsuleCollider.height = originalHeight; // Cambia este valor según necesites
 
@@ -781,7 +865,12 @@ public class Controladorjugador : MonoBehaviour
         // Comprobar si hay un objeto por encima
         //Vector3 top = transform.position + Vector3.up * (originalHeight / 2);
         //return Physics.CheckSphere(top, 0.1f, ceilingLayer);
-        return Physics.Raycast(transform.position, Vector3.up, out RaycastHit hit,2f, ceilingLayer);
+        if (!vr)
+        { return Physics.Raycast(transform.position, Vector3.up, out RaycastHit hit, 2f, ceilingLayer); }
+        else 
+        {
+            return Physics.Raycast(mesh.transform.position, Vector3.up, out RaycastHit hit, 2f, ceilingLayer);
+        }
         
     }
     void StartRampSlide()
@@ -797,20 +886,41 @@ public class Controladorjugador : MonoBehaviour
     }
     bool IsOnRamp()
     {
-        // Verificar si el personaje está sobre una rampa
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, slideLayer))
+        if (!vr)
         {
-            return true;
+            // Verificar si el personaje está sobre una rampa
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, slideLayer))
+            {
+                return true;
+            }
         }
+        else 
+        {
+            if (Physics.Raycast(mesh.transform.position, Vector3.down, out RaycastHit hit, 1f, slideLayer))
+            {
+                return true;
+            }
+        }
+        
         return false;
     }
 
     Vector3 GetRampNormal()
     {
-        // Obtener la normal de la rampa debajo del personaje
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, slideLayer))
+        if (!vr)
         {
-            return hit.normal;
+            // Obtener la normal de la rampa debajo del personaje
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, slideLayer))
+            {
+                return hit.normal;
+            }
+        }
+        else
+        {
+            if (Physics.Raycast(mesh.transform.position, Vector3.down, out RaycastHit hit, 1f, slideLayer))
+            {
+                return hit.normal;
+            }
         }
         return Vector3.up; // Valor predeterminado si no hay rampa
     }
@@ -1075,5 +1185,13 @@ public class Controladorjugador : MonoBehaviour
     private void OnDisable()
     {
         controlador.Disable();
+    }
+    private void LateUpdate()
+    {
+        if (vr)
+        { // Mover la cámara 
+        PlayerLook();
+        }
+       
     }
 }
