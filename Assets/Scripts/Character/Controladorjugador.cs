@@ -146,10 +146,12 @@ public class Controladorjugador : MonoBehaviour
 
     public GameObject mesh;
     public CapsuleCollider capsuleCollider;
+    bool finish;
     #endregion
     #region Awake Start Update
     void Awake()
     {
+        finish = false;
         run = true;
         Animationtime = 1;
         targetIntensitytime = TimeLight.intensity ;
@@ -456,7 +458,7 @@ public class Controladorjugador : MonoBehaviour
     }
     private void ApplyGravity()
     {
-        if (!isWallRunning)
+        if (!isWallRunning && !finish)
         {
             playerVelocity.y += gravityValue * Time.unscaledDeltaTime;
         }
@@ -656,7 +658,7 @@ public class Controladorjugador : MonoBehaviour
             Vector3 wallNormalR = wallRight ? hitRight.normal : hitLeft.normal;
             forceToApply = transform.up * wallJumpUpForce + wallNormalR * wallJumpSideForce;
             characterController.Move(forceToApply.normalized);
-            playerVelocity.y += -9.81f * Time.unscaledDeltaTime;
+            playerVelocity.y += gravityValue * Time.unscaledDeltaTime;
             StartCoroutine(JumpOfWall(forceToApply));
             
         }
@@ -958,16 +960,26 @@ public class Controladorjugador : MonoBehaviour
         }
         else if (other.CompareTag("finish"))
         {
-            characterController.Move(new Vector3(10000,10000,10000) * Time.unscaledDeltaTime);
-            muñeco.gameObject.SetActive(true);
-            CinematicCamera.gameObject.SetActive(true);
+            if (!vr)
+            {
+                finish = true;
+                muñeco.gameObject.SetActive(true);
+                CinematicCamera.gameObject.SetActive(true);
+                characterController.Move(new Vector3(100000, 100000, 100000) * Time.unscaledDeltaTime);
+                playerVelocity.y = 0;
+                controlador.Disable();
+                
+            }
            
-            controlador.Disable();
             StartCoroutine(finishlevel());
         }
          IEnumerator finishlevel()
-        {
+        {   
+            if (!vr)
+            { 
             yield return new WaitForSeconds(3f);
+            }
+            
             UnifiedMenuController menuController = FindObjectOfType<UnifiedMenuController>();
             SaveSystem sistemaGuardado = FindObjectOfType<SaveSystem>();
 
