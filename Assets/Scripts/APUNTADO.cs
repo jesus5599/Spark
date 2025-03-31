@@ -32,8 +32,15 @@ public class APUNTADO : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip ArClip, SubmachineClip, GunClip;
     public LayerMask Playerlayer;
+    public bool survivalmode;
+
+    public bool mort;
     private void OnEnable()
     {
+        int nuevaLayer = LayerMask.NameToLayer("Default");
+        CambiarLayerRecursivo(transform, nuevaLayer);
+        
+        mort = false;
         canShoot = true;
         isShooting = false;
         hasEnteredRange = false;
@@ -43,7 +50,10 @@ public class APUNTADO : MonoBehaviour
 
     private void OnDisable()
     {
+        int nuevaLayer = LayerMask.NameToLayer("Default");
+        CambiarLayerRecursivo(transform, nuevaLayer);
         StopAllCoroutines();
+        mort = false;
         canShoot = true;
         isShooting = false;
         hasEnteredRange = false;
@@ -56,6 +66,7 @@ public class APUNTADO : MonoBehaviour
     {
         if (UnifiedMenuController.isDeath)
         {
+            
             StopAllCoroutines();
             canShoot = true;
             isShooting = false;
@@ -65,7 +76,7 @@ public class APUNTADO : MonoBehaviour
 
         ShowRange();
 
-        if (!gameObject.activeInHierarchy || !canShoot)
+        if (!gameObject.activeInHierarchy || !canShoot || mort)
             return;
 
         if (IsTargetInRange())
@@ -80,12 +91,10 @@ public class APUNTADO : MonoBehaviour
                 return;
             }
 
-            // No disparar si hay un obstáculo en el camino
-            if (IsObstacleInWay())
-                return;
-
-            if (canShoot && !isShooting)
+            // Si puede disparar, se detiene
+            if (!IsObstacleInWay() && canShoot && !isShooting)
             {
+                EnemyAI.shoot = true; // Detener movimiento
                 switch (activeWeapon)
                 {
                     case WeaponType.Pistol:
@@ -99,12 +108,21 @@ public class APUNTADO : MonoBehaviour
                         break;
                 }
             }
+            else
+            {
+                // Si no puede disparar (obstáculo en el camino) y está en rango, sigue moviéndose hacia el objetivo
+                EnemyAI.shoot = false; // No detenerse si no puede disparar
+                
+            }
         }
         else
         {
             hasEnteredRange = false; // Reiniciar estado si el objetivo sale del rango
+            EnemyAI.shoot = false; // Permitir movimiento fuera del rango
+            
         }
     }
+
 
     private bool IsTargetInRange()
     {
@@ -162,15 +180,22 @@ public class APUNTADO : MonoBehaviour
     }
 
     private void LoadDifficulty()
-    {
-        if (PlayerPrefs.HasKey("Difficulty"))
+    { if (!survivalmode)
         {
-            int difficultyValue = PlayerPrefs.GetInt("Difficulty");
-            currentDifficulty = (Difficulty)difficultyValue;
+            if (PlayerPrefs.HasKey("Difficulty"))
+            {
+                int difficultyValue = PlayerPrefs.GetInt("Difficulty");
+                currentDifficulty = (Difficulty)difficultyValue;
+            }
+            else
+            {
+                currentDifficulty = Difficulty.Normal;
+            }
         }
+      
         else
         {
-            currentDifficulty = Difficulty.Normal;
+            currentDifficulty = Difficulty.Easy;
         }
     }
 
@@ -258,5 +283,23 @@ public class APUNTADO : MonoBehaviour
     public void StopCorrutine()
     {
         StopAllCoroutines();
+    }
+    public void muerto()
+    { 
+    mort=true;
+        int nuevaLayer = LayerMask.NameToLayer("Norender");
+        CambiarLayerRecursivo(transform, nuevaLayer);
+        
+        StopAllCoroutines();
+        
+    }
+    void CambiarLayerRecursivo(Transform obj, int nuevaLayer)
+    {
+        obj.gameObject.layer = nuevaLayer;
+
+        foreach (Transform hijo in obj)
+        {
+            CambiarLayerRecursivo(hijo, nuevaLayer);
+        }
     }
 }

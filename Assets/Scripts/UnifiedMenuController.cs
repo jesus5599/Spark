@@ -29,6 +29,7 @@ public class UnifiedMenuController : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;    // Menú de opciones
     [SerializeField] private GameObject difficultyMenu; // Menú de selección de dificultad
     [SerializeField] private GameObject DeathMenu; // Menú de muerte
+    [SerializeField] private GameObject DeathMenuSurvival; // Menú de muerte
     [SerializeField] private GameObject LevelFinishMenu; // Menú de siguiente nivel
     [SerializeReference] public static bool isPaused = false;
     [SerializeReference] public static bool isDeath = false;// Estado del juego (pausado o no)
@@ -43,11 +44,13 @@ public class UnifiedMenuController : MonoBehaviour
     public TextMeshProUGUI textMeshPro;
     // Opcional: Desactivar el botón de "Continuar" si no hay partida guardada
     public UnityEngine.UI.Button continueButton; // Referencia al botón de "Continuar"
-   
-
-
+    public bool SurviveMode;
+    public GameObject CanvasEscena;
+    public bool VR;
     private void Start()
     {
+        CanvasEscena = GameObject.FindWithTag("CanvasEscena");
+        if (CanvasEscena != null) CanvasEscena.SetActive(true);
         UpdateContinueButton();
         // Intentar cargar los datos guardados al iniciar el juego
         gameData = LoadGame() ?? new GameData { currentLevel = 1, score = 0 };
@@ -70,6 +73,7 @@ public class UnifiedMenuController : MonoBehaviour
         DeactivateMenu(optionsMenu);
         DeactivateMenu(difficultyMenu);
         DeactivateMenu(DeathMenu);
+        DeactivateMenu(DeathMenuSurvival);
         DeactivateMenu(LevelFinishMenu);
         Time.timeScale = 1f; // Asegurar que el tiempo comience normal
        
@@ -109,6 +113,8 @@ public class UnifiedMenuController : MonoBehaviour
         isDeath = false;
         isWin = false;
         SetTransparency(true); // Hacer transparente
+        CanvasEscena = GameObject.FindWithTag("CanvasEscena");
+        if (CanvasEscena != null) CanvasEscena.SetActive(true);
 
         // Verificar si es la escena principal y activar el menú adecuado
         if (scene.buildIndex == 0)
@@ -118,6 +124,7 @@ public class UnifiedMenuController : MonoBehaviour
             DeactivateMenu(optionsMenu);
             DeactivateMenu(difficultyMenu);
             DeactivateMenu(DeathMenu);
+            DeactivateMenu(DeathMenuSurvival);
             DeactivateMenu(LevelFinishMenu);
         }
         else
@@ -127,7 +134,16 @@ public class UnifiedMenuController : MonoBehaviour
             DeactivateMenu(optionsMenu);
             DeactivateMenu(difficultyMenu);
             DeactivateMenu(DeathMenu);
+            DeactivateMenu(DeathMenuSurvival);
             DeactivateMenu(LevelFinishMenu);
+        }
+        if (scene.name == ("Survive"))
+        { 
+            SurviveMode = true;
+        }
+        else
+        {
+            SurviveMode = false;
         }
     }
     public void OnPause(InputAction.CallbackContext context)
@@ -136,10 +152,16 @@ public class UnifiedMenuController : MonoBehaviour
         {
             // Cambiar estado de pausa
             if (isPaused)
-            { if (SceneManager.GetActiveScene().buildIndex > 0) { ResumeGame(); } }
+            { 
+                if (SceneManager.GetActiveScene().buildIndex > 0) { ResumeGame(); }
+                if(CanvasEscena != null) CanvasEscena.SetActive(true);
+            }
 
             else
-            { if (SceneManager.GetActiveScene().buildIndex > 0) { PauseGame(); } }
+            { 
+                if (SceneManager.GetActiveScene().buildIndex > 0) { PauseGame(); }
+                if (CanvasEscena != null) CanvasEscena.SetActive(false);
+            }
                
         }
     }
@@ -158,6 +180,7 @@ public class UnifiedMenuController : MonoBehaviour
 
             // Activar el menú de pausa
             OpenMenu(pauseMenu);
+            if (CanvasEscena != null) CanvasEscena.SetActive(false);
         }
         
     }
@@ -174,6 +197,7 @@ public class UnifiedMenuController : MonoBehaviour
 
             // Cerrar el menú de pausa
             CloseAllMenus();
+            if (CanvasEscena != null) CanvasEscena.SetActive(true);
         }
     }
 
@@ -234,7 +258,7 @@ public class UnifiedMenuController : MonoBehaviour
     // Regresar al menú principal desde cualquier menú
     public void BackToMain()
     {
-        SceneManager.LoadScene(0);
+        LoadingScreenManager.LoadScene(0);
     }
 
     // Iniciar un nuevo juego (abre selección de dificultad)
@@ -249,14 +273,15 @@ public class UnifiedMenuController : MonoBehaviour
         PlayerPrefs.SetInt("Difficulty", difficulty); // Guardar dificultad seleccionada
         gameData = new GameData { currentLevel = 1, score = 0 }; // Reiniciar datos
         SaveGame(gameData);                                      // Guardar nueva partida
-        SceneManager.LoadScene("level1");          // Cargar la escena principal del juego
+        LoadingScreenManager.LoadScene(1);
     }
 
     // Reiniciar el nivel actual
     public void RestartLevel()
     {
         Time.timeScale = 1f; // Asegurarse de que el tiempo se reanude antes de recargar
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Recargar la escena actual
+        LoadingScreenManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Recargar la escena actual
     }
 
     // Salir del juego
@@ -290,6 +315,7 @@ public class UnifiedMenuController : MonoBehaviour
 
         ActivateMenu(LevelFinishMenu);
         SetTransparency(false); // Hacer visible
+        if (CanvasEscena != null) CanvasEscena.SetActive(false);
     }
   
     private void OnEnable()
@@ -308,26 +334,33 @@ public class UnifiedMenuController : MonoBehaviour
     }  
     public void Continue()
     {
-        if (isDeath) 
+        if (isDeath)
         {
-            Debug.Log("¡Cualquier botón ha sido presionado!");
-            Controladorjugador DeathController = FindObjectOfType<Controladorjugador>();
-            if (DeathController != null)
-            {
-                
-                DeactivateMenu(mainMenu);
-                DeactivateMenu(pauseMenu);
-                DeactivateMenu(optionsMenu);
-                DeactivateMenu(difficultyMenu);
-                DeactivateMenu(DeathMenu);
-                DeathController.respawn();
-                isDeath = false;
+            if (CanvasEscena != null) CanvasEscena.SetActive(true);
+            if (SurviveMode|| SceneManager.GetActiveScene().buildIndex == 3) { RestartLevel(); }
+            else {
+                Debug.Log("¡Cualquier botón ha sido presionado!");
+                Controladorjugador DeathController = FindObjectOfType<Controladorjugador>();
+                if (DeathController != null)
+                {
+
+                    DeactivateMenu(mainMenu);
+                    DeactivateMenu(pauseMenu);
+                    DeactivateMenu(optionsMenu);
+                    DeactivateMenu(difficultyMenu);
+                    DeactivateMenu(DeathMenu);
+                    DeactivateMenu(DeathMenuSurvival);
+                    DeathController.respawn();
+                    isDeath = false;
+                }
+                else
+                {
+                    Debug.LogError("No se encontró un objeto de tipo Controlador jugador en la escena.");
+                }
             }
-            else
-            {
-                Debug.LogError("No se encontró un objeto de tipo Controlador jugador en la escena.");
-            }
+            
         }
+        
         
     }
 
@@ -336,8 +369,19 @@ public class UnifiedMenuController : MonoBehaviour
         isDeath = true;
         Debug.Log("Pantalla de muerte activada.");
         // Implementa la lógica para mostrar la DeathScreen
-        OpenMenu(DeathMenu);
-    }
+
+        if (SurviveMode)
+        {
+            OpenMenu(DeathMenuSurvival);
+            SetTransparency(false); // Hacer visible
+        }
+        else
+        {
+            OpenMenu(DeathMenu);
+        }
+            if (CanvasEscena != null) CanvasEscena.SetActive(false);
+                         
+        }
 
 
 
@@ -364,10 +408,29 @@ public class UnifiedMenuController : MonoBehaviour
     // Método para pasar al siguiente nivel y guardar el progreso
     public void LevelCompleted(int score)
     {
+        if (gameData.currentLevel > 3)
+        {
+            gameData.currentLevel = 0;
+            LoadingScreenManager.LoadScene(gameData.currentLevel);
+        }
+        else 
+        {
+            if (VR == true)
+            {
+                // Cargar el siguiente nivel
+                LoadingScreenManager.LoadScene(gameData.currentLevel);
+                
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                // Cargar el siguiente nivel
+                LoadingScreenManager.LoadScene(gameData.currentLevel);
+               
+                Time.timeScale = 1f;
+            }
+        }
         
-        // Cargar el siguiente nivel
-        SceneManager.LoadScene("level" + gameData.currentLevel);
-        Time.timeScale = 1f;
     }
 
     // Guardar los datos en un archivo cifrado en Base64
@@ -394,15 +457,28 @@ public class UnifiedMenuController : MonoBehaviour
 
     // Método para continuar la partida desde el nivel guardado
     public void ContinueGame()
-    {
-        if (gameData != null && gameData.currentLevel > 1)
+    { if (gameData.currentLevel > 3)
         {
-            SceneManager.LoadScene("level" + gameData.currentLevel); // Cargar nivel guardado
+            gameData.currentLevel = 3;
         }
-        else
+        else 
         {
-            Debug.Log("No hay una partida guardada.");
+            if (gameData != null && gameData.currentLevel > 1)
+            {
+                SceneManager.LoadScene(gameData.currentLevel); // Cargar nivel guardado
+            }
+            else if (gameData != null && gameData.currentLevel > 1 && VR == true)
+            {
+                SceneManager.LoadScene(gameData.currentLevel); // Cargar nivel guardado de VR
+            }
+            else
+            {
+
+                Debug.Log("No hay una partida guardada. " + " apagando boton" + gameData.currentLevel);
+                continueButton.interactable = false;
+            }
         }
+        
     }
     // Actualizar la interactividad del botón según si hay partida guardada
     // Actualizar la interactividad del botón según los datos guardados
@@ -411,21 +487,25 @@ public class UnifiedMenuController : MonoBehaviour
         if (continueButton != null)
         {
             bool saveExists = File.Exists(SaveFilePath);
-
+            Debug.Log("progreso. "+saveExists);
             if (saveExists)
             {
                 // Cargar datos del archivo y verificar el nivel
                 string encryptedData = File.ReadAllText(SaveFilePath);
                 string jsonData = Encoding.UTF8.GetString(Convert.FromBase64String(encryptedData));
                 GameData gameData = JsonUtility.FromJson<GameData>(jsonData);
-
+                if (gameData.currentLevel > 3)
+                {
+                    gameData.currentLevel = 0;
+                }
                 // El botón es interactuable solo si el nivel guardado es mayor que 1
                 continueButton.interactable = gameData.currentLevel > 1;
-
-                if (gameData.currentLevel == 1)
+                Debug.Log("nivel actual" + gameData.currentLevel);
+                if (gameData.currentLevel <= 1)
                 {
                     Debug.Log("No hay progreso más allá del nivel 1. El botón de 'Continuar' está desactivado.");
                 }
+                
             }
             else
             {
@@ -435,7 +515,11 @@ public class UnifiedMenuController : MonoBehaviour
             }
         }
     }
-
+    public void Survivemode()
+    {
+        PlayerPrefs.SetInt("Difficulty", 1); // Guardar dificultad seleccionada
+        LoadingScreenManager.LoadScene(4);
+    }
 
 
 
