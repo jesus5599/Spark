@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!54 &135470754 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 4525732195545722749, guid: 712e62106d4bce04e80588084023d05b, type: 3}
-  m_PrefabInstance: {fileID: 8307178422629133476}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &271166200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -191,7 +186,7 @@ PrefabInstance:
     - target: {fileID: 7598898528620133086, guid: 3757f6360fabe514abd128d83f7580c1, type: 3}
       propertyPath: misil
       value: 
-      objectReference: {fileID: 135470754}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -345,7 +345,7 @@ public class Controladorjugador : MonoBehaviour
         {
             StartSlide();
         }
-        if (isSliding && !groundedPlayer)
+        if (isSliding && !groundedPlayer && !vr)
         {
             StopSlide();
         }
