@@ -2592,7 +2592,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2980261147973141634, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3409563326484627414, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
       propertyPath: survivalmode
