@@ -11,8 +11,12 @@ public class Enemy : MonoBehaviour
     public CapsuleCollider capsuleCollider;
     public CapsuleCollider capsuleTrigger;
     public Rigidbody rb;
-    void Start()
+    private void Awake()
     {
+        initialPosition = transform.position; // Guarda la posición inicial
+    }
+    void Start()
+    { 
         CapsuleCollider[] colliders = GetComponents<CapsuleCollider>();
 
         foreach (CapsuleCollider col in colliders)
@@ -30,7 +34,7 @@ public class Enemy : MonoBehaviour
         apuntar = GetComponentInChildren<APUNTADO>();
         enemy = GetComponent<EnemyAI>();
         animate = GetComponent<Animator>();
-        initialPosition = transform.position; // Guarda la posición inicial
+       
         
     }
 

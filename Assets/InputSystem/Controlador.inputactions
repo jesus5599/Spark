@@ -15,9 +15,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "RightParry",
+                    "type": "Button",
+                    "id": "fa081511-5c01-4126-b9e5-4b92e275589f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Deflect",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftParry",
+                    "type": "Button",
+                    "id": "9a78bfcc-04de-4e63-87c7-75d5f00cec40",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -150,6 +168,17 @@
                 },
                 {
                     "name": "",
+                    "id": "256e90ab-428a-491c-a11b-5f09b1318fcb",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";XR",
+                    "action": "RightParry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f2e9ba44-c423-42a7-ad56-f20975884794",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
@@ -244,6 +273,17 @@
                     "processors": "",
                     "groups": ";XR",
                     "action": "Deflect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "037213bb-66ff-4608-8745-dc0603f86e01",
+                    "path": "<XRController>{LeftHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";XR",
+                    "action": "LeftParry",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

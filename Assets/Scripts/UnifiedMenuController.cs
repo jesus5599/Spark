@@ -520,7 +520,11 @@ public class UnifiedMenuController : MonoBehaviour
         PlayerPrefs.SetInt("Difficulty", 1); // Guardar dificultad seleccionada
         LoadingScreenManager.LoadScene(4);
     }
-
+    public void Practicmode()
+    {
+        
+        LoadingScreenManager.LoadScene(6);
+    }
     void OnApplicationFocus(bool hasFocus)
     {
         if (!hasFocus && !isDeath && !isWin && SceneManager.GetActiveScene().buildIndex != 0)

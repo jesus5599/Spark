@@ -37,9 +37,27 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""RightParry"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa081511-5c01-4126-b9e5-4b92e275589f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Deflect"",
                     ""type"": ""Button"",
                     ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftParry"",
+                    ""type"": ""Button"",
+                    ""id"": ""9a78bfcc-04de-4e63-87c7-75d5f00cec40"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -172,6 +190,17 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""256e90ab-428a-491c-a11b-5f09b1318fcb"",
+                    ""path"": ""<XRController>{RightHand}/{TriggerButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";XR"",
+                    ""action"": ""RightParry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""f2e9ba44-c423-42a7-ad56-f20975884794"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
@@ -266,6 +295,17 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";XR"",
                     ""action"": ""Deflect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""037213bb-66ff-4608-8745-dc0603f86e01"",
+                    ""path"": ""<XRController>{LeftHand}/{TriggerButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";XR"",
+                    ""action"": ""LeftParry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1226,7 +1266,9 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Shot = m_Player.FindAction("Shot", throwIfNotFound: true);
+        m_Player_RightParry = m_Player.FindAction("RightParry", throwIfNotFound: true);
         m_Player_Deflect = m_Player.FindAction("Deflect", throwIfNotFound: true);
+        m_Player_LeftParry = m_Player.FindAction("LeftParry", throwIfNotFound: true);
         m_Player_CrouchSlide = m_Player.FindAction("Crouch/Slide", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
@@ -1318,7 +1360,9 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Shot;
+    private readonly InputAction m_Player_RightParry;
     private readonly InputAction m_Player_Deflect;
+    private readonly InputAction m_Player_LeftParry;
     private readonly InputAction m_Player_CrouchSlide;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Sprint;
@@ -1334,7 +1378,9 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
         private @Controlador m_Wrapper;
         public PlayerActions(@Controlador wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shot => m_Wrapper.m_Player_Shot;
+        public InputAction @RightParry => m_Wrapper.m_Player_RightParry;
         public InputAction @Deflect => m_Wrapper.m_Player_Deflect;
+        public InputAction @LeftParry => m_Wrapper.m_Player_LeftParry;
         public InputAction @CrouchSlide => m_Wrapper.m_Player_CrouchSlide;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
@@ -1357,9 +1403,15 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
             @Shot.started += instance.OnShot;
             @Shot.performed += instance.OnShot;
             @Shot.canceled += instance.OnShot;
+            @RightParry.started += instance.OnRightParry;
+            @RightParry.performed += instance.OnRightParry;
+            @RightParry.canceled += instance.OnRightParry;
             @Deflect.started += instance.OnDeflect;
             @Deflect.performed += instance.OnDeflect;
             @Deflect.canceled += instance.OnDeflect;
+            @LeftParry.started += instance.OnLeftParry;
+            @LeftParry.performed += instance.OnLeftParry;
+            @LeftParry.canceled += instance.OnLeftParry;
             @CrouchSlide.started += instance.OnCrouchSlide;
             @CrouchSlide.performed += instance.OnCrouchSlide;
             @CrouchSlide.canceled += instance.OnCrouchSlide;
@@ -1397,9 +1449,15 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
             @Shot.started -= instance.OnShot;
             @Shot.performed -= instance.OnShot;
             @Shot.canceled -= instance.OnShot;
+            @RightParry.started -= instance.OnRightParry;
+            @RightParry.performed -= instance.OnRightParry;
+            @RightParry.canceled -= instance.OnRightParry;
             @Deflect.started -= instance.OnDeflect;
             @Deflect.performed -= instance.OnDeflect;
             @Deflect.canceled -= instance.OnDeflect;
+            @LeftParry.started -= instance.OnLeftParry;
+            @LeftParry.performed -= instance.OnLeftParry;
+            @LeftParry.canceled -= instance.OnLeftParry;
             @CrouchSlide.started -= instance.OnCrouchSlide;
             @CrouchSlide.performed -= instance.OnCrouchSlide;
             @CrouchSlide.canceled -= instance.OnCrouchSlide;
@@ -1621,7 +1679,9 @@ public partial class @Controlador: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnShot(InputAction.CallbackContext context);
+        void OnRightParry(InputAction.CallbackContext context);
         void OnDeflect(InputAction.CallbackContext context);
+        void OnLeftParry(InputAction.CallbackContext context);
         void OnCrouchSlide(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);

@@ -290,6 +290,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2678716893008350653, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3707404012122339371, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 57.3
@@ -351,9 +355,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: level2 Map
       objectReference: {fileID: 0}
+    - target: {fileID: 527246918577097115, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 1015325949749831397, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.3237915
+      objectReference: {fileID: 0}
     - target: {fileID: 1581697740344272369, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: survivalmode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073429926698593759, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 73
       objectReference: {fileID: 0}
     - target: {fileID: 2139411571110325188, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: speedUp
@@ -362,6 +378,10 @@ PrefabInstance:
     - target: {fileID: 2139411571110325188, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: speedDown
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148919160593909337, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_Constraints
+      value: 122
       objectReference: {fileID: 0}
     - target: {fileID: 2708334417089322052, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: survivalmode
@@ -407,9 +427,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4497741818858705094, guid: 712e62106d4bce04e80588084023d05b, type: 3}
-      propertyPath: speedUp
-      value: 10
+    - target: {fileID: 4719468160095576396, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784874161626906803, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.98999023
+      objectReference: {fileID: 0}
+    - target: {fileID: 4920069579722409807, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.7969971
+      objectReference: {fileID: 0}
+    - target: {fileID: 4957152535180863442, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 4995523501067398345, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_Constraints
+      value: 122
       objectReference: {fileID: 0}
     - target: {fileID: 5223537288715391917, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: survivalmode
@@ -419,9 +455,17 @@ PrefabInstance:
       propertyPath: survivalmode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6034042174311225891, guid: 712e62106d4bce04e80588084023d05b, type: 3}
-      propertyPath: m_Center.y
-      value: 0.46
+    - target: {fileID: 5588217418683500716, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 73
+      objectReference: {fileID: 0}
+    - target: {fileID: 5771918210522185771, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.784706
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840546492564843437, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_Constraints
+      value: 122
       objectReference: {fileID: 0}
     - target: {fileID: 6233029186971497851, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: survivalmode
@@ -431,17 +475,41 @@ PrefabInstance:
       propertyPath: survivalmode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6882480110158727066, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
     - target: {fileID: 7354255585510306317, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: survivalmode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776011740292100910, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.98999023
+      objectReference: {fileID: 0}
+    - target: {fileID: 8436474663685592568, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 73
+      objectReference: {fileID: 0}
+    - target: {fileID: 8506670748279305223, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_Constraints
+      value: 122
       objectReference: {fileID: 0}
     - target: {fileID: 8559917280675765820, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: survivalmode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9145614899682033044, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
     - target: {fileID: 9155417604721264358, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: survivalmode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9223358106155783698, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.8146896
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4526812987984066984, guid: 712e62106d4bce04e80588084023d05b, type: 3}
