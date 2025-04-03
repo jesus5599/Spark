@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!54 &135470754 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 4525732195545722749, guid: 712e62106d4bce04e80588084023d05b, type: 3}
-  m_PrefabInstance: {fileID: 8307178422629133476}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &271166200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -191,7 +186,7 @@ PrefabInstance:
     - target: {fileID: 7598898528620133086, guid: 3757f6360fabe514abd128d83f7580c1, type: 3}
       propertyPath: misil
       value: 
-      objectReference: {fileID: 135470754}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -356,6 +351,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: level2 Map
       objectReference: {fileID: 0}
+    - target: {fileID: 1581697740344272369, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: survivalmode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2139411571110325188, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: speedUp
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2139411571110325188, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: speedDown
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2708334417089322052, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: survivalmode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3005022168402614157, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 194.3
@@ -396,15 +407,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4497741818858705094, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: speedUp
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5223537288715391917, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: survivalmode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5580669164202610529, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: survivalmode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6034042174311225891, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: m_Center.y
       value: 0.46
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6233029186971497851, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: survivalmode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425762790690129925, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: survivalmode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7354255585510306317, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: survivalmode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8559917280675765820, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: survivalmode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9155417604721264358, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: survivalmode
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4526812987984066984, guid: 712e62106d4bce04e80588084023d05b, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3964152916308026708, guid: 712e62106d4bce04e80588084023d05b, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4434537960373737959, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8307178422629133479}
   m_SourcePrefab: {fileID: 100100000, guid: 712e62106d4bce04e80588084023d05b, type: 3}
 --- !u!114 &8307178422629133477 stripped
 MonoBehaviour:
@@ -417,6 +464,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec1523e85fc0474cbc3f45851e7c295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8307178422629133478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4434537960373737959, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+  m_PrefabInstance: {fileID: 8307178422629133476}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8307178422629133479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8307178422629133478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab68ce6587aab0146b8dabefbd806791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_ClickSpeed: 0.3
+  m_MoveDeadzone: 0.6
+  m_RepeatDelay: 0.5
+  m_RepeatRate: 0.1
+  m_TrackedDeviceDragThresholdMultiplier: 2
+  m_TrackedScrollDeltaMultiplier: 5
+  m_BypassUIToolkitEvents: 0
+  m_ActiveInputMode: 1
+  m_EnableXRInput: 1
+  m_EnableMouseInput: 1
+  m_EnableTouchInput: 1
+  m_PointAction: {fileID: 2869410428622933342, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_LeftClickAction: {fileID: 1855836014308820768, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_MiddleClickAction: {fileID: -6289560987278519447, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_RightClickAction: {fileID: -2562941478296515153, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_ScrollWheelAction: {fileID: 5825226938762934180, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_NavigateAction: {fileID: -7967456002180160679, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_SubmitAction: {fileID: 3994978066732806534, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_CancelAction: {fileID: 2387711382375263438, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_EnableBuiltinActionsAsFallback: 1
+  m_EnableGamepadInput: 1
+  m_EnableJoystickInput: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

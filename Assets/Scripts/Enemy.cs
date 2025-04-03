@@ -57,6 +57,7 @@ public class Enemy : MonoBehaviour
     }
     public void Respawn()
     {
+        rb.useGravity = true;
         transform.position = initialPosition; // Restaura la posición inicial
         gameObject.SetActive(true); // Reactiva el enemigo
     }

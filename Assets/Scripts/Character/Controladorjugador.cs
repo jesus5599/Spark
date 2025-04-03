@@ -345,7 +345,7 @@ public class Controladorjugador : MonoBehaviour
         {
             StartSlide();
         }
-        if (isSliding && !groundedPlayer)
+        if (isSliding && !groundedPlayer && !vr)
         {
             StopSlide();
         }
@@ -385,7 +385,7 @@ public class Controladorjugador : MonoBehaviour
     {
         
         // Saltar si está en el suelo
-        if (controlador.Player.Jump.triggered && groundedPlayer && !isOnRamp && !tocandotecho)
+        if (controlador.Player.Jump.triggered && groundedPlayer && !isOnRamp && !tocandotecho || controlador.Player.Jump.triggered && isSliding && !isOnRamp && !tocandotecho)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
         }
@@ -410,7 +410,7 @@ public class Controladorjugador : MonoBehaviour
     {
         int excludeGroundLayer = ~groundLayer.value;
         // Usar raycast para verificar si el jugador está en el suelo
-        Vector3 origin = transform.position;
+        Vector3 origin = mesh.transform.position;
         Vector3 direction = -transform.up;
         Debug.DrawRay(origin, direction * groundCheckDistance, Color.green);
 
@@ -485,8 +485,11 @@ public class Controladorjugador : MonoBehaviour
         virtualCamera.transform.localRotation = verticalRotation;
         Cabeza.transform.localRotation = verticalRotation;
 
-        // Rotación horizontal (cuerpo del jugador)
-        playerBody.Rotate(Vector3.up * lookX);
+            // Rotación horizontal (cuerpo del jugador)
+            playerBody.Rotate(Vector3.up * lookX);
+        
+       
+        
     }
 
 

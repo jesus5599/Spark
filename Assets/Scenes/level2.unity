@@ -1088,10 +1088,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 272.912
       objectReference: {fileID: 0}
-    - target: {fileID: 6034042174311225891, guid: 712e62106d4bce04e80588084023d05b, type: 3}
-      propertyPath: m_Size.y
-      value: 0.6
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3964152916308026708, guid: 712e62106d4bce04e80588084023d05b, type: 3}
@@ -1118,11 +1114,6 @@ MonoBehaviour:
 --- !u!1 &1607918088 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6412277470532722826, guid: 712e62106d4bce04e80588084023d05b, type: 3}
-  m_PrefabInstance: {fileID: 1607918086}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &1607918089 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 4525732195545722749, guid: 712e62106d4bce04e80588084023d05b, type: 3}
   m_PrefabInstance: {fileID: 1607918086}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1934448295 stripped
@@ -1317,7 +1308,7 @@ PrefabInstance:
     - target: {fileID: 2719212124245754830, guid: 679864feab06c7c49b8a282c52ac9b6c, type: 3}
       propertyPath: misil
       value: 
-      objectReference: {fileID: 1607918089}
+      objectReference: {fileID: 0}
     - target: {fileID: 3660534418546638278, guid: 679864feab06c7c49b8a282c52ac9b6c, type: 3}
       propertyPath: botones
       value: 

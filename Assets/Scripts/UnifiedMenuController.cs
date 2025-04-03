@@ -337,7 +337,7 @@ public class UnifiedMenuController : MonoBehaviour
         if (isDeath)
         {
             if (CanvasEscena != null) CanvasEscena.SetActive(true);
-            if (SurviveMode|| SceneManager.GetActiveScene().buildIndex == 3) { RestartLevel(); }
+            if (SceneManager.GetActiveScene().buildIndex == 4 || SceneManager.GetActiveScene().buildIndex == 3) { RestartLevel(); }
             else {
                 Debug.Log("¡Cualquier botón ha sido presionado!");
                 Controladorjugador DeathController = FindObjectOfType<Controladorjugador>();
