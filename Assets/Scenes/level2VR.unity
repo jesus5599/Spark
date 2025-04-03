@@ -355,6 +355,14 @@ PrefabInstance:
       propertyPath: survivalmode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2139411571110325188, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: speedUp
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2139411571110325188, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: speedDown
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2708334417089322052, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: survivalmode
       value: 0
@@ -398,6 +406,10 @@ PrefabInstance:
     - target: {fileID: 3005022168402614157, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4497741818858705094, guid: 712e62106d4bce04e80588084023d05b, type: 3}
+      propertyPath: speedUp
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5223537288715391917, guid: 712e62106d4bce04e80588084023d05b, type: 3}
       propertyPath: survivalmode

@@ -2602,6 +2602,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level1 Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 3687698234495921373, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5288699256013826955, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
       propertyPath: survivalmode
       value: 0
@@ -2653,6 +2657,10 @@ PrefabInstance:
     - target: {fileID: 6415703516318614202, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
       propertyPath: survivalmode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962716873372143661, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7828657122035598742, guid: 0290e57014bbb2a4da3d93951d16e663, type: 3}
       propertyPath: survivalmode

@@ -385,7 +385,7 @@ public class Controladorjugador : MonoBehaviour
     {
         
         // Saltar si está en el suelo
-        if (controlador.Player.Jump.triggered && groundedPlayer && !isOnRamp && !tocandotecho)
+        if (controlador.Player.Jump.triggered && groundedPlayer && !isOnRamp && !tocandotecho || controlador.Player.Jump.triggered && isSliding && !isOnRamp && !tocandotecho)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
         }
