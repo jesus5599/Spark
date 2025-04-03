@@ -385,8 +385,13 @@ public class Controladorjugador : MonoBehaviour
     {
         
         // Saltar si está en el suelo
-        if (controlador.Player.Jump.triggered && groundedPlayer && !isOnRamp && !tocandotecho || controlador.Player.Jump.triggered && isSliding && !isOnRamp && !tocandotecho)
+        if (controlador.Player.Jump.triggered && groundedPlayer && !isOnRamp && !tocandotecho )
         {
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
+        }
+        if ( controlador.Player.Jump.triggered && isSliding && !isOnRamp && !tocandotecho)
+        {
+            StopSlide();
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
         }
         // Saltar si está en el muro

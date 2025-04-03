@@ -285,7 +285,7 @@ public class ControladorjugadorVR : MonoBehaviour
             rayo = Camera.main.ScreenPointToRay(puntopantalla);
 
         }
-
+        
 
         // Manejar el Disparo
         if (controlador.Player.Shot.triggered && Time.unscaledTime - timeAux > tiempodisparo)
@@ -1143,62 +1143,12 @@ public class ControladorjugadorVR : MonoBehaviour
         animate.SetFloat("Tiempo", Animationtime);
     }
 
-    private void LoadDifficulty()
-    {
-        if (!survivalmode)
-        {
-            if (PlayerPrefs.HasKey("Difficulty"))
-            {
-                int difficultyValue = PlayerPrefs.GetInt("Difficulty");
-                currentDifficulty = (Difficulty)difficultyValue;
-            }
-            else
-            {
-                currentDifficulty = Difficulty.Normal;
-            }
-        }
-
-        else
-        {
-            currentDifficulty = Difficulty.Easy;
-        }
-    }
-    private void AdjustHabilitiesDelays()
-    {
-        // Ajusta los tiempos de disparo según la dificultad
-        switch (currentDifficulty)
-        {
-            case Difficulty.Easy:
-                dashCooldown = 1;
-                tiempodisparo = .25f;
-                timeparry = 4;
-                parrycooldown = 1;
-                TimeSlowed = 8;
-                TimeCooldown = 2;
-                break;
-            case Difficulty.Normal:
-                dashCooldown = 2;
-                tiempodisparo = 0.5f;
-                timeparry = 2;
-                parrycooldown = 2;
-                TimeSlowed = 4;
-                TimeCooldown = 4;
-                break;
-            case Difficulty.Hard:
-                dashCooldown = 4;
-                tiempodisparo = 1;
-                timeparry = 1;
-                parrycooldown = 4;
-                TimeSlowed = 2;
-                TimeCooldown = 8;
-                break;
-        }
-    }
+   
     private void OnEnable()
     {
         controlador.Enable();
-        LoadDifficulty();  // Cargar la dificultad desde PlayerPrefs
-        AdjustHabilitiesDelays();
+        
+        
     }
 
     private void OnDisable()
