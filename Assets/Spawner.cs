@@ -5,6 +5,7 @@ public class Spawner : MonoBehaviour
 {
     public GameObject enemyPrefab; // Prefab específico de este spawner
     public Transform spawnPoint; // Punto de aparición del enemigo
+    [SerializeField]
     private GameObject currentEnemy; // Referencia al enemigo actual
 
     void Start()
@@ -25,12 +26,15 @@ public class Spawner : MonoBehaviour
     {
         while (true) // Bucle infinito
         {
+            
             if (currentEnemy == null) // Si el enemigo ha muerto o no existe
             {
                 yield return new WaitForSeconds(3f); // Espera 3 segundos antes de respawnear
                 SpawnEnemy();
             }
             yield return new WaitForSeconds(1f); // Verificar cada 1 segundo
+            if (!currentEnemy.activeInHierarchy)
+            { currentEnemy = null; }
         }
     }
 }

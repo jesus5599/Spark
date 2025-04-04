@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5007827372085610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7827557968862728624}
+  m_Layer: 9
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7827557968862728624
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5007827372085610}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8224361841111073369}
+  m_Father: {fileID: 4499834116270351053}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &51388622462196810
 GameObject:
   m_ObjectHideFlags: 0
@@ -4216,7 +4248,7 @@ Transform:
   m_Children:
   - {fileID: 4986541258277828340}
   - {fileID: 1646872130894192748}
-  - {fileID: 8224361841111073369}
+  - {fileID: 7827557968862728624}
   - {fileID: 6331536098470491279}
   - {fileID: 7956997765215177156}
   m_Father: {fileID: 0}
@@ -4240,6 +4272,7 @@ MonoBehaviour:
   groundedPlayer: 0
   wallRunSpeed: 10
   wallRunDuration: 0.5
+  sphereRadius: 0.5
   wallJumpUpForce: 1
   wallJumpSideForce: 0.5
   wallJumpTime: 0.25
@@ -4295,6 +4328,7 @@ MonoBehaviour:
   timelow: {fileID: 5447197880719804412, guid: 79664f1243b07d44cb0e7162996068d9, type: 3}
   audioSource: {fileID: 0}
   pasosClip: {fileID: 0}
+  run: 1
   checkpointposition: {x: 0, y: 0, z: 0}
   checkpointrotation: {x: 0, y: 0, z: 0, w: 0}
   currentTime: 0
@@ -4309,6 +4343,14 @@ MonoBehaviour:
     m_Bits: 0
   currentDifficulty: 0
   progress: {fileID: 0}
+  botones: {fileID: 0}
+  survivalmode: 0
+  vr: 0
+  puntapistola: {fileID: 0}
+  CinematicCamera: {fileID: 0}
+  "mu\xF1eco": {fileID: 0}
+  mesh: {fileID: 0}
+  capsuleCollider: {fileID: 0}
 --- !u!114 &8417250214759488698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4470,15 +4512,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3962365751874804524}
   serializedVersion: 2
-  m_LocalRotation: {x: 5.070907e-14, y: 0.00000006180133, z: -0.0000008205174, w: 1}
-  m_LocalPosition: {x: 0.0005676702, y: 0.98255265, z: 0.006534132}
+  m_LocalRotation: {x: 5.062617e-14, y: 0.00000006146729, z: -0.0000008205174, w: 1}
+  m_LocalPosition: {x: 0.00056628766, y: 0.9825525, z: 0.006533884}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1908487054526987045}
   - {fileID: 5235254639092807014}
   - {fileID: 8523682771581694410}
-  m_Father: {fileID: 4499834116270351053}
+  m_Father: {fileID: 7827557968862728624}
   m_LocalEulerAnglesHint: {x: 18.228733, y: 14.609851, z: 5.584825}
 --- !u!1 &3968101339597548459
 GameObject:

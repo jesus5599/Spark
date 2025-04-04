@@ -1,1 +1,0 @@
-C:\Users\jesus llopis\OneDrive\Documentos\Spark\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\j1j2a5s5\obj\arm64-v8a

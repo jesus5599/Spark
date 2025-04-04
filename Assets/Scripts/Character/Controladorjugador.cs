@@ -413,7 +413,8 @@ public class Controladorjugador : MonoBehaviour
     }
     private void CheckGroundStatus()
     {
-        int excludeGroundLayer = ~groundLayer.value;
+      if (vr)
+      {    int excludeGroundLayer = ~groundLayer.value;
         // Usar raycast para verificar si el jugador está en el suelo
         Vector3 origin = mesh.transform.position;
         Vector3 direction = -transform.up;
@@ -426,6 +427,26 @@ public class Controladorjugador : MonoBehaviour
         else
         {
             groundedPlayer = false;
+        }
+    
+      }
+        else
+        {
+            int excludeGroundLayer = ~groundLayer.value;
+            // Usar raycast para verificar si el jugador está en el suelo
+            Vector3 origin = transform.position;
+            Vector3 direction = -transform.up;
+            Debug.DrawRay(origin, direction * groundCheckDistance, Color.green);
+
+            if (Physics.Raycast(origin, direction, groundCheckDistance, ~groundLayer))
+            {
+                groundedPlayer = true;
+            }
+            else
+            {
+                groundedPlayer = false;
+            }
+
         }
 
         // Reiniciar velocidad vertical si está en el suelo
