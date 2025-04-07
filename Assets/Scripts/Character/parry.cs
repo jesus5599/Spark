@@ -13,10 +13,14 @@ public class parry : MonoBehaviour
     public Transform lanzador;  // The launcher's position and rotation 
 
     public  Vector3 puntoimpacto;
-    public LayerMask ParryLayer;
-    public AudioClip parryClip;
+    public LayerMask ParryLayer;    
     public AudioSource audioSource;
     public bool vr;
+
+    
+    public AudioClip[] sonidos; // Aquí arrastras tus sonidos desde el editor
+
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +35,7 @@ public class parry : MonoBehaviour
   
     public void Shoot()
     {
-        if (audioSource != null && parryClip != null)
-        {
-            audioSource.PlayOneShot(parryClip);
-        }
+        ReproducirSonidoAleatorio();
 
 
         int excludeParryLayer = ~ParryLayer.value;
@@ -61,5 +62,12 @@ public class parry : MonoBehaviour
         misilInstanc.gameObject.SetActive(true);
 
     }
-
+    public void ReproducirSonidoAleatorio()
+    {
+        if (audioSource != null && sonidos != null && sonidos.Length > 0)
+        {
+            int index = Random.Range(0, sonidos.Length);
+            audioSource.PlayOneShot(sonidos[index]);
+        }
+    }
 }

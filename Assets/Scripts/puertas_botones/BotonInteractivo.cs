@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 
 public class Boton : MonoBehaviour
 {
@@ -15,9 +16,16 @@ public class Boton : MonoBehaviour
     public bool pisable, disparable;
     private bool temporizadorActivaldo = false; // Para evitar el temporizador si todos están activados
     private bool todosActivados = false; // Si todos los botones del grupo están activados
-    
+    public AudioClip sonidoActivo,sonidoDesactivo;
+
+    private AudioSource audioSource;
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
         render = GetComponent<Renderer>();
         ActualizarMaterial();
         ControladorPuertasYBotones.Instance.RegistrarBoton(this);
@@ -38,6 +46,7 @@ public class Boton : MonoBehaviour
 
     private void ActivarBoton()
     {
+        audioSource.PlayOneShot(sonidoActivo);
         activado = true;
         ControladorPuertasYBotones.Instance.BotonActivado(puertaID);
         ActualizarMaterial();
@@ -70,8 +79,9 @@ public class Boton : MonoBehaviour
 
     public void DesactivarBoton()
     {
+       
         if (!activado) return;
-
+        audioSource.PlayOneShot(sonidoDesactivo);
         activado = false;
         ControladorPuertasYBotones.Instance.BotonDesactivado(puertaID);
         ActualizarMaterial();

@@ -253,6 +253,8 @@ MonoBehaviour:
   mantenerActivadosCuandoTodos: 0
   pisable: 0
   disparable: 1
+  sonidoActivo: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+  sonidoDesactivo: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
 --- !u!65 &91823504
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -471,6 +473,8 @@ MonoBehaviour:
   mantenerActivadosCuandoTodos: 0
   pisable: 0
   disparable: 1
+  sonidoActivo: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+  sonidoDesactivo: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
 --- !u!65 &155725574
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1358,6 +1362,8 @@ MonoBehaviour:
   mantenerActivadosCuandoTodos: 0
   pisable: 0
   disparable: 1
+  sonidoActivo: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+  sonidoDesactivo: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
 --- !u!65 &367870706
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1584,6 +1590,14 @@ PrefabInstance:
       propertyPath: disparable
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1502933926652431437, guid: 3614b3bfb0da83441af9a993fc7f42b1, type: 3}
+      propertyPath: sonidoActivo
+      value: 
+      objectReference: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+    - target: {fileID: 1502933926652431437, guid: 3614b3bfb0da83441af9a993fc7f42b1, type: 3}
+      propertyPath: sonidoDesactivo
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
     - target: {fileID: 1923032068121129835, guid: 3614b3bfb0da83441af9a993fc7f42b1, type: 3}
       propertyPath: m_Name
       value: puerta1
@@ -1648,10 +1662,26 @@ PrefabInstance:
       propertyPath: disparable
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5180049940563151846, guid: 3614b3bfb0da83441af9a993fc7f42b1, type: 3}
+      propertyPath: sonidoActivo
+      value: 
+      objectReference: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+    - target: {fileID: 5180049940563151846, guid: 3614b3bfb0da83441af9a993fc7f42b1, type: 3}
+      propertyPath: sonidoDesactivo
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
     - target: {fileID: 5850693070430941708, guid: 3614b3bfb0da83441af9a993fc7f42b1, type: 3}
       propertyPath: disparable
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5850693070430941708, guid: 3614b3bfb0da83441af9a993fc7f42b1, type: 3}
+      propertyPath: sonidoActivo
+      value: 
+      objectReference: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+    - target: {fileID: 5850693070430941708, guid: 3614b3bfb0da83441af9a993fc7f42b1, type: 3}
+      propertyPath: sonidoDesactivo
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
     - target: {fileID: 6118648268208001761, guid: 3614b3bfb0da83441af9a993fc7f42b1, type: 3}
       propertyPath: m_Size.x
       value: 0.014
@@ -2192,6 +2222,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.73846966
       objectReference: {fileID: 0}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 6739915897514158754, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 9.850303
@@ -2620,6 +2670,8 @@ MonoBehaviour:
   mantenerActivadosCuandoTodos: 0
   pisable: 0
   disparable: 1
+  sonidoActivo: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+  sonidoDesactivo: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
 --- !u!65 &487457314
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2996,6 +3048,8 @@ MonoBehaviour:
   mantenerActivadosCuandoTodos: 0
   pisable: 0
   disparable: 1
+  sonidoActivo: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+  sonidoDesactivo: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
 --- !u!65 &572115237
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3652,6 +3706,8 @@ MonoBehaviour:
   mantenerActivadosCuandoTodos: 0
   pisable: 0
   disparable: 1
+  sonidoActivo: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+  sonidoDesactivo: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
 --- !u!65 &802364356
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4814,6 +4870,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 5572305344243674041, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
       propertyPath: m_Constraints
       value: 122
@@ -5246,6 +5322,8 @@ MonoBehaviour:
   mantenerActivadosCuandoTodos: 0
   pisable: 0
   disparable: 1
+  sonidoActivo: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+  sonidoDesactivo: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
 --- !u!65 &1653333648
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5417,6 +5495,8 @@ MonoBehaviour:
   mantenerActivadosCuandoTodos: 0
   pisable: 0
   disparable: 1
+  sonidoActivo: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+  sonidoDesactivo: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
 --- !u!65 &1662137565
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6190,6 +6270,8 @@ MonoBehaviour:
   mantenerActivadosCuandoTodos: 0
   pisable: 0
   disparable: 1
+  sonidoActivo: {fileID: 8300000, guid: 9174fdda17c2988409c89d116b6087f2, type: 3}
+  sonidoDesactivo: {fileID: 8300000, guid: 8b859ce53ba2b0c41bf13ce6bbaefe1b, type: 3}
 --- !u!65 &1730871425
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6624,6 +6706,26 @@ PrefabInstance:
       propertyPath: rangeZ
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 6914695107680777131, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
       propertyPath: m_Name
       value: Enemy_Ar 1
@@ -28515,9 +28617,9 @@ MonoBehaviour:
   ParryLayer:
     serializedVersion: 2
     m_Bits: 2560
-  parryClip: {fileID: 8300000, guid: 9c022e5d7dc162547bd8619d9aaa6be3, type: 3}
   audioSource: {fileID: 3592200298227286793}
   vr: 1
+  sonidos: []
 --- !u!4 &1915882169494304665
 Transform:
   m_ObjectHideFlags: 0
@@ -47042,9 +47144,9 @@ MonoBehaviour:
   ParryLayer:
     serializedVersion: 2
     m_Bits: 2560
-  parryClip: {fileID: 8300000, guid: 9c022e5d7dc162547bd8619d9aaa6be3, type: 3}
   audioSource: {fileID: 0}
   vr: 1
+  sonidos: []
 --- !u!4 &3272780439059544924
 Transform:
   m_ObjectHideFlags: 0
@@ -97350,9 +97452,9 @@ MonoBehaviour:
   ParryLayer:
     serializedVersion: 2
     m_Bits: 2560
-  parryClip: {fileID: 8300000, guid: 9c022e5d7dc162547bd8619d9aaa6be3, type: 3}
   audioSource: {fileID: 3592200298227286793}
   vr: 1
+  sonidos: []
 --- !u!4 &5698077524432107551
 Transform:
   m_ObjectHideFlags: 0

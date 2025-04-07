@@ -49106,9 +49106,13 @@ MonoBehaviour:
   ParryLayer:
     serializedVersion: 2
     m_Bits: 2560
-  parryClip: {fileID: 8300000, guid: 9c022e5d7dc162547bd8619d9aaa6be3, type: 3}
   audioSource: {fileID: 3592200298364717445}
   vr: 1
+  sonidos:
+  - {fileID: 8300000, guid: c339e3ae2af130b43a55ed1b22257970, type: 3}
+  - {fileID: 8300000, guid: 0711cdd5b5f9cd6468e91722939b306a, type: 3}
+  - {fileID: 8300000, guid: be3f1fc56d33a654d82b713db2ed8980, type: 3}
+  - {fileID: 8300000, guid: 619b5ba5c5a43a546a38ffe9acb96327, type: 3}
 --- !u!136 &520345243808321390
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -49185,9 +49189,9 @@ MonoBehaviour:
   ParryLayer:
     serializedVersion: 2
     m_Bits: 2560
-  parryClip: {fileID: 8300000, guid: 9c022e5d7dc162547bd8619d9aaa6be3, type: 3}
   audioSource: {fileID: 3592200298364717445}
   vr: 1
+  sonidos: []
 --- !u!136 &7449138891796101062
 CapsuleCollider:
   m_ObjectHideFlags: 0

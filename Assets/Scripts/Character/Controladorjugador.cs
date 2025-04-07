@@ -309,7 +309,7 @@ public class Controladorjugador : MonoBehaviour
         CheckGroundStatus();
 
         // Aplicar movimiento y salto
-        if (isWallRunning == false && isSliding == false && isOnRamp==false)
+        if (!isWallRunning && !isSliding && !isOnRamp )
         {
             HandleMovement();
         }
@@ -389,7 +389,8 @@ public class Controladorjugador : MonoBehaviour
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
         }
-        if ( controlador.Player.Jump.triggered && isSliding && !isOnRamp && !tocandotecho)
+        // Saltar si está en deslizandose en vr
+        if ( controlador.Player.Jump.triggered && isSliding && !isOnRamp && !tocandotecho && vr)
         {
             StopSlide();
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
@@ -399,6 +400,7 @@ public class Controladorjugador : MonoBehaviour
         {
             WallJump();
         }
+        // Saltar si está en una rampa
         if (controlador.Player.Jump.triggered && isOnRamp)
         {
             if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f, slideLayer))

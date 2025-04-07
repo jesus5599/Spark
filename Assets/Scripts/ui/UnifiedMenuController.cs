@@ -47,8 +47,16 @@ public class UnifiedMenuController : MonoBehaviour
     public bool SurviveMode;
     public GameObject CanvasEscena;
     public bool VR;
+    
+    public AudioClip sonidoui;
+    private AudioSource audioSource;
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
         CanvasEscena = GameObject.FindWithTag("CanvasEscena");
         if (CanvasEscena != null) CanvasEscena.SetActive(true);
         UpdateContinueButton();
@@ -170,6 +178,7 @@ public class UnifiedMenuController : MonoBehaviour
     public void PauseGame()
     { if (!isDeath && !isWin)
         {
+            audioSource.PlayOneShot(sonidoui);
             isPaused = true;
 
             // Guardar el estado actual del tiempo antes de pausar
@@ -190,6 +199,7 @@ public class UnifiedMenuController : MonoBehaviour
     {
         if (!isDeath && !isWin)
         {
+            audioSource.PlayOneShot(sonidoui);
             isPaused = false;
 
             // Restaurar el tiempo al valor previo a la pausa
@@ -221,6 +231,7 @@ public class UnifiedMenuController : MonoBehaviour
     // Cerrar el menú actual y volver al anterior
     public void CloseCurrentMenu()
     {
+        audioSource.PlayOneShot(sonidoui);
         if (menuStack.Count > 0)
         {
             // Cerrar el menú actual
@@ -252,24 +263,28 @@ public class UnifiedMenuController : MonoBehaviour
     // Navegar al menú de opciones
     public void OpenOptions()
     {
+        audioSource.PlayOneShot(sonidoui);
         OpenMenu(optionsMenu);
     }
 
     // Regresar al menú principal desde cualquier menú
     public void BackToMain()
     {
+        audioSource.PlayOneShot(sonidoui);
         LoadingScreenManager.LoadScene(0);
     }
 
     // Iniciar un nuevo juego (abre selección de dificultad)
     public void StartGame()
     {
+        audioSource.PlayOneShot(sonidoui);
         OpenMenu(difficultyMenu);
     }
 
     // Seleccionar dificultad y cargar la escena del juego
     public void SelectDifficulty(int difficulty)
     {
+        audioSource.PlayOneShot(sonidoui);
         PlayerPrefs.SetInt("Difficulty", difficulty); // Guardar dificultad seleccionada
         gameData = new GameData { currentLevel = 1, score = 0 }; // Reiniciar datos
         SaveGame(gameData);                                      // Guardar nueva partida
@@ -279,6 +294,7 @@ public class UnifiedMenuController : MonoBehaviour
     // Reiniciar el nivel actual
     public void RestartLevel()
     {
+        audioSource.PlayOneShot(sonidoui);
         Time.timeScale = 1f; // Asegurarse de que el tiempo se reanude antes de recargar
         LoadingScreenManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         // Recargar la escena actual
@@ -287,6 +303,7 @@ public class UnifiedMenuController : MonoBehaviour
     // Salir del juego
     public void QuitGame()
     {
+        audioSource.PlayOneShot(sonidoui);
         Application.Quit(); // Salir del juego
         Debug.Log("El juego se cerrará (solo en compilación, no en el editor).");
     }
@@ -336,6 +353,7 @@ public class UnifiedMenuController : MonoBehaviour
     {
         if (isDeath)
         {
+            audioSource.PlayOneShot(sonidoui);
             if (CanvasEscena != null) CanvasEscena.SetActive(true);
             if (SceneManager.GetActiveScene().buildIndex == 4 || SceneManager.GetActiveScene().buildIndex == 3) { RestartLevel(); }
             else {
@@ -408,6 +426,7 @@ public class UnifiedMenuController : MonoBehaviour
     // Método para pasar al siguiente nivel y guardar el progreso
     public void LevelCompleted(int score)
     {
+        audioSource.PlayOneShot(sonidoui);
         if (gameData.currentLevel > 3)
         {
             gameData.currentLevel = 0;
@@ -457,7 +476,9 @@ public class UnifiedMenuController : MonoBehaviour
 
     // Método para continuar la partida desde el nivel guardado
     public void ContinueGame()
-    { if (gameData.currentLevel > 3)
+    {
+        audioSource.PlayOneShot(sonidoui);
+        if (gameData.currentLevel > 3)
         {
             gameData.currentLevel = 3;
         }
@@ -517,12 +538,13 @@ public class UnifiedMenuController : MonoBehaviour
     }
     public void Survivemode()
     {
+        audioSource.PlayOneShot(sonidoui);
         PlayerPrefs.SetInt("Difficulty", 1); // Guardar dificultad seleccionada
         LoadingScreenManager.LoadScene(4);
     }
     public void Practicmode()
     {
-        
+        audioSource.PlayOneShot(sonidoui);
         LoadingScreenManager.LoadScene(6);
     }
     void OnApplicationFocus(bool hasFocus)

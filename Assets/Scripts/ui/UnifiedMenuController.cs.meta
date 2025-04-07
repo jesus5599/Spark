@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 9c10a6b25d62755419fcfda751080aa5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - mainMenu: {instanceID: 0}
+  - pauseMenu: {instanceID: 0}
+  - optionsMenu: {instanceID: 0}
+  - difficultyMenu: {instanceID: 0}
+  - DeathMenu: {instanceID: 0}
+  - DeathMenuSurvival: {instanceID: 0}
+  - LevelFinishMenu: {instanceID: 0}
+  - textMeshPro: {instanceID: 0}
+  - continueButton: {instanceID: 0}
+  - CanvasEscena: {instanceID: 0}
+  - sonidoui: {fileID: 8300000, guid: 1cf6166719369614cbe20fecdab4dbfb, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

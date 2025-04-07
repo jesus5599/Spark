@@ -11,8 +11,17 @@ public class Puerta : MonoBehaviour
     public float velocidadDeMovimiento = 2f;
     private float tiempoDeMovimiento = 0f; // Tiempo de transición
 
+    public AudioClip sonidoPuerta;
+    
+    private AudioSource audioSource;
+
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
         posicionInicial = transform.localPosition; // Guardamos la posición inicial en el espacio local
         ControladorPuertasYBotones.Instance.RegistrarPuerta(this);
     }
@@ -23,11 +32,13 @@ public class Puerta : MonoBehaviour
         {
             StartCoroutine(MoverPuerta(posicionAbierta)); // Mover hacia la posición abierta en espacio local
             estaAbierta = true;
+            audioSource.PlayOneShot( sonidoPuerta);
         }
         else if (!abrir && estaAbierta)
         {
             StartCoroutine(MoverPuerta(posicionInicial)); // Mover hacia la posición inicial en espacio local
             estaAbierta = false;
+            audioSource.PlayOneShot(sonidoPuerta);
         }
     }
 

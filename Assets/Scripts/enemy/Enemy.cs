@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 public class Enemy : MonoBehaviour
 {
     public int checkpointID; // ID del checkpoint al que pertenece este enemigo
@@ -11,8 +12,17 @@ public class Enemy : MonoBehaviour
     public CapsuleCollider capsuleCollider;
     public CapsuleCollider capsuleTrigger;
     public Rigidbody rb;
+   
+    
+    public AudioSource audioSource;
+    public AudioClip[] sonidos; // Aquí arrastras tus sonidos desde el editor
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
         initialPosition = transform.position; // Guarda la posición inicial
     }
     void Start()
@@ -48,6 +58,7 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator Muerto()
     {
+        ReproducirSonidoAleatorio();
         apuntar.muerto();
         enemy.Muerto();
         capsuleCollider.enabled = false;
@@ -65,9 +76,16 @@ public class Enemy : MonoBehaviour
         transform.position = initialPosition; // Restaura la posición inicial
         gameObject.SetActive(true); // Reactiva el enemigo
     }
-   
-    
 
+
+    public void ReproducirSonidoAleatorio()
+    {
+        if (audioSource != null && sonidos != null && sonidos.Length > 0)
+        {
+            int index = Random.Range(0, sonidos.Length);
+            audioSource.PlayOneShot(sonidos[index]);
+        }
+    }
 
 }
 

@@ -9975,6 +9975,7 @@ MonoBehaviour:
   SurviveMode: 1
   CanvasEscena: {fileID: 0}
   VR: 0
+  sonidoui: {fileID: 8300000, guid: 1cf6166719369614cbe20fecdab4dbfb, type: 3}
 --- !u!114 &7246616609882978058
 MonoBehaviour:
   m_ObjectHideFlags: 0
