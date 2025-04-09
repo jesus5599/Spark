@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.7490197, g: 0.7490197, b: 0.7490197, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 68ef0ed45a37444428f8e6825fb669f9, type: 2}
+  m_SubtractiveShadowColor: {r: 0.41960785, g: 0.47843137, b: 0.627451, a: 1}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 77fa295415ad5534eb5833c2beee5005, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 43b55d6cc013f6246a3aa690629701f8, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 8bebbcd3b6fdaa64387097d4b1898309, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -2718,9 +2718,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 827170094834844201, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 827170094834844201, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388908436026504949, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1439203588839587297, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1473467081169129846, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: minimapPanel
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3295662899976631627, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2763,8 +2779,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5453680004501196464, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
-      propertyPath: m_Lightmapping
-      value: 4
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5453680004501196464, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5453680004501196464, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8060413486014749265, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8249814336001735214, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
       propertyPath: m_Name
@@ -40827,10 +40855,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3846562676674549398, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
       propertyPath: survivalmode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3925321757246100696, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
-      propertyPath: m_RenderPostProcessing
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4209878821891962902, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
