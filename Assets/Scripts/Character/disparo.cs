@@ -144,6 +144,13 @@ public class disparo : MonoBehaviour
         yield return new WaitForSeconds(0);
 
     }
+    public void mort()
+    {
+        municionactual = municioninicial;
+        BalasVisibles();
+        recarga = true;
+        disparoarma = false;
 
+    }
 }
 

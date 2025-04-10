@@ -293,6 +293,19 @@ public class APUNTADO : MonoBehaviour
         StopAllCoroutines();
         
     }
+    public void vivo()
+    {
+       
+        int nuevaLayer = LayerMask.NameToLayer("Default");
+        CambiarLayerRecursivo(transform, nuevaLayer);
+
+        mort = false;
+        canShoot = true;
+        isShooting = false;
+        hasEnteredRange = false;
+       
+
+    }
     void CambiarLayerRecursivo(Transform obj, int nuevaLayer)
     {
         obj.gameObject.layer = nuevaLayer;

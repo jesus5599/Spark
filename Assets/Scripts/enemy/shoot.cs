@@ -114,7 +114,7 @@ public class shoot : MonoBehaviour
                 speed = 50;
                 break;
             case Difficulty.Hard:
-                speed = 80;
+                speed = 70;
                 break;
         }
     }

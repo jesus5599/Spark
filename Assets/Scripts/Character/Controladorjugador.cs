@@ -69,8 +69,9 @@ public class Controladorjugador : MonoBehaviour
     // Variables para el control de la cámara con el ratón
     public CinemachineVirtualCamera virtualCamera; // Referencia a la Cinemachine Virtual Camera
     public Vector3 alturacamara, alturacamaraslide;
-    public Transform playerBody; // Referencia al cuerpo del jugador (para moverlo horizontalmente)
-    public float Sensitivity;
+    public Transform playerBody; // Referencia al cuerpo del jugador (para moverlo horizontalmente)    
+    public float baseSensitivity = 100f;  // valor inicial
+    public float currentSensitivity;
     public float SensitivityX = 2.0f; // Sensibilidad  en el eje X
     public float SensitivityY = 2.0f; // Sensibilidad en el eje Y
 
@@ -192,6 +193,7 @@ public class Controladorjugador : MonoBehaviour
     }
     private void Start()
     {
+        UpdateSensitivityFromSavedOffset();
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         // Busca un GameObject llamado "Texto" y obtiene el componente TextMeshProUGUI
         GameObject textObject = GameObject.Find("tiempo");
@@ -208,6 +210,8 @@ public class Controladorjugador : MonoBehaviour
     }
     void Update()
     {
+        UpdateSensitivityFromSavedOffset();
+
         if (currentPlatform != null)
         {
             // Calcula cuánto se ha movido la plataforma y mueve el personaje con ella
@@ -257,14 +261,6 @@ public class Controladorjugador : MonoBehaviour
         }
 
 
-        if (controlador.Player.Sensitivity.ReadValue<Vector2>().x<-.5)
-        {
-            Sensitivity -= 0.001f;
-        }
-        if (controlador.Player.Sensitivity.ReadValue<Vector2>().x > .5)
-        {
-            Sensitivity += 0.001f;
-        }
         cameraoffset();
 
         HandleAnimations();
@@ -495,8 +491,8 @@ public class Controladorjugador : MonoBehaviour
     private void PlayerLook()
     {
         
-            SensitivityX = Sensitivity;
-            SensitivityY = Sensitivity;
+            SensitivityX = currentSensitivity;
+            SensitivityY = currentSensitivity;
         
         
 
@@ -1063,6 +1059,8 @@ public class Controladorjugador : MonoBehaviour
 
     public void Muerto()
     {
+        disparo shot = FindObjectOfType<disparo>();
+        shot.mort();
         StopAllCoroutines();
         progress.StopAllCoroutines(); 
         botones.ApagarTodosLosBotones();
@@ -1240,6 +1238,12 @@ public class Controladorjugador : MonoBehaviour
         { // Mover la cámara 
         PlayerLook();
         }
-       
+
     }
+    void UpdateSensitivityFromSavedOffset()
+    {
+        currentSensitivity = SensitivityManager.GetSensitivityOffset(); // valor ya está entre 50–150
+    }
+
+
 }

@@ -45,6 +45,10 @@ public class EnemyAI : MonoBehaviour
     { 
     muerto = true;
     }
+    public void vivo()
+    {
+        muerto = false;
+    }
     void Update()
     {
         if(animate !=null) animate.SetBool("Correr", perseguir);

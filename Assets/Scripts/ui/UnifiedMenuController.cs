@@ -486,11 +486,12 @@ public class UnifiedMenuController : MonoBehaviour
         {
             if (gameData != null && gameData.currentLevel > 1)
             {
-                SceneManager.LoadScene(gameData.currentLevel); // Cargar nivel guardado
+                LoadingScreenManager.LoadScene(gameData.currentLevel); // Cargar nivel guardado
+                
             }
             else if (gameData != null && gameData.currentLevel > 1 && VR == true)
             {
-                SceneManager.LoadScene(gameData.currentLevel); // Cargar nivel guardado de VR
+                LoadingScreenManager.LoadScene(gameData.currentLevel); // Cargar nivel guardado de VR
             }
             else
             {

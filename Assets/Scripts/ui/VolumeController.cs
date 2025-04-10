@@ -124,7 +124,7 @@ public class VolumeController : MonoBehaviour
     {
         if (volumeLabel != null)
         {
-            volumeLabel.text = $"{Mathf.RoundToInt(volume * 100)}%";
+            volumeLabel.text = "Volume: " + $"{Mathf.RoundToInt(volume * 100)}%";
         }
     }
 

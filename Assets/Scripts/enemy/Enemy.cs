@@ -72,9 +72,16 @@ public class Enemy : MonoBehaviour
     }
     public void Respawn()
     {
+
+
         rb.useGravity = true;
+        capsuleCollider.enabled = true;
+        capsuleTrigger.enabled = true;
         transform.position = initialPosition; // Restaura la posición inicial
         gameObject.SetActive(true); // Reactiva el enemigo
+        apuntar.vivo();
+        enemy.vivo();
+        StopAllCoroutines(); // Detenemos cualquier coroutine que esté en ejecución
     }
 
 
