@@ -5,11 +5,11 @@ OcclusionCullingSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_OcclusionBakeSettings:
-    smallestOccluder: 5
+    smallestOccluder: 4
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 0110aab65314f994b984b4899dd48792
+  m_OcclusionCullingData: {fileID: 36300000, guid: f79560af49b4cb94f84e0b5dfe2283f4, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -93,8 +93,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: b4c3c0b73e7007e48b95a12fbcd63974, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 398917db02c014243a7d5d2397bcc258, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -137,6 +137,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 498624567872792709, guid: 7104522f4ebe3ee43821b7542c7c3d21, type: 3}
       propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498624567872792709, guid: 7104522f4ebe3ee43821b7542c7c3d21, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3995307746675415047, guid: 7104522f4ebe3ee43821b7542c7c3d21, type: 3}
