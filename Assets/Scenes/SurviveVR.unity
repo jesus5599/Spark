@@ -616,6 +616,10 @@ PrefabInstance:
       propertyPath: m_StaticShadowCaster
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1292161148646181762, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1388908436026504949, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
@@ -666,6 +670,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3295662899976631627, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266689160003341343, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696817329763638070, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5453680004501196464, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
