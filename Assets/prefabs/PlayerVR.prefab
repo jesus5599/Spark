@@ -26909,7 +26909,7 @@ MonoBehaviour:
   groundedPlayer: 0
   wallRunSpeed: 10
   wallRunDuration: 0.5
-  sphereRadius: 0.2
+  sphereRadius: 0.15
   wallJumpUpForce: 1
   wallJumpSideForce: 0.5
   wallJumpTime: 0.25
@@ -26919,7 +26919,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 21504
-  wallDetectionDistance: 0.2
+  wallDetectionDistance: 0.15
   salidarayos: 0.9
   wallLayer:
     serializedVersion: 2
@@ -26934,7 +26934,8 @@ MonoBehaviour:
   alturacamara: {x: 0, y: 0, z: 0}
   alturacamaraslide: {x: 0, y: 0, z: 0}
   playerBody: {fileID: 4405559746559339248}
-  Sensitivity: 100
+  baseSensitivity: 100
+  currentSensitivity: 0
   SensitivityX: 1
   SensitivityY: 1
   Cabeza: {fileID: 5900358433075598790}
@@ -27246,7 +27247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 4849705578324526741}
-  rayDistance: 10
+  rayDistance: 1000
   vector3: {x: 0, y: 0, z: 1}
   vector3pos: {x: 0, y: 0, z: 0}
   startwidth: 0.01
@@ -47687,7 +47688,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &177700553748408252
 Transform:
   m_ObjectHideFlags: 0
@@ -62881,7 +62882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 3826244008858700093}
-  rayDistance: 0.75
+  rayDistance: 0.15
   vector3: {x: 1, y: 0, z: 0}
   vector3pos: {x: 0, y: 0.9, z: 0}
   startwidth: 0.05
@@ -62899,7 +62900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 8636258373736064587}
-  rayDistance: 0.75
+  rayDistance: 0.15
   vector3: {x: -1, y: 0, z: 0}
   vector3pos: {x: 0, y: 0.9, z: 0}
   startwidth: 0.05
@@ -79506,7 +79507,7 @@ Transform:
   m_GameObject: {fileID: 4429958234579081978}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: -0.1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
