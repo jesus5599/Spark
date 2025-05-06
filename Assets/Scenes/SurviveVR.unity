@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
@@ -632,6 +632,14 @@ PrefabInstance:
       propertyPath: minimapPanel
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1932260115956819760, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2718374147769065693, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 3295662899976631627, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -680,6 +688,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5061935336344095729, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 5453680004501196464, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -696,6 +708,10 @@ PrefabInstance:
       propertyPath: m_Lightmapping
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7781780042518046549, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 8060413486014749265, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
@@ -703,6 +719,10 @@ PrefabInstance:
     - target: {fileID: 8249814336001735214, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
       propertyPath: m_Name
       value: SurvivalMap (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9199180888205189635, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9137477401200312025, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
@@ -769,6 +789,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 19603442659425905, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 19603442659425905, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19603442659425905, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.41568628
+      objectReference: {fileID: 0}
+    - target: {fileID: 19603442659425905, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.41568628
+      objectReference: {fileID: 0}
+    - target: {fileID: 19603442659425905, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.41568628
+      objectReference: {fileID: 0}
     - target: {fileID: 768730287999509775, guid: 441ab64ccc4eba143b3642ee4da5f19e, type: 3}
       propertyPath: m_Name
       value: PlayerVR

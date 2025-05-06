@@ -79492,7 +79492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 684095692736385404}
   m_Layer: 9
-  m_Name: GameObject
+  m_Name: objetivocanvas
   m_TagString: objetivocanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79507,7 +79507,7 @@ Transform:
   m_GameObject: {fileID: 4429958234579081978}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.1, z: 1.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -96007,7 +96007,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2902439526422856305}
   m_Layer: 9
-  m_Name: GameObject (1)
+  m_Name: rotacioncanvas
   m_TagString: rotacioncanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
