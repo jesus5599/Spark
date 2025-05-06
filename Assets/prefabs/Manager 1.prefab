@@ -387,14 +387,14 @@ RectTransform:
   m_GameObject: {fileID: 152589022338262943}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5067863, y: 2.0431, z: 2.0431}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1420622694636037594}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 254.84415, y: 63.041588}
+  m_AnchoredPosition: {x: 298, y: 45}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &623309914186320836
@@ -675,7 +675,7 @@ RectTransform:
   m_GameObject: {fileID: 293444335490532739}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2925340960706681852}
@@ -750,7 +750,7 @@ RectTransform:
   m_GameObject: {fileID: 583455652977078758}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2925340960706681852}
@@ -1246,7 +1246,7 @@ GameObject:
   - component: {fileID: 463260415535963750}
   - component: {fileID: 5916697542537109106}
   m_Layer: 5
-  m_Name: Image
+  m_Name: titulo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1321,7 +1321,7 @@ GameObject:
   - component: {fileID: 3839927842205585604}
   - component: {fileID: 5432423722464054817}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: fondo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1846,7 +1846,7 @@ RectTransform:
   m_GameObject: {fileID: 1271961970530271860}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4358192288626572659}
@@ -2148,7 +2148,7 @@ RectTransform:
   m_GameObject: {fileID: 1417809979088487724}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1650768078807117549}
@@ -2332,7 +2332,7 @@ GameObject:
   - component: {fileID: 4968564196362851601}
   - component: {fileID: 9052339710570013151}
   m_Layer: 5
-  m_Name: marco
+  m_Name: marco rayo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2643,7 +2643,7 @@ RectTransform:
   m_GameObject: {fileID: 1775662681317662828}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1156128201253039505}
@@ -2718,7 +2718,7 @@ RectTransform:
   m_GameObject: {fileID: 1776576417696798765}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1156128201253039505}
@@ -3397,7 +3397,7 @@ RectTransform:
   m_GameObject: {fileID: 2004862353025674519}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7135450724864353082}
@@ -3457,7 +3457,7 @@ GameObject:
   - component: {fileID: 2988526030585547903}
   - component: {fileID: 3205961319590886767}
   m_Layer: 5
-  m_Name: marco (1)
+  m_Name: marco rayo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3698,7 +3698,7 @@ GameObject:
   - component: {fileID: 3221416575164502845}
   - component: {fileID: 5949227524958192742}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: fondo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3897,81 +3897,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &2467616096312765718
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7271242349668221198}
-  - component: {fileID: 4068737928882437907}
-  - component: {fileID: 8527682533322497505}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &7271242349668221198
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2467616096312765718}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6930253265575516301}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 92.2, y: 1.3}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4068737928882437907
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2467616096312765718}
-  m_CullTransparentMesh: 1
---- !u!114 &8527682533322497505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2467616096312765718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a8591f017716b4d4e94eb53e6d74145b, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2535059368162084709
 GameObject:
   m_ObjectHideFlags: 0
@@ -3999,7 +3924,7 @@ RectTransform:
   m_GameObject: {fileID: 2535059368162084709}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4358192288626572659}
@@ -4059,7 +3984,7 @@ GameObject:
   - component: {fileID: 9126326421283018809}
   - component: {fileID: 5871234164437582840}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: controles pc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4618,7 +4543,7 @@ RectTransform:
   m_GameObject: {fileID: 3306949170284430536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8294007630623031648}
@@ -4693,7 +4618,7 @@ RectTransform:
   m_GameObject: {fileID: 3326163008998028215}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7135450724864353082}
@@ -5459,7 +5384,7 @@ GameObject:
   - component: {fileID: 7628425346597717768}
   - component: {fileID: 453582762958938997}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: controles mando
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6609,7 +6534,7 @@ RectTransform:
   m_GameObject: {fileID: 5077642754428029546}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1650768078807117549}
@@ -7552,7 +7477,7 @@ GameObject:
   - component: {fileID: 8723370447897562878}
   - component: {fileID: 1918017423449396675}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: fondo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8245,14 +8170,14 @@ RectTransform:
   m_GameObject: {fileID: 6178224432785423420}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.093112, y: 3.093112, z: 3.093112}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5602451676426998960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.8441467, y: 63.041588}
+  m_AnchoredPosition: {x: 3.8441467, y: 63.042}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &758113195870512927
@@ -8941,7 +8866,7 @@ RectTransform:
   m_GameObject: {fileID: 6488528014184690403}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2714104469655109424}
@@ -9016,7 +8941,7 @@ RectTransform:
   m_GameObject: {fileID: 6663793993422050362}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8652881912782369515}
@@ -9096,7 +9021,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 454127612481951686}
-  - {fileID: 7271242349668221198}
   m_Father: {fileID: 6777798501399939918}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.164, y: 0.1922922}
@@ -9210,7 +9134,7 @@ GameObject:
   - component: {fileID: 4834143252334410370}
   - component: {fileID: 2210220049078671972}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: fondo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9867,7 +9791,7 @@ RectTransform:
   m_GameObject: {fileID: 7097520839436091113}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8652881912782369515}
@@ -10121,7 +10045,7 @@ GameObject:
   - component: {fileID: 4891352182206725980}
   - component: {fileID: 4245886279478318164}
   m_Layer: 5
-  m_Name: marco
+  m_Name: marco rayo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10931,7 +10855,7 @@ RectTransform:
   m_GameObject: {fileID: 7671865048015131687}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2714104469655109424}
@@ -11235,7 +11159,7 @@ RectTransform:
   m_GameObject: {fileID: 8257620692935278218}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8447307, y: 0.71714, z: 0.71714}
+  m_LocalScale: {x: 1.5, y: 0.71714, z: 0.71714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8294007630623031648}
@@ -12725,7 +12649,7 @@ GameObject:
   - component: {fileID: 3433534094764942839}
   - component: {fileID: 2836102433560457146}
   m_Layer: 5
-  m_Name: Image
+  m_Name: fondo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
