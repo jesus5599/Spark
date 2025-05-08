@@ -432,18 +432,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1292161148646181762, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1932260115956819760, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 2718374147769065693, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 3295662899976631627, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -484,37 +472,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5061935336344095729, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453680004501196464, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453680004501196464, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453680004501196464, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453680004501196464, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
-      propertyPath: m_Lightmapping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7781780042518046549, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 8249814336001735214, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
       propertyPath: m_Name
       value: SurvivalMap (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 9199180888205189635, guid: a4e7c99da3df5c44d886fcfd40e5c8e5, type: 3}
-      propertyPath: m_Layer
-      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

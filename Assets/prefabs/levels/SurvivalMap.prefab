@@ -751,7 +751,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -791,7 +791,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -961,7 +961,7 @@ GameObject:
   - component: {fileID: 7188693980273336121}
   - component: {fileID: 4485756220900825555}
   - component: {fileID: 6199214592927224508}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1305,7 +1305,7 @@ GameObject:
   - component: {fileID: 6805208717174772190}
   - component: {fileID: 3762507483914030293}
   - component: {fileID: 7093956817842415442}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2442,7 +2442,7 @@ GameObject:
   - component: {fileID: 6251453584674984131}
   - component: {fileID: 1325718518888787871}
   - component: {fileID: 6080149154247407158}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3348,7 +3348,7 @@ GameObject:
   - component: {fileID: 1089354562775293197}
   - component: {fileID: 6878781232326046516}
   - component: {fileID: 2223417602409699364}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4235,7 +4235,7 @@ GameObject:
   - component: {fileID: 5408173769558379131}
   - component: {fileID: 96225448950075781}
   - component: {fileID: 1235596737583708130}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12521,7 +12521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5782604321555974274, guid: 5fed3cb3247a40343bd2a2b47a1cd848, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 57.040005
+      value: -7.039996
       objectReference: {fileID: 0}
     - target: {fileID: 5782604321555974274, guid: 5fed3cb3247a40343bd2a2b47a1cd848, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12529,7 +12529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5782604321555974274, guid: 5fed3cb3247a40343bd2a2b47a1cd848, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -61.11
+      value: 0.69999933
       objectReference: {fileID: 0}
     - target: {fileID: 5782604321555974274, guid: 5fed3cb3247a40343bd2a2b47a1cd848, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15738,7 +15738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501584456118195379, guid: ec9b59e4fa83ece478d0ecd6292dffce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 59.500004
+      value: -4.579997
       objectReference: {fileID: 0}
     - target: {fileID: 5501584456118195379, guid: ec9b59e4fa83ece478d0ecd6292dffce, type: 3}
       propertyPath: m_LocalPosition.y
@@ -15746,7 +15746,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501584456118195379, guid: ec9b59e4fa83ece478d0ecd6292dffce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -61.11
+      value: 0.69999933
       objectReference: {fileID: 0}
     - target: {fileID: 5501584456118195379, guid: ec9b59e4fa83ece478d0ecd6292dffce, type: 3}
       propertyPath: m_LocalRotation.w
@@ -44200,7 +44200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4658019907443540660, guid: dcfcab3f94d64f24980fbda3cd6a6e14, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 58.15
+      value: -5.93
       objectReference: {fileID: 0}
     - target: {fileID: 4658019907443540660, guid: dcfcab3f94d64f24980fbda3cd6a6e14, type: 3}
       propertyPath: m_LocalPosition.y
@@ -44208,7 +44208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4658019907443540660, guid: dcfcab3f94d64f24980fbda3cd6a6e14, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -61.11
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4658019907443540660, guid: dcfcab3f94d64f24980fbda3cd6a6e14, type: 3}
       propertyPath: m_LocalRotation.w
@@ -44489,6 +44489,10 @@ PrefabInstance:
     - target: {fileID: 8817084246775663209, guid: dcfcab3f94d64f24980fbda3cd6a6e14, type: 3}
       propertyPath: m_Name
       value: Y Bot (ARgun)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8817084246775663209, guid: dcfcab3f94d64f24980fbda3cd6a6e14, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8821023331641121009, guid: dcfcab3f94d64f24980fbda3cd6a6e14, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
