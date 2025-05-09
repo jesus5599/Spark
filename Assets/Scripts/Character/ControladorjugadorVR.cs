@@ -607,10 +607,16 @@ public class ControladorjugadorVR : MonoBehaviour
 
         // Guardar la dirección de movimiento previa
         preWallRunVelocity = playerVelocity;
-
-        // Almacenar la dirección de entrada al wall run (la dirección de movimiento al momento de entrar)
-        entryDirection = transform.forward;
-
+        if (!vr)
+        {
+            // Almacenar la dirección de entrada al wall run (la dirección de movimiento al momento de entrar)
+            entryDirection = transform.forward;
+        }
+        else
+        {
+            // Almacenar la dirección de entrada al wall run (la dirección de movimiento al momento de entrar)
+            entryDirection = mesh.transform.forward;
+        }
         // Desactivar la gravedad temporalmente durante el wall run
         playerVelocity.y = 0; // Cancelar efecto de gravedad durante el wall run
 
