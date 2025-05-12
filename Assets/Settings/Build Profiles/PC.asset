@@ -10,40 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 15003, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: "New Android\u2122 Profile"
+  m_Name: PC
   m_EditorClassIdentifier: 
   m_AssetVersion: 1
-  m_BuildTarget: 13
-  m_Subtarget: 0
-  m_PlatformId: b9b35072a6f44c2e863f17467ea3dc13
+  m_BuildTarget: 19
+  m_Subtarget: 2
+  m_PlatformId: 4e3c793746204150860bf175a9a41a05
   m_PlatformBuildProfile:
-    rid: 3801690631717519360
+    rid: 4250318974014193664
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/Scenes/MenuVR.unity
+    m_path: Assets/Scenes/Menu.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/level1VR.unity
+    m_path: Assets/Scenes/level1.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/level2VR.unity
+    m_path: Assets/Scenes/level2.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/BossVR.unity
+    m_path: Assets/Scenes/Boss.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/SurviveVR.unity
+    m_path: Assets/Scenes/Survive.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/LoadingScreenVR.unity
+    m_path: Assets/Scenes/LoadingScreen.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/Practicscene.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/CreditosVR.unity
+    m_path: Assets/Scenes/Creditos.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings: []
   references:
     version: 2
     RefIds:
-    - rid: 3801690631717519360
-      type: {class: AndroidPlatformBuildSettings, ns: UnityEditor.Android, asm: UnityEditor.Android.Extensions}
+    - rid: 4250318974014193664
+      type: {class: WindowsPlatformSettings, ns: UnityEditor.WindowsStandalone, asm: UnityEditor.WindowsStandalone.Extensions}
       data:
         m_Development: 0
         m_ConnectProfiler: 0
@@ -54,15 +52,11 @@ MonoBehaviour:
         m_ExplicitNullChecks: 0
         m_ExplicitDivideByZeroChecks: 0
         m_ExplicitArrayBoundsChecks: 0
-        m_CompressionType: 2
+        m_CompressionType: 0
         m_InstallInBuildFolder: 0
-        m_BuildSubtarget: 0
-        m_BuildSystem: 1
-        m_ExportAsGoogleAndroidProject: 0
-        m_DebugSymbolLevel: 1
-        m_DebugSymbolFormat: 5
-        m_CurrentDeploymentTargetId: __builtin__target_default
-        m_BuildType: 2
-        m_BuildAppBundle: 0
-        m_IPAddressToConnect: 
-        m_SymlinkSources: 0
+        m_WindowsBuildAndRunDeployTarget: 0
+        m_Architecture: 0
+        m_CreateSolution: 0
+        m_CopyPDBFiles: 0
+        m_WindowsDevicePortalAddress: 
+        m_WindowsDevicePortalUsername: 

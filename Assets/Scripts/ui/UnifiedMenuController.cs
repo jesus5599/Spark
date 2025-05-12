@@ -430,24 +430,21 @@ public class UnifiedMenuController : MonoBehaviour
         if (gameData.currentLevel > 3)
         {
             gameData.currentLevel = 0;
-            LoadingScreenManager.LoadScene(gameData.currentLevel);
+            if (VR)
+            {
+                LoadingScreenManager.LoadScene(7);
+            }
+            else { LoadingScreenManager.LoadScene(6); }
+            
         }
         else 
         {
-            if (VR == true)
-            {
+            
                 // Cargar el siguiente nivel
                 LoadingScreenManager.LoadScene(gameData.currentLevel);
                 
                 Time.timeScale = 1f;
-            }
-            else
-            {
-                // Cargar el siguiente nivel
-                LoadingScreenManager.LoadScene(gameData.currentLevel);
-               
-                Time.timeScale = 1f;
-            }
+           
         }
         
     }
