@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 5875625188814273947}
   m_Layer: 14
   m_Name: Cube (27)
-  m_TagString: Untagged
+  m_TagString: Plataforma
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2058,7 +2058,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1353956941506559655
 Transform:
   m_ObjectHideFlags: 0
@@ -2667,7 +2667,7 @@ GameObject:
   - component: {fileID: 6341480317683695544}
   m_Layer: 14
   m_Name: Cube (26)
-  m_TagString: Untagged
+  m_TagString: Plataforma
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2712,7 +2712,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -3354,8 +3354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baaddab2a0245e245a12102332d4bb8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedUp: 20
-  speedDown: 20
+  speedUp: 10
+  speedDown: 50
   targetUp: {fileID: 1427330822213068125}
   targetDown: {fileID: 5486397447441174231}
 --- !u!1 &1829850634345631848
@@ -4965,7 +4965,7 @@ GameObject:
   - component: {fileID: 4854543071611297185}
   - component: {fileID: 8224085455924616134}
   - component: {fileID: 2293885570378614283}
-  m_Layer: 13
+  m_Layer: 12
   m_Name: paredes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5578,7 +5578,7 @@ GameObject:
   - component: {fileID: 1462297234708429253}
   - component: {fileID: 2699921271448019070}
   - component: {fileID: 4491555586792942300}
-  m_Layer: 13
+  m_Layer: 12
   m_Name: paredes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8905,7 +8905,7 @@ GameObject:
   - component: {fileID: 5539431020833180433}
   - component: {fileID: 1081453129082298965}
   - component: {fileID: 7825791779882537128}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: respawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9561,7 +9561,7 @@ GameObject:
   - component: {fileID: 3304850293172672922}
   - component: {fileID: 6632201638885682647}
   - component: {fileID: 2948815545078594387}
-  m_Layer: 13
+  m_Layer: 12
   m_Name: paredes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9995,7 +9995,7 @@ GameObject:
   - component: {fileID: 4850432882340850762}
   m_Layer: 14
   m_Name: Cube (26)
-  m_TagString: Untagged
+  m_TagString: Plataforma
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10700,7 +10700,7 @@ GameObject:
   - component: {fileID: 6655782678676275614}
   - component: {fileID: 7470024089239050137}
   - component: {fileID: 7097136336947954757}
-  m_Layer: 13
+  m_Layer: 12
   m_Name: paredes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12214,7 +12214,7 @@ GameObject:
   - component: {fileID: 9074517063855144566}
   m_Layer: 14
   m_Name: Cube (27)
-  m_TagString: Untagged
+  m_TagString: Plataforma
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12259,7 +12259,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -13092,7 +13092,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 396eb62f3415b394697f000b714747e4, type: 2}
+  - {fileID: 2100000, guid: ae4e31a4d74972944926526d818ad632, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13147,7 +13147,7 @@ GameObject:
   - component: {fileID: 3099471497170458828}
   - component: {fileID: 5774442928665363390}
   - component: {fileID: 7290885460469453987}
-  m_Layer: 13
+  m_Layer: 12
   m_Name: paredes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13901,8 +13901,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baaddab2a0245e245a12102332d4bb8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedUp: 20
-  speedDown: 25
+  speedUp: 10
+  speedDown: 50
   targetUp: {fileID: 9054294220750337964}
   targetDown: {fileID: 648537552793539724}
 --- !u!1 &8469647527735110420
@@ -14149,7 +14149,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4974326412227382744}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Paredes escenario
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15364,6 +15364,26 @@ PrefabInstance:
       propertyPath: checkpointID
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 6489593005611723425, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
       propertyPath: isSurviveActive
       value: 0
@@ -16085,6 +16105,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8125843459090711341}
     m_Modifications:
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 6752977303356578976, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
       propertyPath: m_Name
       value: Enemy_Gun 1 (2)
@@ -16805,6 +16845,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8125843459090711341}
     m_Modifications:
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 6752977303356578976, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
       propertyPath: m_Name
       value: Enemy_Gun 1
@@ -16897,15 +16957,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 54447137531189, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 780463343177679900, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 832212355623917929, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1296842949995610663, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Name
@@ -16913,7 +16973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1296842949995610663, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1296842949995610663, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_IsActive
@@ -16921,7 +16981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1672942582962306660, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1924338202727225501, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_LocalScale.z
@@ -16969,23 +17029,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2238373495440746451, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4479773696925450173, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4853775471098793042, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5151440950082943491, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5206782355428741997, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6002024123092737587, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: flash
@@ -17001,7 +17061,7 @@ PrefabInstance:
       objectReference: {fileID: 4439446888068859363}
     - target: {fileID: 6569200551730077970, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7182049915634637076, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_IsKinematic
@@ -17013,11 +17073,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7563333884985836933, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8583754795264043594, guid: 2cac014825b98324a908cc6a8a069777, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17898,6 +17958,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8125843459090711341}
     m_Modifications:
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 6752977303356578976, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
       propertyPath: m_Name
       value: Enemy_Gun 1 (1)
@@ -18056,6 +18136,26 @@ PrefabInstance:
       propertyPath: checkpointID
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 6914695107680777131, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
       propertyPath: m_Name
       value: Enemy_Ar 1 (1)
@@ -18311,6 +18411,26 @@ PrefabInstance:
       propertyPath: checkpointID
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 4605487704569238486, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 6489593005611723425, guid: 14f1c3d27561ed742934dc7f9dae19cf, type: 3}
       propertyPath: isSurviveActive
       value: 0
@@ -19767,6 +19887,26 @@ PrefabInstance:
       propertyPath: checkpointID
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 6914695107680777131, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
       propertyPath: m_Name
       value: Enemy_Ar 1
@@ -19797,6 +19937,26 @@ PrefabInstance:
       propertyPath: checkpointID
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 6362290705291304709, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 6752977303356578976, guid: bfe3f349e1bfeac4c9adda088f0df86d, type: 3}
       propertyPath: m_Name
       value: Enemy_Gun 1
@@ -19947,6 +20107,26 @@ PrefabInstance:
       propertyPath: checkpointID
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: sonidos.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 48468d122f2cae54fa77731953402b50, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c364f368c6080bb4e9e1dd458082fa22, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 633758c1d084c264f9dfe8a684a7bae9, type: 3}
+    - target: {fileID: 6117629771373355521, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
+      propertyPath: 'sonidos.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f9fccf33dd3789543b78b3a24e25cca1, type: 3}
     - target: {fileID: 6914695107680777131, guid: 8299c4974a83a4f4fba0f840b4f999b8, type: 3}
       propertyPath: m_Name
       value: Enemy_Ar 1

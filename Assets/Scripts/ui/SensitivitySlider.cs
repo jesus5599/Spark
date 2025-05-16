@@ -11,10 +11,18 @@ public class SensitivitySlider : MonoBehaviour
 
     void Start()
     {
+
         // Configuramos el slider de 1 a 10
         sensitivitySlider.minValue = 1;
         sensitivitySlider.maxValue = 10;
         sensitivitySlider.wholeNumbers = true;
+
+        // Si no hay sensibilidad guardada, establecerla por defecto en visible = 5
+        if (!PlayerPrefs.HasKey("SensitivityOffset"))
+        {
+            float defaultReal = MapVisibleToReal(5);
+            SensitivityManager.SetSensitivityOffset(defaultReal);
+        }
 
         // Cargar la sensibilidad real desde PlayerPrefs
         float realSensitivity = SensitivityManager.GetSensitivityOffset();
@@ -25,6 +33,7 @@ public class SensitivitySlider : MonoBehaviour
 
         UpdateSensitivityText(visibleValue);
     }
+
 
     void Update()
     {
